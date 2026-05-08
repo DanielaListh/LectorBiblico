@@ -1,27 +1,32 @@
 <script setup>
-    const preguntas = ["nota1", "nota2", "nota3", "nota4", "nota5", "nota6"]
+const preguntas = [
+    { title: "¿Cómo encontrar un versículo o libro específico? ", description: "Puedes usar el buscador en la parte superior de la página para ingresar el nombre del libro. A medida que escribes, el sistema te va mostrando sugerencias para que encuentres rápidamente el pasaje que estás buscando." },
+    { title: "¿Por qué leer la Biblia online?", description: "Leer la Biblia online permite acceder a la Palabra de Dios desde cualquier lugar y en cualquier momento, sin necesidad de tener una copia física. Además, las plataformas digitales ofrecen herramientas interactivas como búsqueda por versículo, notas personales, textos resaltados y comparaciones entre traducciones, que enriquecen la experiencia de lectura y estudio "},
+    { title: "¿Necesito registrarme para usar la plataforma?", description: "No es obligatorio para leer la Biblia, pero si querés guardar notas, textos resaltados o personalizar tu experiencia, te recomendamos crear una cuenta gratuita." },
+    { title: "¿Puedo compartir versículos con amigos?", description: "Sí, cada versículo tiene una opción para compartir por redes sociales o copiar el enlace. Las notas personales son privadas, pero podés copiarlas y compartirlas manualmente." },
+    { title: "¿De dónde proviene el contenido bíblico?", description: "Los textos son extraídos de una API confiable que utiliza traducciones reconocidas. Podés consultar la fuente ..." },
+    { title: "¿La plataforma funciona en dispositivos móviles?", description: "Sí, el sitio está diseñado para ser completamente responsivo y puede usarse desde celulares, tablets o computadoras sin perder calidad ni funcionalidad. La interfaz se adapta automáticamente al tamaño de la pantalla para que puedas leer, buscar y navegar de forma cómoda desde cualquier dispositivo."},
+    
+]
 </script>
 
 <template>
-    <section class="h-auto mx-auto flex items-center justify-center flex-col py-20">
-       <h2 class="font-cinzel text-[#5b493b] m-[20px] text-5xl">Preguntas Frecuentes</h2> 
-       <div class="bg-[url('/img/noe.png')] bg-cover bg-center h-[85vh] w-[85%] mx-auto m-[20px]">
-            <ul>
-                <li 
-                    v-for="pregunta in preguntas" :key="pregunta"
-                    class="
-                    flex justify-center gap-5
-                    w-auto min-w-[100px] max-w-[350px] 
-                    h-auto max-h-[200px] 
-                    m-[10px] p[10px] 
-                    border-4 rounded-lg border-[#5b493b] 
-                    bg-[#fff8ef] hover:border-[#ffb648]
-                    font-lexendExa text-[#5b493b]
-                    ">
-                    {{ pregunta }}
-                </li>
-            </ul>
-            
+    <section class="h-auto mx-auto flex items-center flex-col py-20">
+       <h2 class="font-cinzel text-[#5b493b] m-[10px] text-5xl">Preguntas Frecuentes</h2> 
+       <div 
+        class=" group h-screen bg-[url('/img/moises.png')] 
+                bg-cover bg-center w-[90%] mx-auto m-[10px]
+                columns-1 sm:columns-2 lg:columns-3 gap-1 space-y-3"
+       >
+            <div v-for="(pregunta, index) in preguntas" :key="index"
+                class=" w-[360px] bg-[#faf6f3f6] border m-[15px]
+                    border-white/20 text-[#6a3d03] rounded-2xl shadow-md
+                    hover:border-[#eb9d36] transition-all duration-500 ease-out p-2
+                    transform hover:translate-y-2 hover:shadow-2xl hover:shadow-[#eb9d36]
+                    break-inside-avoid">
+                <h3 class="font-cinzel text-xl mb-2">{{ pregunta.title }}</h3>
+                <p class="text-sm">{{ pregunta.description }}</p>
+            </div>
        </div>    
     </section>
 </template>
