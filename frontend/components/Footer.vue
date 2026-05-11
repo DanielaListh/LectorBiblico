@@ -18,15 +18,13 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
                 <a href="https://www.facebook.com/Dani.listh/" target="_blank" class="icon-redes">
                     <FontAwesomeIcon :icon="['fab', 'facebook-f']" />
                 </a>
-                <a href="https://www.instagram.com/liseth.dbh/" target="_blank" class="icon-redes">
-                    <FontAwesomeIcon :icon="['fab', 'instagram']" />
-                </a>
             </div>
             <div class=" justify-end m-[10px] font-lexendExa text-[#5b493b] flex gap-2 font-semibold">
-                <a href="" class="hover:text-[#eb9d36] transition-colors duration-300">Home</a>
-                <a href="" class="hover:text-[#eb9d36] transition-colors duration-300">Buscar</a>
-                <a href="" class="hover:text-[#eb9d36] transition-colors duration-300">FAQ</a>
-                <a href="" class="hover:text-[#eb9d36] transition-colors duration-300">Donar</a>
+                <a href="#home" class="hover:text-[#eb9d36] transition-colors duration-300">Home</a>
+                <a href="#busqueda" class="hover:text-[#eb9d36] transition-colors duration-300">Buscar</a>
+                <a href="#faq" class="hover:text-[#eb9d36] transition-colors duration-300">FAQ</a>
+                <a href="#audiencia" class="hover:text-[#eb9d36] transition-colors duration-300">Audiencia</a>
+                <a href="#donar" class="hover:text-[#eb9d36] transition-colors duration-300">Donar</a>
             </div>
         </div>
             

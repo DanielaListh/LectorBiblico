@@ -1,6 +1,6 @@
 <template>
     <section id="audiencia" class="w-[90%] h-screen flex bg-[#5c3439] mx-auto">
-        <div class="w-[45%] m-[80px]">
+        <div class="w-[40%] m-[80px]">
             <p class="text-[#faf6f3] text-1l m-[10px]">Hecho por puro amor para las personas que buscan un amor 
                 verdadero, fiel, puro e infinito; quienes están tristes o cargan con pesadas preocupaciones, 
                 recuerden las palabras de Jesucristo: “Vengan a mí todos los que están cansados y agobiados, 
@@ -13,16 +13,16 @@
                 móvil, completamente gratuita, sin anuncios y sin necesidad de registrarse.
             </p>
 
-            <h2 class="m-[30px] font-cinzel text-5xl text-[#faf6f3]">AUDIENCIA</h2>
+            <h2 class="relative top-[120px] font-cinzel text-5xl text-[#faf6f3]">AUDIENCIA</h2>
         </div>
 
-        <div class="w-[45%]">
+        <div>
             <img 
-                src="/img/roca.png" 
-                alt="la tumba abierta porque Jesucristo Resucitó" 
-                class="w-[95%] h-[90%] m-[10px]"
+                src="/img/roca1.png" 
+                alt="la tumba abierta pues Jesucristo Resucitó" 
+                class=" w-[95%] h-[90%] m-[10px] transition-all duration-700 hover:drop-shadow-[0_0_6px_#efcd9f]"
             >
-            <p class="text-[#faf6f3] text-1l my-[-250px] w-[400px]">
+            <p class="relative -top-[250px]  -left-6 text-[#faf6f3] text-[13px] w-[370px]">
                 Mas él les dijo: No os asustéis; buscáis a Jesús nazareno, el que fue crucificado; <span class="text-[#efcd9f]">ha resucitado</span>, no está aquí; mirad el lugar en donde le pusieron.
             </p>
         </div>
