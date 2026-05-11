@@ -1,5 +1,5 @@
 <template>
-    <section class="w-[90%] h-screen flex bg-[#5c3439] mx-auto">
+    <section id="audiencia" class="w-[90%] h-screen flex bg-[#5c3439] mx-auto">
         <div class="w-[45%] m-[80px]">
             <p class="text-[#faf6f3] text-1l m-[10px]">Hecho por puro amor para las personas que buscan un amor 
                 verdadero, fiel, puro e infinito; quienes están tristes o cargan con pesadas preocupaciones, 

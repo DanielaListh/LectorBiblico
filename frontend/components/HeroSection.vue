@@ -6,14 +6,15 @@ const subtitle = "Una fuente de Bendiciones Digital"
 
 <template>
   
-  <section class="w-full min-h-screen flex flex-col items-center bg-[#faf6f3]">
+  <section id="home" class="w-full min-h-screen flex flex-col items-center">
 
     <!-- NAVBAR -->
     <nav class="w-[80%] font-lexendExa font-semibold max-w-6xl flex justify-end gap-8 py-6 text-[#5b493b]">
-      <a href="#" class="hover:text-yellow-600 transition">Home</a>
-      <a href="#" class="hover:text-yellow-600 transition">Búsqueda</a>
-      <a href="#" class="hover:text-yellow-600 transition">FAQs</a>
-      <a href="#" class="hover:text-yellow-600 transition">Login</a>
+      <a href="#home" class="hover:text-[#dbaf27] transition">Home</a>
+      <a href="#busqueda" class="hover:text-[#dbaf27] transition">Búsqueda</a>
+      <a href="#faq" class="hover:text-[#dbaf27] transition">FAQs</a>
+      <a href="#audiencia" class="hover:text-[#dbaf27] transition">Audiencia</a>
+      <a href="#donar" class="hover:text-[#dbaf27] transition">Donar</a>
       
     </nav>
 
@@ -24,14 +25,14 @@ const subtitle = "Una fuente de Bendiciones Digital"
     <div class="flex flex-col items-center text-center mt-10 px-4">
 
       <!-- TÍTULO -->
-      <h1 class="font-cinzel text-4xl md:text-6xl font-bold text-yellow-600 tracking-wide drop-shadow-sm">
+      <h1 class="mt-[30px] mb-[-100px] font-cinzel md:text-8xl text-[#dbaf27] tracking-tight drop-shadow-sm">
         {{ title }}
       </h1>
 
       <!-- IMAGEN -->
-      <div class="mt-10 max-w-md md:max-w-lg">
+      <div class="max-w-md md:max-w-lg">
         <img 
-          src="/img/portada.png" 
+          src="/img/JesusCristo.png" 
           alt="Ilustración de JesusCristo buscando la oveja perdida"
           class="w-full object-contain"
         />
@@ -39,7 +40,7 @@ const subtitle = "Una fuente de Bendiciones Digital"
 
       <!-- BOTÓN -->
       <button
-        class="mt-8 px-8 py-3 bg-yellow-600 text-white font-semibold rounded-lg shadow-lg hover:bg-yellow-700 transition"
+        class="px-8 py-3 bg-[#c5ae80] text-white font-semibold rounded-lg shadow-lg hover:bg-[#dbaf27] transition"
       >
         Comenzar a leer
       </button>

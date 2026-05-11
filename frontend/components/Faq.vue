@@ -11,18 +11,18 @@ const preguntas = [
 </script>
 
 <template>
-    <section class="h-auto mx-auto flex items-center flex-col py-20">
+    <section id="faq" class="h-auto mx-auto flex items-center flex-col py-20">
        <h2 class="font-cinzel text-[#5b493b] m-[10px] text-5xl">Preguntas Frecuentes</h2> 
        <div 
-        class=" group h-screen bg-[url('/img/moises.png')] 
+        class=" group h-screen bg-[url('/img/moises1.png')] 
                 bg-cover bg-center w-[90%] mx-auto m-[10px]
                 columns-1 sm:columns-2 lg:columns-3 gap-1 space-y-3"
        >
             <div v-for="(pregunta, index) in preguntas" :key="index"
-                class=" w-[360px] bg-[#faf6f3f6] border m-[15px]
+                class=" w-[350px] bg-[#faf6f3f6] border m-[15px]
                     border-white/20 text-[#6a3d03] rounded-2xl shadow-md
-                    hover:border-[#eb9d36] transition-all duration-500 ease-out p-2
-                    transform hover:translate-y-2 hover:shadow-2xl hover:shadow-[#eb9d36]
+                    hover:border-[#dbaf27] transition-all duration-500 ease-out p-2
+                    transform hover:translate-y-2 hover:shadow-2xl hover:shadow-[#dbaf27]
                     break-inside-avoid">
                 <h3 class="font-cinzel text-xl mb-2">{{ pregunta.title }}</h3>
                 <p class="text-sm">{{ pregunta.description }}</p>

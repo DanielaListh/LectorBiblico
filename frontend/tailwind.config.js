@@ -11,7 +11,8 @@ export default {
     extend: {
       fontFamily: {
         cinzel: ['Cinzel', 'serif'],
-        lexendExa:['Lexend Exa', 'sans-serif'],
+        lexendExa: ['Lexend Exa', 'sans-serif'],
+        bellefair: ['Bellefair', 'serif'],
       }
     },
   },
