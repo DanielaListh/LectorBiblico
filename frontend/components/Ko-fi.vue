@@ -25,7 +25,7 @@ const openBinance = () => {
         </div>
         <div>
             <img src="/img/Daniel.png" alt="El profeta Daniel en el foso de los leones"
-                class="w-[600px] h-auto ">
+                class="hidden w-[600px] h-auto md:block">
         </div>
     </section>
 </template>

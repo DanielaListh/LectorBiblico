@@ -11,21 +11,23 @@ const preguntas = [
 </script>
 
 <template>
-    <section id="faq" class="h-auto mx-auto flex items-center flex-col py-20">
+    <section 
+        id="faq" 
+        class="h-auto mx-auto flex flex-col items-center py-20"
+    >
        <h2 class="font-cinzel text-[#5b493b] m-[10px] text-5xl">Preguntas Frecuentes</h2> 
        <div 
-        class=" group h-screen bg-[url('/img/moises1.png')] 
-                bg-cover bg-center w-[90%] mx-auto m-[10px]
-                columns-1 sm:columns-2 lg:columns-3 gap-1 space-y-3"
+        class=" group h-auto mx-auto m-[10px] md:gap-1 md:space-y-3 md:h-screen md:w-[90%] 
+                md:bg-[url('/img/moises1.png')] md:bg-cover md:bg-center lg:columns-3"
        >
             <div v-for="(pregunta, index) in preguntas" :key="index"
-                class=" w-[350px] bg-[#faf6f3f6] border m-[15px]
-                    border-white/20 text-[#6a3d03] rounded-2xl shadow-md
+                class=" flex flex-col w-[350px] bg-[#5b493b] text-[#faf6f3f6] md:bg-[#faf6f3f6] border m-[15px]
+                    border-white/20 md:text-[#6a3d03] rounded-2xl shadow-md
                     hover:border-[#dbaf27] transition-all duration-500 ease-out p-2
-                    transform hover:translate-y-2 hover:shadow-2xl hover:shadow-[#dbaf27]
+                    transform hover:translate-y-2 hover:shadow-2xl hover:shadow-[#f3be1d]
                     break-inside-avoid">
                 <h3 class="font-cinzel text-xl mb-2">{{ pregunta.title }}</h3>
-                <p class="text-sm">{{ pregunta.description }}</p>
+                <p class="font-lexendExa text-sm">{{ pregunta.description }}</p>
             </div>
        </div>    
     </section>

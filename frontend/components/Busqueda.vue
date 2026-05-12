@@ -28,10 +28,13 @@ const coincidenciaBusqueda = (libro) => {
 <template>
 
     <section id="busqueda" class="h-auto flex items-center justify-center flex-col gap-4 py-20">
-        <h2 class="font-cinzel text-5xl text-[#5b493b]">ENCUENTRA EL LIBRO</h2>
-        <h3 class="font-cinzel">DE LA BIBLIA QUE <span class=" text-[#dbaf27]">DESEAS LEER</span> HOY</h3>
+        <div class="flex flex-col justify-center items-center text-center">
+            <h2 class="font-cinzel text-4xl text-[#5b493b] md:text-5xl">ENCUENTRA EL LIBRO</h2>
+            <h3 class="font-cinzel">DE LA BIBLIA QUE <span class=" text-[#dbaf27]">DESEAS LEER</span> HOY</h3>
+        </div>
+        
 
-        <div class="flex gap-2">
+        <div class="hidden md:flex gap-2">
             <input 
                 v-model="busqueda"
                 type="text" 
@@ -40,13 +43,13 @@ const coincidenciaBusqueda = (libro) => {
             <img src="/img/loupe.png" alt="lupa" class="w-auto h-[30px]">
         </div>
 
-        <div class="w-[85%] font-lexendExa">
-            <h2 class="m-[30px] text-left text-3xl text-[#dbaf27]">Antiguo testamento</h2>
+        <div class="w-full font-lexendExa md:w-[85%]">
+            <h2 class="m-[30px] text-center text-2xl text-[#dbaf27] md:text-3xl md:text-left">Antiguo testamento</h2>
             <div class="m-[30px]">
-                <ul class=" flex flex-wrap gap-2">
+                <ul class=" flex flex-wrap gap-2 justify-center md:justify-normal md:items-normal">
                     <li 
                         v-for="libro in listAncientTestament" :key="libro"
-                        class="border-2 w-auto p-1 text-[#5b493b] border-[#d8c3a6] hover:border-[#6A513F] transition-colors duration-300 rounded-lg text-center "
+                        class="text-sm sm:text-base px-2 py-1 border-2 w-auto p-1 text-[#5b493b] border-[#d8c3a6] hover:border-[#6A513F] transition-colors duration-300 rounded-lg text-center "
                        :class="[
                             coincidenciaBusqueda(libro)
                             ? 'bg-[#6A513F] text-[#F2EAE3] shadow-lg shadow-[#6A513F]/40 scale-105'
@@ -59,21 +62,22 @@ const coincidenciaBusqueda = (libro) => {
                 </ul>
             </div>
         </div>
-        <div class=" w-[85%] font-lexendExa justify-center items-center">
-            <h2 class=" text-left text-3xl text-[#994D2C] m-[30px]">Nuevo testamento</h2>
+        <div class="w-full font-lexendExa md:w-[85%]">
+            <h2 class="m-[30px] text-center text-2xl text-[#994D2C] md:text-3xl md:text-left">Nuevo testamento</h2>
             <div class="m-[30px]">
-                <ul class=" flex flex-wrap gap-2">
-                    <li v-for="libro in listNewTestament" :key="libro" 
-                    class="border-2 w-auto p-1 text-[#5b493b] border-[#d8c3a6] hover:border-[#6A513F] transition-colors duration-300 rounded-lg text-center "
+                <ul class=" flex flex-wrap gap-2 justify-center md:justify-normal md:items-normal">
+                    <li 
+                        v-for="libro in listNewTestament" :key="libro"
+                        class="text-sm sm:text-base px-2 py-1 border-2 w-auto p-1 text-[#5b493b] border-[#d8c3a6] hover:border-[#6A513F] transition-colors duration-300 rounded-lg text-center "
                        :class="[
                             coincidenciaBusqueda(libro)
                             ? 'bg-[#6A513F] text-[#F2EAE3] shadow-lg shadow-[#6A513F]/40 scale-105'
                             : 'hover:text-[#b83801] hover:shadow-md hover:shadow-[#B56B46]/30'
                         ]"
-                    >
+                        >
                     <a href="">{{ libro }}</a>
-                    </li>
                     
+                    </li>
                 </ul>
             </div>
         </div>
