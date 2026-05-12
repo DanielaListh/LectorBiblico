@@ -38,7 +38,7 @@ const subtitle = "Una fuente de Bendiciones Digital"
 
     <!-- BOTÓN -->
     <button
-      class="mt-6 px-8 py-3 bg-[#c5ae80] text-white font-semibold rounded-lg shadow-lg hover:bg-[#dbaf27] transition"
+      class="mt-6 px-8 py-3 bg-[#c5ae80] text-[#F2EAE3] font-semibold rounded-lg shadow-lg hover:bg-[#dbaf27] transition"
     >
       Comenzar a leer
     </button>

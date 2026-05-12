@@ -38,7 +38,7 @@ const coincidenciaBusqueda = (libro) => {
             <input 
                 v-model="busqueda"
                 type="text" 
-                class="border-2 border-[#958671] rounded-lg  h-8 px-6 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                class="border-2 border-[#958671] bg-transparent rounded-lg  h-8 px-6 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 >
             <img src="/img/loupe.png" alt="lupa" class="w-auto h-[30px]">
         </div>
