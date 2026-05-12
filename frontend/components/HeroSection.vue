@@ -9,7 +9,7 @@ const subtitle = "Una fuente de Bendiciones Digital"
   <section id="home" class="w-full min-h-screen flex flex-col items-center">
 
   <!-- NAVBAR -->
-  <nav class="w-[80%] font-lexendExa font-semibold flex flex-wrap justify-center md:justify-end gap-4 md:gap-8 py-6 text-[#5b493b]">
+  <nav class="w-[85%] font-lexendExa font-semibold flex flex-wrap justify-center md:justify-end gap-2 md:gap-8 py-6 text-[#5b493b]">
     <a href="#home" class="hover:text-[#dbaf27] transition">Home</a>
     <a href="#busqueda" class="hover:text-[#dbaf27] transition">Búsqueda</a>
     <a href="#faq" class="hover:text-[#dbaf27] transition">FAQs</a>
@@ -23,7 +23,7 @@ const subtitle = "Una fuente de Bendiciones Digital"
   <div class="flex flex-col items-center text-center mt-10 px-4">
 
     <!-- TÍTULO -->
-    <h1 class="mt-10 mb-4 font-cinzel text-5xl sm:text-5xl md:text-7xl lg:text-8xl text-[#dbaf27] tracking-tight drop-shadow-sm">
+    <h1 class="mt-10 mb-4 font-cinzel text-4xl md:text-5xl text-[#dbaf27] tracking-tight drop-shadow-sm">
       {{ title }}
     </h1>
 

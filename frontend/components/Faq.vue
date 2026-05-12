@@ -15,7 +15,7 @@ const preguntas = [
         id="faq" 
         class="h-auto mx-auto flex flex-col items-center py-20"
     >
-       <h2 class="font-cinzel text-[#5b493b] m-[10px] text-5xl">Preguntas Frecuentes</h2> 
+       <h2 class="font-cinzel text-[#5b493b] m-[10px] text-4xl md:text-5xl">Preguntas Frecuentes</h2> 
        <div 
         class=" group h-auto mx-auto m-[10px] md:gap-1 md:space-y-3 md:h-screen md:w-[90%] 
                 md:bg-[url('/img/moises1.png')] md:bg-cover md:bg-center lg:columns-3"

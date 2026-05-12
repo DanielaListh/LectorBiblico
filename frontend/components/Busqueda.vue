@@ -29,7 +29,7 @@ const coincidenciaBusqueda = (libro) => {
 
     <section id="busqueda" class="h-auto flex items-center justify-center flex-col gap-4 py-20">
         <div class="flex flex-col justify-center items-center text-center">
-            <h2 class="font-cinzel text-4xl text-[#5b493b] md:text-5xl">ENCUENTRA EL LIBRO</h2>
+            <h2 class="font-cinzel text-3xl text-[#5b493b] md:text-5xl">ENCUENTRA EL LIBRO</h2>
             <h3 class="font-cinzel">DE LA BIBLIA QUE <span class=" text-[#dbaf27]">DESEAS LEER</span> HOY</h3>
         </div>
         
