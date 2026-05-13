@@ -13,9 +13,9 @@
     ];
 </script>
 <template>
-    <section class="w-[260px] h-auto max-h-[220px] text-[#5b493b]">
+    <section class="w-[260px] h-auto max-h-[200px] text-[#5b493b]">
         <div class="h-[3px] bg-[#beb093]"></div>
-        <ul class="h-[200px] font-lexendExa text-[1.3rem] flex flex-col justify-start m-5 overflow-y-auto">
+        <ul class="h-[178px] font-lexendExa text-[1.3rem] flex flex-col justify-start m-5 overflow-y-auto">
             <li v-for="capitulo in capitulos" :key="capitulo.numero" class="">
                 <a href="" class="hover:text-[#d29928]">{{ capitulo.nombre }}</a>
             </li>

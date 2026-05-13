@@ -1,16 +1,33 @@
 <script setup>
-    import { ref } from 'vue'
+import { ref } from 'vue'
 
-    
-    const embedUrl = ref('')
+const url = ref('')
+const embedUrl = ref('https://open.spotify.com/playlist/1GXbpYP2LZYAUigQuD0vuN?si=NMHrKQNeSSWw7pfJNlbLpQ')
 
-    const url = ref('')
-    const generarEmbed = () => {
-        if (!url.value) return
+const generarEmbed = () => {
 
-        const base = url.value.replace("open.spotify.com/", "open.spotify.com/embed/")
-        embedUrl.value = base
+  if (!url.value) return
+
+    try {
+
+        // separa la URL
+        const partes = url.value.split('/')
+
+        // obtiene playlist
+        const tipo = partes[3]
+
+        // obtiene ID sin parámetros
+        const id = partes[4]?.split('?')[0]
+
+        if (!tipo || !id) return
+
+        embedUrl.value =
+        `https://open.spotify.com/embed/${tipo}/${id}`
+
+    } catch(error) {
+        console.log(error)
     }
+}
 </script>
 <template>
     <div class="h-[3px] bg-[#beb093]"></div>
@@ -26,9 +43,11 @@
             v-if="embedUrl" 
             :src="embedUrl"
             width="100%"
-            height="auto" 
+            height="352" 
             frameborder="0"
-            allow="autoplay; clipboard-white; encrypted-media; fullscreen; picture-in-picture"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            allowfullscreen
+            allowtransparency="true"
             loading="lazy"
             class="rounded-xl"
         ></iframe>
