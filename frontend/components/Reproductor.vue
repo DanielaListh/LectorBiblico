@@ -1,9 +1,10 @@
 <script setup>
     import { ref } from 'vue'
 
-    const url = ref('')
-    const embedUrl = ref('')
+    
+    const embedUrl = ref('https://open.spotify.com/playlist/1GXbpYP2LZYAUigQuD0vuN?si=KITvI5OTQWSDzphxv3_4tw')
 
+    const url = ref('')
     const generarEmbed = () => {
         if (!url.value) return
 
@@ -13,7 +14,7 @@
 </script>
 <template>
     <div class="h-[3px] bg-[#beb093]"></div>
-    <div class="flex flex-col gap-4 max-h-[300px] p-[10px]">
+    <div class="flex flex-col p-2 gap-1 max-h-[300px]">
         <input 
         v-model="url"
         @input="generarEmbed"
@@ -25,7 +26,7 @@
             v-if="embedUrl" 
             :src="embedUrl"
             width="100%"
-            height="152" 
+            height="auto" 
             frameborder="0"
             allow="autoplay; clipboard-white; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"

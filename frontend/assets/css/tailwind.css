@@ -22,3 +22,7 @@
   background-color: #5b493b; /* color del scroll */
   border-radius: 4px; /* bordes redondeados */
 }
+
+html {
+  scroll-behavior: smooth;
+}

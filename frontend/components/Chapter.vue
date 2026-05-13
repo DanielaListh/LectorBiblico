@@ -6,13 +6,16 @@
         { numero: 4, nombre: "Capitulo 4" },
         { numero: 5, nombre: "Capitulo 5" },
         { numero: 6, nombre: "Capitulo 6" },
-        { numero: 7, nombre: "Capitulo 7" }
+        { numero: 7, nombre: "Capitulo 7" },
+        { numero: 8, nombre: "Capitulo 8" },
+        { numero: 9, nombre: "Capitulo 9" },
+        { numero: 10, nombre: "Capitulo 10" },
     ];
 </script>
 <template>
-    <section class="w-[260px] h-auto max-h-[300px] text-[#5b493b] bg-[#f5e9d3]">
+    <section class="w-[260px] h-auto max-h-[220px] text-[#5b493b]">
         <div class="h-[3px] bg-[#beb093]"></div>
-        <ul class="font-lexendExa text-[1.3rem] flex flex-col justify-start m-5">
+        <ul class="h-[200px] font-lexendExa text-[1.3rem] flex flex-col justify-start m-5 overflow-y-auto">
             <li v-for="capitulo in capitulos" :key="capitulo.numero" class="">
                 <a href="" class="hover:text-[#d29928]">{{ capitulo.nombre }}</a>
             </li>
