@@ -1,9 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Aboreto&family=Cinzel:wght@400..900&family=Coiny&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Aboreto&family=Cinzel:wght@400..900&family=Coiny&family=Lexend+Exa:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Aboreto&family=Bellefair&family=Cinzel:wght@400..900&family=Coiny&family=Lexend+Exa:wght@100..900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Aboreto&family=Bellefair&family=Cinzel:wght@400..900&family=Coiny&family=Corinthia:wght@400;700&family=Lexend+Exa:wght@100..900&display=swap');
+
 
 .icon-redes{
  @apply text-[#5b493b] hover:text-[#eb9d36] transition-colors duration-300 mx-2 text-xl
