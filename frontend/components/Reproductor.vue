@@ -2,7 +2,7 @@
     import { ref } from 'vue'
 
     
-    const embedUrl = ref('https://open.spotify.com/playlist/1GXbpYP2LZYAUigQuD0vuN?si=KITvI5OTQWSDzphxv3_4tw')
+    const embedUrl = ref('')
 
     const url = ref('')
     const generarEmbed = () => {
