@@ -1,7 +1,11 @@
 <script setup>
+import { RouterLink } from 'vue-router';
+
 // Si luego querés hacerlo dinámico, podemos mover estos textos a props o a un archivo de contenido.
 const title = "SANTA BIBLIA DIGITAL"
 const subtitle = "Una fuente de Bendiciones Digital"
+//para redireccionar a otra pag como /leer debemos por button  
+
 </script>
 
 <template>
@@ -36,12 +40,13 @@ const subtitle = "Una fuente de Bendiciones Digital"
       />
     </div>
 
-    <!-- BOTÓN -->
-    <button
-      class="mt-6 px-8 py-3 bg-[#c5ae80] text-[#F2EAE3] font-semibold rounded-lg shadow-lg hover:bg-[#dbaf27] transition"
-    >
-      Comenzar a leer
-    </button>
+    <RouterLink to="/panel">
+      <button
+        class="mt-6 px-8 py-3 bg-[#c5ae80] text-[#F2EAE3] font-semibold rounded-lg shadow-lg hover:bg-[#dbaf27] transition"
+      >
+        Comenzar a leer
+      </button>
+    </RouterLink>
 
     <!-- SUBTÍTULO -->
     <p class="mt-6 text-[#b0aba0] text-base sm:text-lg font-lexendExa max-w-xl">

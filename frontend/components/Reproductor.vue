@@ -8,29 +8,23 @@ const generarEmbed = () => {
 
   if (!url.value) return
 
-    try {
+  const regex =
+    /https:\/\/open\.spotify\.com\/(playlist|track|album|artist)\/([a-zA-Z0-9]+)/
 
-        // separa la URL
-        const partes = url.value.split('/')
+  const match = url.value.match(regex)
 
-        // obtiene playlist
-        const tipo = partes[3]
+  if (!match) return
 
-        // obtiene ID sin parámetros
-        const id = partes[4]?.split('?')[0]
+  const tipo = match[1]
+  const id = match[2]
 
-        if (!tipo || !id) return
-
-        embedUrl.value =
-        `https://open.spotify.com/embed/${tipo}/${id}`
-
-    } catch(error) {
-        console.log(error)
-    }
+  embedUrl.value =
+    `https://open.spotify.com/embed/${tipo}/${id}`
 }
+
 </script>
 <template>
-    <div class="h-[3px] bg-[#beb093]"></div>
+    
     <div class="flex flex-col p-2 gap-1 max-h-[300px]">
         <input 
         v-model="url"
