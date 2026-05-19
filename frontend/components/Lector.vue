@@ -1,96 +1,105 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { ref, onMounted } from 'vue'
-//import { mapaLibros } from '~/utils/mapaLibros'
+import { ref, onMounted, watch } from 'vue'
+import { mapaLibros } from '~/data/mapaLibros'
+import { computed } from 'vue'
 
-const route = useRoute()
+
+const route = useRoute() 
 const router = useRouter()
 
-const libro = route.params.libro
-const capitulo = route.params.capitulo
+const libro = computed (() => route.params.libro)
 
 //const libroApi = mapaLibros[libroSlug] //
 
-const data = ref(null) // aquí se guardará la información del capítulo cargado
+const data = ref({
+  verses: []
+}) // aquí se guardará la información del capítulo cargado
 
-onMounted(async () => {
+const cargarCapitulo = async () => {
+  
+  const capitulo = computed (() => route.params.capitulo)
+
   try {
-    //const res = await fetch(`https://www.esvapi.com/api/bible/rvr1960/${libro}/${capitulo}`)
-    const res = await fetch(`https://api.midvash.com/v1/rvr1960/${libro}/${capitulo}`)
-    data.value = await res.json()
-  } catch (e) {
-    console.error("Error cargando capítulo:", e)
+    const res = await fetch(`https://api.midvash.com/v1/rvr1960/${libro.value}/${capitulo.value}`)
+    const json = await res.json()
+    data.value = json.data 
+    console.log(data.value)
+  } catch (e){
+    console.error("Error al cargar el capitulo: ",)
   }
-})
+}
+
+onMounted(cargarCapitulo)
+
+watch(
+  () => route.fullPath,
+  () => { cargarCapitulo() }
+)
 
 const irACapitulo = (num) => {
-  router.push(`/leer/${libro}/${num}`)
+  router.push(`/panel/libros/${libro.value}/${num}`)
 }
+
+
 
 </script>
 
 <template>
-  <section class="w-full min-h-screen bg-[#f8f1e4] text-[#5b493b] px-10 py-12">
+  <section class="w-full h-screen text-[#5b493b] px-10 py-12 overflow-y-auto">
 
     <div>
 
       <!-- TÍTULO -->
-      <h1 
-        v-if="data.book"
-        class="text-5xl font-bold font-lexendExa mb-2 capitalize"
+    <h1
+      class="text-5xl font-bold font-lexendExa mb-2 capitalize"
+    >
+      {{ mapaLibros[libro]}}
+    </h1>
+
+    <!-- SUBTÍTULO -->
+    <h2
+      v-if="data?.chapter"
+      class="text-2xl font-semibold text-[#8a775f] mb-8"
+    >
+      Capítulo {{ data.chapter }}
+    </h2>
+
+    <!-- CONTENIDO -->
+    <div class="flex flex-col gap-6 leading-relaxed text-lg max-w-3xl">
+
+      <div
+        v-for="(vers, index) in data?.verses || []"
+        :key="index"
+        class="flex gap-3"
       >
-        {{ data.book }}
-      </h1>
-      <h1 v-else>
-        Parece que no tienes acceso a internet
-      </h1>
+        <span class="font-bold text-[#d2a85a]">
+          {{ index + 1 }}
+        </span>
 
-      <!-- SUBTÍTULO -->
-      <h2 class="text-2xl font-semibold text-[#8a775f] mb-8">
-        Capítulo {{ data.chapter }}
-      </h2>
-
-      <!-- CONTENIDO -->
-      <div class="flex flex-col gap-6 leading-relaxed text-lg max-w-3xl">
-
-        <div
-          v-for="vers in data.verses"
-          :key="vers.number"
-          class="flex gap-3"
-        >
-          <span class="font-bold text-[#d2a85a]">
-            {{ vers.number }}
-          </span>
-
-          <p class="text-[#5b493b]">
-            {{ vers.text }}
-          </p>
-        </div>
-
+        <p class="text-[#5b493b]">
+          {{ vers }}
+        </p>
       </div>
 
-      <!-- NAVEGACIÓN -->
-      <div class="flex justify-between mt-12 max-w-3xl">
+    </div>
 
-        <button
-          v-if="data.previous"
-          @click="irACapitulo(data.previous)"
-          class="px-6 py-3 rounded-xl border border-[#dcc16b] text-[#5b493b] hover:bg-[#dcc16b]/20 transition"
-        >
-          ← Capítulo anterior
-        </button>
+    <!-- NAVEGACIÓN -->
+    <div class="flex justify-between mt-12 max-w-3xl">
 
-        <div></div>
+      <button
+    
+      >
+        ← Capítulo anterior
+      </button>
 
-        <button
-          v-if="data.next"
-          @click="irACapitulo(data.next)"
-          class="px-6 py-3 rounded-xl border border-[#dcc16b] text-[#5b493b] hover:bg-[#dcc16b]/20 transition"
-        >
-          Siguiente capítulo →
-        </button>
+      <button
+        
+      >
+        Siguiente capítulo →
+      </button>
 
-      </div>
+    </div>
 
     </div>
 

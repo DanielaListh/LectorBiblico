@@ -25,6 +25,7 @@ import NavDesk from '~/components/NavDesk.vue'
     <!-- CONTENIDO DINÁMICO -->
     <main class="w-[80%] flex flex-col">
       <NavDesk />
+      <div class="w-full h-[3px] bg-[#beb093]"></div>
       <slot />
     </main>
 

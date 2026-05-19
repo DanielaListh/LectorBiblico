@@ -70,8 +70,6 @@
     </div>
   </section>
 
-  <div class="w-full h-[3px] bg-[#beb093]"></div>
-
   <!-- /leer → mostrar Libros -->
   <Libros
     v-if="esRutaLeer"
