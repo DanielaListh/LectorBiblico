@@ -40,6 +40,14 @@
 
 <template>
   <section class="flex py-[20px] px-[30px]">
+    <div>
+      <button
+        @click="router.push('/panel')"
+        class="font-lexendExa text-center text-xl text-[#5b493b] hover:text-[#d29928]"
+      >
+      Inicio
+      </button>
+    </div>
     <div class=" relative flex gap-2 mx-auto items-center">
       <input
         type="text"

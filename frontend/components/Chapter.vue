@@ -9,6 +9,8 @@ const router = useRouter()
 // REACTIVO
 const libro = computed(() => route.params.libro)
 
+const capituloActual = computed (() => Number(route.params.capitulo))
+
 const totalCapitulos = computed(() => {
   return capitulosPorLibro[libro.value] || 0
 })
@@ -34,7 +36,8 @@ const irCapitulo = (num) => {
         v-for="cap in capitulos"
         :key="cap"
         @click="irCapitulo(cap)"
-        class="text-left px-4 py-2 rounded-lg hover:bg-[#dcc16b]/20 transition"
+        class="text-left px-4 font-lexendExa rounded-lg transition duration-300"
+        :class="cap === capituloActual ? 'bg-[#924e0a] text-[#faf6f3] font-bold' : 'hover:text-[#d4720f]/80' "
       >
         Capítulo {{ cap }}
       </button>
