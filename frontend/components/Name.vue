@@ -1,16 +1,18 @@
 <script setup>
+
 import { RouterLink } from 'vue-router';
+import logoLight from '~/public/img/logo-light.png'
+import logoDark from '~/public/img/logo-dark.png'
+
+const isDark = useColorMode().value === 'dark'
 
 </script>
 
 <template>
-    <section class="h-[70px]">
+    <section class="flex justify-center items-center ">
         <RouterLink to="/">
-            <button
-                class=" py-[20px] h-auto font-bellefair text-3xl text-[#dbaf27] flex 
-                justify-center items-center text-center"
-            >
-                LECTOR BÍBLICO
+            <button>
+                <img :src="isDark ? logoDark : logoLight" alt="logo" class="h-[70px]">
             </button>
         </RouterLink>
         

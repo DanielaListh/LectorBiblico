@@ -36,3 +36,46 @@ html {
 .fade-leave-to {
   opacity: 0;
 }
+
+:root {
+  --bg-1: #faf6f3;
+  --bg-2: #beb093;
+  --bg-3: #aa4b22;
+  --text-1: #5b493b;
+  --text-2: #c05209;
+  --text-3: #faf6f3;
+  --border: #5b493b;
+  --hover-text: #e6b524;
+  --hover-border: #dbaf27;
+  --placeholder: #86420e;
+  --bg-image: url('/img/fondo-light.png');
+  --logo-primary: #5b493b;
+  --logo-secondary: #e6b524;
+}
+
+.dark {
+  --bg-1: #2b1709;
+  --bg-2: #2f221b;
+  --bg-3: #8a3917;
+  --text-1: #c5a48f;
+  --text-2: #87430b;
+  --text-3: #2b1709;
+  --border: #4c250c;
+  --hover-text: #ba5326;
+  --hover-border: #882e07;
+  --placeholder: #85634a;
+  --bg-image: url('/img/fondo-dark.png');
+  --logo-primary: #b69479;
+  --logo-secondary: #ba5326;
+}
+
+.logo-primary{fill: var(--logo-primary);}
+.logo-secondary{fill: var(--logo-secondary);}
+
+.theme-icon{
+  content:url('../../public/img/dark-icon.png')
+}
+
+.dark .theme-icon{
+  content:url('../../public/img/light-icon.png')
+}

@@ -61,17 +61,17 @@ const irACapitulo = async (num) => {
       
 
         <!-- Contenedor de Nombre de Libro, Capitulo y botones de navegacion entre capitulos-->
-        <div class="flex justify-between items-center sticky top-0 bg-[url('/img/fondo1.png')] px-10 py-6 ">
+        <div class="flex justify-between items-center bg-main sticky top-0 px-10 py-6 ">
           <div>
             <h1
-              class="text-5xl font-bold font-lexendExa text-[#5b493b]"
+              class="text-5xl font-bold font-lexendExa text-text1"
             >
               {{ mapaLibros[libro]}}
             </h1>
 
             <h2
               v-if="data?.chapter"
-              class="font-lexendExa text-2xl font-semibold text-[#8a775f]"
+              class="font-lexendExa text-2xl font-semibold text-text1"
             >
               Capítulo {{ data.chapter }}
             </h2>
@@ -102,11 +102,11 @@ const irACapitulo = async (num) => {
             :key="index"
             class="flex gap-3"
           >
-            <span class="font-bold font-lexendExa text-[#d2a85a]">
+            <span class="font-bold font-lexendExa text-text2">
               {{ index + 1 }}
             </span>
 
-            <p class="text-[#5b493b] font-lexendExa">
+            <p class="text-text1 font-lexendExa">
               {{ vers }}
             </p>
           </div>
