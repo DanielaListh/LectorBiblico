@@ -85,7 +85,7 @@ const stopResize = () => {
         @input="generarEmbed"
         type="text"
         placeholder="Url de Spotify"
-        class="border-2 p-1 rounded-lg border-border bg-transparent focus:outline-none text-center text-text1 placeholder-placeholder"
+        class="border-2 p-1 rounded-lg border-border1 bg-transparent focus:outline-none text-center text-text1 placeholder-placeholder"
       >
 
       

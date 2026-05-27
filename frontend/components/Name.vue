@@ -1,10 +1,6 @@
 <script setup>
 
 import { RouterLink } from 'vue-router';
-import logoLight from '~/public/img/logo-light.png'
-import logoDark from '~/public/img/logo-dark.png'
-
-const isDark = useColorMode().value === 'dark'
 
 </script>
 
@@ -12,7 +8,7 @@ const isDark = useColorMode().value === 'dark'
     <section class="flex justify-center items-center ">
         <RouterLink to="/">
             <button>
-                <img :src="isDark ? logoDark : logoLight" alt="logo" class="h-[70px]">
+                <span src="/img/logo-dark.png" class="logo h-[70px] block"></span>
             </button>
         </RouterLink>
         

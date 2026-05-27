@@ -21,9 +21,9 @@ const imagenesPorLibro = {
       :key="slug"
       @click="$emit('select', slug)"
       class="relative group overflow-hidden w-[230px] h-[150px] rounded-[28px]
-             border border-[#dcc16b]/40 bg-transparent transition-all duration-500
+             border border-border2 bg-transparent transition-all duration-500
              hover:w-[230px] hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(220,193,107,0.3)]
-             hover:border-[#dcc16b]"
+             hover:border-hoverBorder2"
     >
       <img
         v-if="imagenesPorLibro[slug]"
@@ -39,8 +39,8 @@ const imagenesPorLibro = {
                   bg-[#ffdc68]/20"></div>
 
       <div class="relative z-10 h-full flex items-end justify-start p-5">
-        <p class="font-lexendExa text-xl text-[#5b493b] transition-all duration-500
-                  group-hover:text-[#f8ead0] group-hover:drop-shadow-[0_0_8px_rgba(255,220,120,0.6)]">
+        <p class="font-lexendExa text-xl text-text1 transition-all duration-500
+                  group-hover:text-text3 group-hover:drop-shadow-[0_0_8px_rgba(255,220,120,0.6)]">
           {{ mapaLibros[slug] }}
         </p>
       </div>

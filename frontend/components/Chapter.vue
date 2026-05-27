@@ -45,7 +45,7 @@ const irCapitulo = (num) => {
 
     <div v-else class="flex flex-col justify-center items-center mx-auto p-1">
       <h2 class="font-lexendExa text-center text-text1">
-        Al seleccionar un libro podrás ver un listado de los capítulos
+        Selecciona un libro para ver sus capítulos
       </h2>
       <img src="/img/heart.png" alt="corazon color beige" class="mt-2">
     </div>

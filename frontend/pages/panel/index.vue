@@ -1,5 +1,4 @@
 <script setup>
-import { libros } from '~/data/libros'
 import { useRouter } from 'vue-router'; // useRouter es para navegar programáticamente entre rutas
 import Libros from '~/components/Libros.vue'
 

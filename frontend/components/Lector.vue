@@ -14,7 +14,7 @@ const capitulo = computed(() => Number(route.params.capitulo))
 const totalCapitulos = computed(() => capitulosPorLibro[libro.value])
 const previousChapter = computed(() => { return capitulo.value > 1 ? capitulo.value - 1 : null }) // si el capitulo es mayor a uno entonces el valor del capitulo es - 1 sino es nulo
 const nextChapter = computed(() => { return capitulo.value < totalCapitulos.value ? capitulo.value + 1 : null })
-
+const cargando = ref(true)
 
 
 const data = ref({
@@ -22,6 +22,7 @@ const data = ref({
 }) // aquí se guardará la información del capítulo cargado
 
 const cargarCapitulo = async () => {
+  cargando.value = true
 
   try {
     const res = await fetch(`https://api.midvash.com/v1/rvr1960/${libro.value}/${capitulo.value}`)
@@ -31,6 +32,7 @@ const cargarCapitulo = async () => {
   } catch (e){
     console.error("Error al cargar el capitulo: ",)
   }
+  cargando.value = false
 }
 
 onMounted(cargarCapitulo)
@@ -71,7 +73,7 @@ const irACapitulo = async (num) => {
 
             <h2
               v-if="data?.chapter"
-              class="font-lexendExa text-2xl font-semibold text-text1"
+              class="font-lexendExa text-2xl font-semibold text-text1 mt-4"
             >
               Capítulo {{ data.chapter }}
             </h2>
@@ -93,10 +95,25 @@ const irACapitulo = async (num) => {
           </div>
 
         </div>
+
+        <!-- loader -->
+        <div v-if="cargando" class="px-10 animate-pulse">
+          <div class="h-6 w-1/6 bg-bg3 rounded mb-12"></div>
+          <div class="h-6 w-4/6 bg-bg4 rounded mb-4"></div>
+          <div class="h-6 w-3/6 bg-bg4 rounded mb-4"></div>
+          <div class="h-6 w-5/6 bg-bg4 rounded mb-4"></div>
+          <div class="h-6 w-3/6 bg-bg4 rounded mb-4"></div>
+          <div class="h-6 w-4/6 bg-bg4 rounded mb-4"></div>
+          <div class="h-6 w-3/6 bg-bg4 rounded mb-4"></div>
+          <div class="h-6 w-5/6 bg-bg4 rounded mb-4"></div>
+          <div class="h-6 w-3/6 bg-bg4 rounded mb-4"></div>
+        </div>
         
         <!-- contenedor de versiculos -->
-        <div class="flex flex-col gap-2 leading-relaxed text-lg max-w-4xl px-10 pt-3 pb-12">
-
+        <div
+          v-if="!cargando" 
+          class="flex flex-col gap-2 leading-relaxed text-lg max-w-4xl px-10 pt-3 pb-12"
+        >
           <div
             v-for="(vers, index) in data?.verses || []"
             :key="index"
@@ -110,7 +127,6 @@ const irACapitulo = async (num) => {
               {{ vers }}
             </p>
           </div>
-
         </div>
 
 
