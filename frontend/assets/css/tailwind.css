@@ -6,7 +6,7 @@
 
 
 .icon-redes {
- @apply text-[#5b493b] hover:text-[#eb9d36] transition-colors duration-300 mx-2 text-xl
+ @apply text-text1 hover:text-hoverText transition-colors duration-300 mx-2 text-xl
 }
 
 /*scroll vertical*/
@@ -38,42 +38,61 @@ html {
 }
 
 :root {
-  --bg-1: #faf6f3;
-  --bg-2: #beb093;
-  --bg-3: #aa4b22;
-  --bg-4: #cebfa0;
-  --text-1: #5b493b;
-  --text-2: #aa4b22;
-  --text-3: #faf6f3;
-  --border-1: #5b493b;
-  --border-2: #dfc984;
-  --hover-text: #e6b524;
-  --hover-border-1: #dbaf27;
-  --hovver-border-2: #b19950;
-  --placeholder: #86420e;
+  --bg-1: #b45a2b;      /* fondo principal */
+  --bg-2: #e8d9c7;      /* botones beige cálido */
+  --bg-3: #fcebd5;      /* fondos secundarios */
+  --bg-4: #d0c0ad; 
+
+  --text-1: #5b493b;    /* marrón suave */
+  --text-2: #b45a2b;    /* terracota suave */
+  --text-3: #f8d8c1;    /* texto secundario cálido */
+  --text-4: #f9efd3;
+
+  --border-1: #8c6f5a;  /* borde principal */
+  --border-2: #d8b48a;  /* borde suave */
+
+  --hover-text: #c97a3d;        /* acento cálido */
+  --hover-border-1: #c97a3d;
+  --hover-border-2: #b68a55;
+  --hover-bg: #f3d6a4;
+
+  --shadow: 0 2px 6px rgba(203, 175, 126, 0.543);
+  --placeholder: #a06a45;       /* cálido, suave */
+
   --bg-image: url('/img/fondo-light.png');
-  --scroll-track:#f5e9dc;
-  --scroll-thumb: #d8c49d;
+
+  --scroll-track: #f3e7db;
+  --scroll-thumb: #d2b89c;
 }
 
 .dark {
-  --bg-1: #2b1709;
-  --bg-2: #3b2b23;
-  --bg-3: #b83f0b;
-  --bg-4: #3b2b23;
-  --text-1: #c5a48f;
-  --text-2: #b83f0b;
-  --text-3: #2b1709;
-  --border-1: #6c5a4f;
-  --border-2: #564306;
-  --hover-text: #f4ae75;
-  --hover-border-1: #882e07;
-  --hovver-border-2: #68390c;
-  --placeholder: #926947;
+  --bg-1: #5b493b;      /* fondo principal */
+  --bg-2: #3a2416;      /* botones chocolate suave */
+  --bg-3: #84411a;      /* fondos secundarios cálidos */
+  --bg-4: #8a5638;     /* líneas divisorias terracota oscura */
+
+  --text-1: #f1d4c0;    /* texto principal cálido */
+  --text-2: #d27a4a;    /* acento terracota */
+  --text-3: #b99b85;    /* texto secundario */
+  --text-4: #fed576;
+
+  --border-1: #7a5a47;  /* borde principal */
+  --border-2: #5a3a28;  /* borde suave */
+
+  --hover-text: #e89b6b;        /* acento cálido */
+  --hover-border-1: #e89b6b;
+  --hover-border-2: #8a5638;
+  --hover-bg: #882206;
+
+  --shadow: 0 2px 6px rgb(247, 116, 9);
+  --placeholder: #b48a6a;
+
   --bg-image: url('/img/fondo-dark.png');
-  --scroll-track:#32251d;
-  --scroll-thumb: #463a30;
+
+  --scroll-track: #2f1e14;
+  --scroll-thumb: #4a3326;
 }
+
 
 
 

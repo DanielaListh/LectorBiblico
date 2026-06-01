@@ -1,10 +1,13 @@
 <script setup>
 import { RouterLink } from 'vue-router';
+import { useTheme } from '~/composables/useTheme'
 
 // Si luego querés hacerlo dinámico, podemos mover estos textos a props o a un archivo de contenido.
 const title = "SANTA BIBLIA DIGITAL"
 const subtitle = "Una fuente de Bendiciones Digital"
-//para redireccionar a otra pag como /leer debemos por button  
+//para redireccionar a otra pag como /leer debemos por button
+
+const { toggleTheme } = useTheme() 
 
 </script>
 
@@ -13,26 +16,40 @@ const subtitle = "Una fuente de Bendiciones Digital"
   <section id="home" class="w-full min-h-screen flex flex-col items-center">
 
   <!-- NAVBAR -->
-  <nav class="w-[85%] font-lexendExa font-semibold flex flex-wrap justify-center md:justify-end gap-2 md:gap-8 py-6 text-[#5b493b]">
-    <a href="#home" class="hover:text-[#dbaf27] transition">Home</a>
-    <a href="#busqueda" class="hover:text-[#dbaf27] transition">Búsqueda</a>
-    <a href="#faq" class="hover:text-[#dbaf27] transition">FAQs</a>
-    <a href="#audiencia" class="hover:text-[#dbaf27] transition">Audiencia</a>
-    <a href="#donar" class="hover:text-[#dbaf27] transition">Donar</a>
-  </nav>
+  <nav class="w-[85%] font-lexendExa font-semibold flex flex-wrap 
+    justify-center md:justify-end gap-2 md:gap-8 py-6
+    sticky z-100 "
+  >
 
-  <div class="w-full h-[3px] bg-[#ccc0a9]"></div>
+  <button>
+    <img src="" alt="">
+  </button>
+
+    <a href="#home" class="text-text1 hover:text-hoverText transition">Home</a>
+    <a href="#busqueda" class="text-text1 hover:text-hoverText transition">Búsqueda</a>
+    <a href="#faq" class="text-text1 hover:text-hoverText transition">FAQs</a>
+    <a href="#audiencia" class="text-text1 hover:text-hoverText transition">Audiencia</a>
+    <a href="#donar" class="text-text1 hover:text-hoverText transition">Donar</a>
+
+    <button @click="toggleTheme">
+      <img class="theme-icon w-8 " alt="tema" />
+    </button>
+
+  </nav> 
+
+   
+
+  <div class="w-full h-[3px] bg-bg2"></div>
 
   <!-- CONTENIDO CENTRAL -->
-  <div class="flex flex-col items-center text-center mt-10 px-4">
+  <div class="flex flex-col items-center text-center py-4 px-4">
 
-    <!-- TÍTULO -->
-    <h1 class="mt-10 mb-4 font-cinzel text-4xl md:text-5xl text-[#dbaf27] tracking-tight drop-shadow-sm">
+    <h1 class=" font-cinzel text-4xl md:text-5xl text-text1 tracking-tight drop-shadow-sm hover:text-hoverText transition-all duration-700 hover:drop-shadow-[0_0_6px_#efcd9f]">
       {{ title }}
     </h1>
 
-    <!-- IMAGEN -->
-    <div class="max-w-xs sm:max-w-sm md:max-w-lg mt-4">
+    <!-- imagen -->
+    <div class="max-w-xs sm:max-w-sm md:max-w-lg">
       <img 
         src="/img/JesusCristo.png" 
         alt="Ilustración de JesusCristo buscando la oveja perdida"
@@ -42,14 +59,14 @@ const subtitle = "Una fuente de Bendiciones Digital"
 
     <RouterLink to="/panel">
       <button
-        class="mt-6 px-8 py-3 bg-[#c5ae80] text-[#F2EAE3] font-semibold rounded-lg shadow-lg hover:bg-[#dbaf27] transition"
+        class="px-8 py-2 bg-bg4 text-text1 font-semibold rounded-lg shadow-lg hover:bg-bg3 transition-all duration-700"
       >
         Comenzar a leer
       </button>
     </RouterLink>
 
     <!-- SUBTÍTULO -->
-    <p class="mt-6 text-[#b0aba0] text-base sm:text-lg font-lexendExa max-w-xl">
+    <p class="mt-6 text-text2 text-base sm:text-lg font-lexendExa max-w-xl">
       {{ subtitle }}
     </p>
   </div>

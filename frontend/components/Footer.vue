@@ -20,19 +20,21 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
             </div>
 
             <!-- LINKS -->
-            <div class="flex flex-wrap justify-center md:justify-end m-[10px] font-lexendExa text-[#5b493b] gap-3 font-semibold">
-                <a href="#home" class="hover:text-[#eb9d36] transition-colors duration-300">Home</a>
-                <a href="#busqueda" class="hover:text-[#eb9d36] transition-colors duration-300">Buscar</a>
-                <a href="#faq" class="hover:text-[#eb9d36] transition-colors duration-300">FAQ</a>
-                <a href="#audiencia" class="hover:text-[#eb9d36] transition-colors duration-300">Audiencia</a>
-                <a href="#donar" class="hover:text-[#eb9d36] transition-colors duration-300">Donar</a>
+            <div class="flex flex-wrap justify-center md:justify-end m-[10px] font-lexendExa text-text1 gap-3 font-semibold">
+                <a href="#home" class="hover:text-hoverText transition-colors duration-300">Home</a>
+                <a href="#busqueda" class="hover:text-hoverText transition-colors duration-300">Buscar</a>
+                <a href="#faq" class="hover:text-hoverText transition-colors duration-300">FAQ</a>
+                <a href="#audiencia" class="hover:text-hoverText transition-colors duration-300">Audiencia</a>
+                <a href="#donar" class="hover:text-hoverText transition-colors duration-300">Donar</a>
             </div>
 
         </div>
 
         <!-- TEXTO FINAL -->
         <div class="flex justify-center items-center mt-4">
-            <p class="font-cinzel text-[#836e53] text-center">🧡 HECHO POR DANIELA BERRIOS 🧡</p>
+            <img src="/img/heart.png" alt="corazon" class="w-4 mr-2">
+            <p class="font-cinzel text-text1 text-center">HECHO POR DANIELA BERRIOS</p>
+            <img src="/img/heart.png" alt="corazon" class="w-4 ml-2">
         </div>
         <div class="h-[30px]"></div>
     </footer>

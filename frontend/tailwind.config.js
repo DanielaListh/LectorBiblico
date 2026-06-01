@@ -32,12 +32,15 @@ export default {
         text1: "var(--text-1)",
         text2: "var(--text-2)",
         text3: "var(--text-3)",
+        text4: "var(--text-4)",
         border1: "var(--border-1)",
         border2: "var(--border-2)",
         hoverText: "var(--hover-text)",
+        boxShadow: "var(--shadow)",
         placeholder: "var(--placeholder)",
         hoverBorder1: "var(--hover-border-1)",
-        hoverBoder2: "var(--hover-border-2)"
+        hoverBorder2: "var(--hover-border-2)",
+        hoverBg: "var(--hover-bg)"
       }
     }
   },

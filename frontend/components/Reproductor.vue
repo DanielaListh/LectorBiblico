@@ -25,7 +25,7 @@ onMounted(() => {
 const generarEmbed = () => {
   if (!url.value) return
 
-  const regex = /https:\/\/open\.spotify\.com\/(playlist|track|album|artist)\/([a-zA-Z0-9]+)/
+  const regex = /https:\/\/open\.spotify\.com\/(playlist|track|album|artist)\/([a-zA-Z0-9]+)(\?.*)?/
 
   const match = url.value.match(regex)
 
@@ -35,6 +35,8 @@ const generarEmbed = () => {
   const id = match[2]
 
   embedUrl.value = `https://open.spotify.com/embed/${tipo}/${id}`
+
+  localStorage.setItem('spotifyUrl', url.value) //guardar url en localStorage
 }
 
 //resize
@@ -76,7 +78,7 @@ const stopResize = () => {
 <template>
 
     <div 
-      class="relative flex flex-col gap-2 p-2"
+      class=" relative flex flex-col gap-2 p-2"
       :style="embedUrl ? { height: height + 'px' } : {}"
     >
 
@@ -84,7 +86,7 @@ const stopResize = () => {
         v-model="url"
         @input="generarEmbed"
         type="text"
-        placeholder="Url de Spotify"
+        placeholder="Url de playlist Spotify aquí"
         class="border-2 p-1 rounded-lg border-border1 bg-transparent focus:outline-none text-center text-text1 placeholder-placeholder"
       >
 
@@ -104,7 +106,7 @@ const stopResize = () => {
           frameborder="0"
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           loading="lazy"
-          class="rounded-xl pointer-events-none"
+          class="rounded-xl"
         ></iframe>
 
       </div>
