@@ -58,30 +58,32 @@ const irACapitulo = async (num) => {
 
 <template>
   <Transition name="fade">
-    <section class="w-full h-screen overflow-y-auto">
+    <section class="md:w-full md:h-screen md:overflow-y-auto">
 
       
 
         <!-- Contenedor de Nombre de Libro, Capitulo y botones de navegacion entre capitulos-->
-        <div class="flex justify-between items-center bg-main sticky top-0 px-10 py-6 ">
+        <div class="
+          items-center px-5 py-4
+          md:flex md:justify-between md:sticky md:top-0 md:px-10 md:py-6 md:bg-main ">
           <div>
             <h1
-              class="text-5xl font-bold font-lexendExa text-text1"
+              class="text-3xl font-bold font-lexendExa text-text1 md:text-5xl"
             >
               {{ mapaLibros[libro]}}
             </h1>
 
             <h2
               v-if="data?.chapter"
-              class="font-lexendExa text-2xl font-semibold text-text1 mt-4"
+              class="font-lexendExa  text-1xl font-semibold text-text1 md:mt-4 md:text-2xl"
             >
               Capítulo {{ data.chapter }}
             </h2>
           </div>
           
 
-          <!-- NAVEGACIÓN -->
-          <div class="flex justify-end gap-5 ">
+          <!-- permitir navegacion mobile con el tactil -->
+          <div class=" hidden md:flex md:justify-end md:gap-5 ">
             <button 
               v-if="previousChapter"
               @click="irACapitulo(previousChapter)">
@@ -112,7 +114,7 @@ const irACapitulo = async (num) => {
         <!-- contenedor de versiculos -->
         <div
           v-if="!cargando" 
-          class="flex flex-col gap-2 leading-relaxed text-lg max-w-4xl px-10 pt-3 pb-12"
+          class="pl-5 flex flex-col gap-2 leading-relaxed text-lg md:max-w-4xl md:px-10 md:pt-3 md:pb-12"
         >
           <div
             v-for="(vers, index) in data?.verses || []"

@@ -14,37 +14,79 @@ const imagenesPorLibro = {
 </script>
 
 <template>
-  <section class="w-full h-screen flex flex-wrap justify-center gap-4 overflow-y-auto p-3">
+  <section
+    class="p-3 h-auto md:h-screen md:flex md:flex-wrap md:justify-center md:gap-4 md:overflow-y-auto"
+  >
 
     <button
       v-for="slug in Object.keys(mapaLibros)"
       :key="slug"
       @click="$emit('select', slug)"
-      class="relative group overflow-hidden w-[230px] h-[150px] rounded-[28px]
-             border border-border2 bg-transparent transition-all duration-500
-             hover:w-[230px] hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(220,193,107,0.3)]
-             hover:border-hoverBorder2"
+
+      class="
+        block w-full text-center border-2 border-border2 text-text1 py-2 px-3 rounded-lg my-2
+        font-lexendExa text-sm hover:bg-bg1 hover:border-none
+
+        md:relative md:group md:overflow-hidden
+        md:w-[230px] md:h-[150px] md:rounded-[25px]
+        md:border md:border-border2 md:bg-transparent
+        md:transition-all md:duration-500
+        md:hover:-translate-y-1
+        md:hover:shadow-[0_0_25px_rgba(220,193,107,0.3)]
+        md:hover:border-hoverBorder2
+      "
     >
+
+      <!-- Imagen SOLO en desktop -->
       <img
         v-if="imagenesPorLibro[slug]"
         :src="imagenesPorLibro[slug]"
-        class="absolute inset-0 w-full h-full object-cover opacity-0 scale-110
-               transition-all duration-700 group-hover:opacity-100 group-hover:scale-100"
+        class="
+          hidden md:block
+          absolute inset-0 w-full h-full object-cover opacity-0 scale-110
+          transition-all duration-700 group-hover:opacity-100 group-hover:scale-100
+        "
       >
 
-      <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent
-                  opacity-0 transition-all duration-700 group-hover:opacity-100"></div>
+      <!-- Overlays SOLO en desktop -->
+      <div
+        class="hidden md:block absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent
+               opacity-0 transition-all duration-700 group-hover:opacity-100"
+      ></div>
 
-      <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500
-                  bg-[#ffdc68]/20"></div>
+      <div
+        class="hidden md:block absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500
+               bg-[#ffdc68]/20"
+      ></div>
 
-      <div class="relative z-10 h-full flex items-end justify-start p-5">
-        <p class="font-lexendExa text-xl text-text1 transition-all duration-500
-                  group-hover:text-text3 group-hover:drop-shadow-[0_0_8px_rgba(255,220,120,0.6)]">
+      <!-- Texto -->
+      <div
+        class="
+          /* mobile */
+          relative z-10 text-center md:text-left
+
+          /* desktop */
+          md:absolute md:bottom-0 md:left-0 md:p-5 md:flex md:items-end
+        "
+      >
+        <p
+          class="
+            font-lexendExa text-text1
+            
+            text-sm hover:text-text4
+
+            /* desktop */
+            md:text-xl md:transition-all md:duration-500
+            md:group-hover:text-text3
+            md:group-hover:drop-shadow-[0_0_8px_rgba(255,220,120,0.6)]
+          "
+        >
           {{ mapaLibros[slug] }}
         </p>
       </div>
+
     </button>
 
   </section>
 </template>
+

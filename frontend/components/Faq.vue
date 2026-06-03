@@ -15,13 +15,13 @@ const preguntas = [
         id="faq" 
         class="h-auto mx-auto flex flex-col items-center py-20"
     >
-       <h2 class="font-cinzel text-text1 m-[10px] text-4xl md:text-5xl">Preguntas Frecuentes</h2> 
+       <h2 class="font-cinzel text-center text-text1 m-[10px] text-4xl md:text-5xl">Preguntas Frecuentes</h2> 
        <div 
         class=" group h-auto mx-auto m-[10px] md:gap-1 md:space-y-3 md:h-screen md:w-[90%] 
                 md:bg-[url('/img/moises1.png')] md:bg-cover md:bg-center lg:columns-3"
        >
             <div v-for="(pregunta, index) in preguntas" :key="index"
-                class=" flex flex-col w-[350px] bg-bg3 text-text1 md:bg-bg3 border m-[15px]
+                class=" flex flex-col bg-bg3 text-text1 md:bg-bg3 border m-[20px]
                     border-border2 md:text-text1 rounded-2xl shadow-md
                     hover:border-hoverBorder1 transition-all duration-500 ease-out p-2
                     transform hover:translate-y-2 hover:shadow-2xl hover:shadow-[#754a1a]

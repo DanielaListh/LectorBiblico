@@ -1,13 +1,11 @@
 <script setup>
 import { RouterLink } from 'vue-router';
-import { useTheme } from '~/composables/useTheme'
 
 // Si luego querés hacerlo dinámico, podemos mover estos textos a props o a un archivo de contenido.
 const title = "SANTA BIBLIA DIGITAL"
 const subtitle = "Una fuente de Bendiciones Digital"
 //para redireccionar a otra pag como /leer debemos por button
-
-const { toggleTheme } = useTheme() 
+ 
 
 </script>
 
@@ -15,33 +13,6 @@ const { toggleTheme } = useTheme()
   
   <section id="home" class="w-full min-h-screen flex flex-col items-center">
 
-  <!-- NAVBAR -->
-  <nav class="w-[85%] font-lexendExa font-semibold flex flex-wrap 
-    justify-center md:justify-end gap-2 md:gap-8 py-6
-    sticky z-100 "
-  >
-
-  <button>
-    <img src="" alt="">
-  </button>
-
-    <a href="#home" class="text-text1 hover:text-hoverText transition">Home</a>
-    <a href="#busqueda" class="text-text1 hover:text-hoverText transition">Búsqueda</a>
-    <a href="#faq" class="text-text1 hover:text-hoverText transition">FAQs</a>
-    <a href="#audiencia" class="text-text1 hover:text-hoverText transition">Audiencia</a>
-    <a href="#donar" class="text-text1 hover:text-hoverText transition">Donar</a>
-
-    <button @click="toggleTheme">
-      <img class="theme-icon w-8 " alt="tema" />
-    </button>
-
-  </nav> 
-
-   
-
-  <div class="w-full h-[3px] bg-bg2"></div>
-
-  <!-- CONTENIDO CENTRAL -->
   <div class="flex flex-col items-center text-center py-4 px-4">
 
     <h1 class=" font-cinzel text-4xl md:text-5xl text-text1 tracking-tight drop-shadow-sm hover:text-hoverText transition-all duration-700 hover:drop-shadow-[0_0_6px_#efcd9f]">
