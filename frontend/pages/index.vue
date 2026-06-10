@@ -9,9 +9,9 @@ const { toggleTheme } = useTheme()
 
   <div class="relative bg-main bg-cover bg-center">
 
-    <nav class="font-lexendExa font-semibold flex flex-wrap px-[100px]
-      justify-between items-center py-3 top-0
-      sticky z-[100] bg-main backdrop-blur-lg 
+    <nav class="font-lexendExa font-semibold flex justify-center items-center py-3 
+      md:flex-wrap md:px-[100px] md:justify-between 
+      top-0 sticky z-[100] bg-main backdrop-blur-lg 
       border-border2 border-[3px] ">
 
       <div>
@@ -20,18 +20,9 @@ const { toggleTheme } = useTheme()
             <span src="img/logo-dark.png" class="logo h-[50px]"></span>
           </button>
         </RouterLink>
-        <button>
-          <a src=""></a>
-        </button>
       </div>
 
-      <div>
-        <button>
-          <a src="" alt=""></a>
-        </button>
-      </div>
-
-      <div class="hidden gap-4 md:block">
+      <div class="hidden gap-4 md:flex justify-between">
         <a href="#home" class="text-text1 hover:text-hoverText transition">Home</a>
         <a href="#busqueda" class="text-text1 hover:text-hoverText transition">Búsqueda</a>
         <a href="#faq" class="text-text1 hover:text-hoverText transition">FAQs</a>

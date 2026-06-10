@@ -12,20 +12,30 @@ const mostrarChapter = ref(false)
 <template>
   <div class="md:flex md:w-full md:h-screen bg-main bg-cover bg-center">
 
-    <!-- COLUMNA IZQUIERDA -->
-    <aside class=" none md:flex md:w-[21%] md:flex-col">
+    <aside class="hidden md:flex md:w-[20%] md:flex-col md:mx-auto">
       <Name  class="hidden md:block"/>
       <div class="w-full h-[4px] bg-bg2"></div>
-        
-        <Chapter v-if="mostrarChapter" class="block md:hidden" />
+      <Chapter class="hidden md:block" />
       <div class="w-full h-[4px] bg-bg2"></div>
-      <Reproductor  class="hidden md:block" />
+      <Reproductor class="hidden md:block" />
     </aside>
+
+    <!-- drawer mobile -->
+    <transition name="slide-chapter">
+        <div
+          v-if="mostrarChapter"
+          class="fixed top-[60px] left-0 h-auto w-[200px] max-w-[300px] 
+          bg-bg2 shadow-xl z-[9999] rounded-xl overflow-y-hidden
+          md:hidden"
+        >
+          <Chapter />
+        </div>
+      </transition>
 
     <div class="md:w-[3px] md:bg-bg2"></div>
 
     <!-- CONTENIDO DINÁMICO -->
-    <main class="md:w-[80%] md:flex md:flex-col">
+    <main class="w-full md:w-[80%] md:flex md:flex-col">
       <NavDesk 
         :mostrarChapter="mostrarChapter"
         @toggle-chapter="mostrarChapter = !mostrarChapter"

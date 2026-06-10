@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, computed, provide } from 'vue'
+  import { ref, computed, provide, onMounted, onUnmounted } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
   import Libros from '~/components/Libros'
   import Resultados from '~/components/Resultados'
@@ -41,12 +41,38 @@ const emit = defineEmits(['toggle-chapter'])
   }
 
 
-  const { toggleTheme } = useTheme() 
+const { toggleTheme } = useTheme() 
+
+// menu
+const abierto = ref(null)
+
+const toggle = (nombre) => {
+  abierto.value = abierto.value === nombre ? 'null' : nombre
+}
+
+const cerrar = () => {
+  abierto.value = null
+}
+
+const clickFuera = (e) => {
+  if(!e.target.closest('.menu-opciones')) cerrar()
+}
+
+onMounted(() => {
+  window.addEventListener('click', clickFuera)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('click', clickFuera)
+})
   
 </script>
 
 <template>
-  <section class="flex px-[30px] md:h-[80px] py-[20px]  text-text1 gap-4">
+  <section class="flex px-[10px] py-[15px] gap-3 text-text1 justify-between
+    md:px-[30px] md:h-[80px] md:py-[20px]  md:gap-4">
+
+    
 
     <div class="my-auto">
       <button class="block md:hidden"
@@ -69,7 +95,6 @@ const emit = defineEmits(['toggle-chapter'])
       </button>
     </div>
 
-
     <div>
       <button
         @click="router.push('/panel')"
@@ -79,7 +104,7 @@ const emit = defineEmits(['toggle-chapter'])
       </button>
     </div>
 
-    <div class="relative flex gap-2 mx-auto items-center">
+    <div class="hidden md:relative md:flex md:gap-2 md:mx-auto md:items-center">
       <input
         type="text"
         v-model="busqueda"
@@ -99,21 +124,39 @@ const emit = defineEmits(['toggle-chapter'])
       <img class="theme-icon w-8 " alt="tema" />
     </button>
 
-    <button class="ml-4 text-text hover:text-hoverText transition duration-300">
-      <svg 
-        class="w-8 h-8" 
-        style="color:var(--icon-color)"
-        fill="currentColor" 
-        xmlns="http://www.w3.org/2000/svg">
-        <path 
-        d="M4 6H20M4 12H20M4 18H20"
-        transform="scale(1.3)" 
-        stroke="currentColor" 
-        stroke-width="3" 
-        stroke-linecap="round" 
-        stroke-linejoin="round"/>
-      </svg>
-    </button>
+    
+    <div class="relative menu-opciones">
+      <button
+        @click.stop="toggle('opciones')" 
+        class="ml-4 text-text hover:text-hoverText transition duration-300">
+        <svg 
+          class="w-8 h-8" 
+          style="color:var(--icon-color)"
+          fill="currentColor" 
+          xmlns="http://www.w3.org/2000/svg">
+          <path 
+          d="M4 6H20M4 12H20M4 18H20"
+          transform="scale(1.3)" 
+          stroke="currentColor" 
+          stroke-width="3" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <transition name="fade">
+        <div
+          v-show="abierto === 'opciones'" 
+          class="w-[150px] font-lexendExa absolute right-0 mt-2 bg-bg2 border border-border2 rounded-lg 
+          p-3 flex flex-col gap-2 z-[9999] transition-all duration-300"   
+        >
+          <a href="/panel/favoritos" class="text- hover:text-hoverText">Favoritos</a>
+          <a href="/panel/notas" class="hover:text-hoverText">Notas</a>
+          <a href="/" class="hover:text-hoverText">Pagina principal</a>
+        </div>
+      </transition>
+    </div>
+  
 
     
   </section>

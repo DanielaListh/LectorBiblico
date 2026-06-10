@@ -11,7 +11,7 @@ defineEmits(['select'])// realiza la emisión del evento 'select' al hacer clic 
 
 <template>
     <div class="absolute top-[45px] left-0 w-[200px] max-h-[300px] overflow-y-auto z-50
-             rounded-lg bg-bg1 blackdrop-blur-md border-2 border-border1 p-2">
+             rounded-lg bg-bg2 blackdrop-blur-md border-2 border-border1 p-2">
         <div v-if="resultados.length > 0">
             <button
                 v-for="libro in resultados"

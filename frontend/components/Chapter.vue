@@ -28,7 +28,7 @@ const irCapitulo = (num) => {
 </script>
 
 <template>
-  <div class="h-[350px] flex flex-col gap-2 p-4 overflow-y-auto text-center">
+  <div class="h-[500px] flex flex-col gap-2 overflow-y-auto text-start">
 
     
     <template v-if="capitulos.length > 0">
@@ -43,7 +43,7 @@ const irCapitulo = (num) => {
       </button>
     </template>
 
-    <div v-else class="flex flex-col justify-center items-center mx-auto p-1">
+    <div v-else class="flex flex-col justify-center items-center mx-auto my-auto p-1">
       <h2 class="font-lexendExa text-center text-text1">
         Selecciona un libro para ver sus capítulos
       </h2>
