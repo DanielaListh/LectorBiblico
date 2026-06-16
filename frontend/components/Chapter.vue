@@ -1,49 +1,51 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { capitulosPorLibro } from '~/data/capitulos'
+import { chapterPerBooks } from '~/data/chapters'
 
 const route = useRoute()
 const router = useRouter()
 
 // REACTIVO
-const libro = computed(() => route.params.libro)
+const book = computed(() => route.params.book)
 
-const capituloActual = computed (() => Number(route.params.capitulo))
+const currentChapter = computed (() => Number(route.params.chapter))
 
-const totalCapitulos = computed(() => {
-  return capitulosPorLibro[libro.value] || 0
+const totalChapters = computed(() => {
+  return chapterPerBooks[book.value] || 0
 })
 
-const capitulos = computed(() =>
+const chapters = computed(() =>
   Array.from(
-    { length: totalCapitulos.value },
+    { length: totalChapters.value },
     (_, i) => i + 1
   )
 )
 
-const irCapitulo = (num) => {
-  router.push(`/panel/libros/${libro.value}/${num}`)
+const goToChapter = (num) => {
+  router.push(`/panel/libros/${book.value}/${num}`)
 }
 </script>
 
 <template>
-  <div class="h-[500px] flex flex-col gap-2 overflow-y-auto text-start">
+  <div class="h-full overflow-y-auto p-1">
 
     
-    <template v-if="capitulos.length > 0">
+    <template v-if="chapters.length > 0">
       <button
-        v-for="cap in capitulos"
-        :key="cap"
-        @click="irCapitulo(cap)"
-        class="text-left px-4 font-lexendExa rounded-lg transition duration-300 text-text1"
-        :class="cap === capituloActual ? 'bg-bg3 text-text3 font-bold' : 'hover:text-hoverText' "
+        v-for="chapter in chapters"
+        :key="chapter"
+        @click="goToChapter(chapter)"
+        class="w-full text-left px-4 py-1 font-lexendExa rounded-lg transition duration-300 text-text1"
+        :class="chapter === currentChapter
+          ? 'bg-bg3 text-text2 font-bold'
+          : 'text-text1 hover:bg-bg-2/80 hover:text-hoverText'"
       >
-        Capítulo {{ cap }}
+        Capítulo {{ chapter }}
       </button>
     </template>
 
-    <div v-else class="flex flex-col justify-center items-center mx-auto my-auto p-1">
+    <div v-else class="flex flex-col justify-center items-center mx-auto p-2 my-auto">
       <h2 class="font-lexendExa text-center text-text1">
         Selecciona un libro para ver sus capítulos
       </h2>

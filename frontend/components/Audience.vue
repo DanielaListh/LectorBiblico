@@ -1,6 +1,6 @@
 <template>
     <section 
-        id="audiencia" 
+        id="audience" 
         class="w-[90%] h-auto text-center flex flex-col lg:flex-row bg-bg4 mx-auto py-10 md:min-h-screen md:text-left"
     >
         <div class="flex flex-col justify-center items-center w-full lg:w-1/2 px-6 lg:px-12">

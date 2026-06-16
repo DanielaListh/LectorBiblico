@@ -1,9 +1,9 @@
 <script setup>
-import { mapaLibros } from '~/data/mapaLibros';
+import { booksMap } from '~/data/booksMap';
 
 defineProps({
-    resultados: Array,
-    busqueda: String
+    results: Array,
+    search: String
 })
 
 defineEmits(['select'])// realiza la emisión del evento 'select' al hacer clic en un resultado
@@ -12,14 +12,14 @@ defineEmits(['select'])// realiza la emisión del evento 'select' al hacer clic 
 <template>
     <div class="absolute top-[45px] left-0 w-[200px] max-h-[300px] overflow-y-auto z-50
              rounded-lg bg-bg2 blackdrop-blur-md border-2 border-border1 p-2">
-        <div v-if="resultados.length > 0">
+        <div v-if="results.length > 0">
             <button
-                v-for="libro in resultados"
-                :key="libro"
-                @click="$emit('select', libro)"
+                v-for="book in results"
+                :key="book"
+                @click="$emit('select', book)"
                 class=" w-full text-left px-4 py-2 rounded-xl text-text1 hover:bg-bg3 transition"
             >
-            {{ mapaLibros[libro]}}
+            {{ booksMap[book]}}
             </button>
         </div>
         <div 

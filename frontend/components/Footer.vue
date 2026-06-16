@@ -33,7 +33,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
         <!-- TEXTO FINAL -->
         <div class="flex justify-center items-center mt-4">
             <img src="/img/heart.png" alt="corazon" class="w-4 mr-2">
-            <p class="font-cinzel text-text1 text-center">HECHO POR DANIELA BERRIOS</p>
+            <p class="font-cinzel text-text1 text-center">Created by Daniela Berrios</p>
             <img src="/img/heart.png" alt="corazon" class="w-4 ml-2">
         </div>
         <div class="h-[30px]"></div>

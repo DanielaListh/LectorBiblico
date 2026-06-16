@@ -1,4 +1,4 @@
-export const capitulosPorLibro = {
+export const chapterPerBooks = {
   genesis: 50,
   exodus: 40,
   leviticus: 27,

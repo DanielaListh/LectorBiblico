@@ -4,43 +4,44 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-const irAFavorito = (item) => {
+const goToFavorite = (item) => {
   router.push({
-    path: `/panel/libros/${item.libro}/${item.capitulo}`,
-    query: { vers: item.versiculos[0] } // si es un rango tomamos el primero
+    path: `/panel/libros/${item.book}/${item.chapter}`,
+    query: { verses: item.verses[0] } // If it is a range, we take the first one.
     
   })
 
 }
 
-// Array reactivo donde se cargarán los favoritos guardados
-const favoritos = ref([])
+// Reactive array where saved favorites will be loaded
+const favorites = ref([])
 
 onMounted(() => {
-  const data = localStorage.getItem('resaltados')
-  favoritos.value = data ? JSON.parse(data) : []
-  ordenarFavoritos()
+  const data = localStorage.getItem('highlights')
+  favorites.value = data ? JSON.parse(data) : []
+  sortFavorites()
 })
 
-const eliminar = (id) => {
-  favoritos.value = favoritos.value.filter(item => item.id !== id)
-  ordenarFavoritos()
-  localStorage.setItem("resaltados", JSON.stringify(favoritos.value))
+// delete
+const del = (id) => {
+  favorites.value = favorites.value.filter(item => item.id !== id)
+  sortFavorites()
+  localStorage.setItem("highlights", JSON.stringify(favorites.value))
 }
 
-const obtenerTextoFavorito = (item) => {
-  const libro = item.libro
-  const cap = item.capitulo
-  const vers = item.versiculos
+const getFavoriteText = (item) => {
+  const book = item.book
+  const chapter = item.chapter
+  const verses = item.verses
 
-  return item.texto || "(texto no guardado)"
+  return item.text || "(texto no guardado)"
 }
 
-const ordenarFavoritos = () => {
-  favoritos.value.sort((a, b) => {
-    if (a.libro < b.libro) return -1
-    if (a.libro > b.libro) return 1
-    return a.capitulo - b.capitulo
+const sortFavorites = () => {
+  favorites.value.sort((a, b) => {
+    if (a.book < b.book) return -1
+    if (a.book > b.book) return 1
+    return a.chapter - b.chapter
   })
 }
 
@@ -54,25 +55,26 @@ const ordenarFavoritos = () => {
     <div class=" columns-3 gap-4 w-full">
 
       <div
-        v-for="item in favoritos"
+        v-for="item in favorites"
         :key="item.id"
-        @click="irAFavorito(item)" 
+        @click="goToFavorite(item)" 
         class="cursor-pointer break-inside-avoid bg-bg2 p-3 rounded-xl font-lexendExa mb-4"
       >
         <div
           
           class="flex justify-between items-center">
           <h3 class="font-semibold text-text1 font-lexendExa">
-            {{ item.libro }} {{ item.capitulo }} :
-            <span v-if="item.versiculos && item.versiculos.length === 1">
-            {{ item.versiculos[0] }}
+            {{ item.book }} {{ item.chapter }} :
+            <span v-if="item.verses && item.verses.length === 1">
+            {{ item.verses[0] }}
             </span> 
-            <span v-else-if="item.versiculos && item.versiculos.length > 1"> ?
-              [{{ item.versiculos[0] }} - {{ item.versiculos[item.versiculos.length - 1] }}]
+            <span v-else-if="item.verses && item.verses.length > 1"> ?
+              [{{ item.verses[0] }} - {{ item.verses[item.verses.length - 1] }}] 
+              // 😭 range of numbers for the selected and highlights verses, example: [4 - 7]
             </span>
           </h3>
           <button
-            @click="eliminar(item.id)" 
+            @click="del(item.id)" 
             class=""
           >
           <svg 
@@ -104,7 +106,7 @@ const ordenarFavoritos = () => {
           </button>
         </div>
           <p class="text-text2 mt-2">
-            {{ obtenerTextoFavorito(item) }}
+            {{ getFavoriteText(item) }}
           </p>
       </div>
       

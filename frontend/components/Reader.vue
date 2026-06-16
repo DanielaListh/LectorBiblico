@@ -1,41 +1,41 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { ref, onMounted, onUnmounted,watch } from 'vue'
-import { mapaLibros } from '~/data/mapaLibros'
+import { booksMap } from '~/data/booksMap'
 import { computed } from 'vue'
-import { capitulosPorLibro } from '~/data/capitulos'
+import { chapterPerBooks } from '~/data/chapters'
 
 
 
 const route = useRoute() 
 const router = useRouter()
 
-const libro = computed(() => route.params.libro)
-const capitulo = computed(() => Number(route.params.capitulo))
-const totalCapitulos = computed(() => capitulosPorLibro[libro.value])
-const previousChapter = computed(() => { return capitulo.value > 1 ? capitulo.value - 1 : null }) // si el capitulo es mayor a uno entonces el valor del capitulo es - 1 sino es nulo
-const nextChapter = computed(() => { return capitulo.value < totalCapitulos.value ? capitulo.value + 1 : null })
-const cargando = ref(true)
-const direccion = ref('next') //para animacion al cambiar de pag
+const book = computed(() => route.params.book)
+const chapter = computed(() => Number(route.params.chapter))
+const totalChapters = computed(() => chapterPerBooks[book.value])
+const previousChapter = computed(() => { return chapter.value > 1 ? chapter.value - 1 : null }) // Return the previous chapter number if the current chapter is greater than 1; otherwise return null
+const nextChapter = computed(() => { return chapter.value < totalChapters.value ? chapter.value + 1 : null }) // return the next chapter number if the current chapter is lower than totalChapters; otherwise return null
+const loading = ref(true)
+const direction = ref('next') // animation to change the pag
 
 
 const data = ref({
   verses: []
-}) // aquí se guardará la información del capítulo cargado
+}) // The data for the loaded chapter will be stored here
 
-const cargarCapitulo = async () => {
-  cargando.value = true
+const loadChapter = async () => {
+  loading.value = true
 
   try {
-    const res = await fetch(`https://api.midvash.com/v1/rvr1960/${libro.value}/${capitulo.value}`)
+    const res = await fetch(`https://api.midvash.com/v1/rvr1960/${book.value}/${chapter.value}`)
     const json = await res.json()
     data.value = json.data 
     console.log(data.value)
 
   } catch (e){
-    console.error("Error al cargar el capitulo: ",)
+    console.error("Error al cargar el capitulo: ", error)
   }
-  cargando.value = false
+  loading.value = false
 }
 
 watch(
@@ -43,12 +43,12 @@ watch(
   () => {
     const vers = route.query.vers
     if (vers) {
-      scrollToVersiculo(vers)
+      scrollToVerse(vers)
     }
   }
 )
 
-const scrollToVersiculo = (vers) => {
+const scrollToVerse = (vers) => {
   setTimeout(() => {
     const el = document.querySelector(`[data-vers="${vers}"]`)
     if (el) {
@@ -60,15 +60,15 @@ const scrollToVersiculo = (vers) => {
   }, 300)
 }
 
-onMounted(cargarCapitulo)
+onMounted(loadChapter)
 
 watch(
   () => route.fullPath,
-  () => { cargarCapitulo() }
+  () => { loadChapter() }
 )
 
-const irACapitulo = async (num) => {
-  await router.push(`/panel/libros/${route.params.libro}/${num}`)
+const goToChapter = async (num) => {
+  await router.push(`/panel/libros/${route.params.book}/${num}`)
 
   window.scrollTo({
     top: 0,
@@ -85,19 +85,17 @@ const swipeThreshold = 50 // distancia mínima para considerar un swipe
 
 const nextChapterSwipe = () => {
   if (nextChapter.value) {
-    direccion.value = 'next'
-    irACapitulo(nextChapter.value)
+    direction.value = 'next'
+    goToChapter(nextChapter.value)
   }
 }
 
 const prevChapterSwipe = () => {
   if (previousChapter.value) {
-    direccion.value = 'prev'
-    irACapitulo(previousChapter.value)
+    direction.value = 'prev'
+    goToChapter(previousChapter.value)
   }
 }
-
-//const nextChapterSwipe = () =>
 
 const handleTouchStart = (e) => {
   touchStartX.value = e.changedTouches[0].clientX// obtenemos la posición inicial del toque en el eje X  
@@ -110,10 +108,10 @@ const handleTouchEnd = (e) => {
 
   //detectamos seleccion de texto
   const selection = window.getSelection()
-  const texto = selection.toString().trim()
+  const text = selection.toString().trim()
 
-  if (texto.length > 0) {
-    handleSelection(texto) //se hay texto seleccionado se llama a la funcion
+  if (text.length > 0) {
+    handleSelection(text) //se hay texto seleccionado se llama a la funcion
     return
   }
 
@@ -148,132 +146,133 @@ onUnmounted(() => {
 })
 
 
-//selector de textos por mouse
-const handleMouseUp = () => {
-  if (texto.length > 0) {
-    handleSelection(texto)
-  }
-}
+//selected text for mouse
+//const handleMouseUp = () => {
+  //if (text.length > 0) {
+    //handleSelection(text)
+  //}
+//}
 
 //funcion para manejar la seleccion de texto
 const handleSelection = () => {
   const selection = window.getSelection()
-  const texto = selection.toString().trim()
+  const text = selection.toString().trim()
 
-  if (!texto) return
-  const versiculos = obtenerVersiculosSeleccionados()
-  if(versiculos.length === 0) return
-  abrirMenuResaltador(versiculos)
+  if (!text) return
+
+  const verses = obtainSelectedVerses()
+  if(verses.length === 0) return
+  openHighlighterMenu(verses)
 }
 
-//menu florante
-const menuResaltador = ref({
+//menu flotante
+const highlighterMenu = ref({
   visible: false,
-  versiculos: [],
+  verses: [],
   x: 0,
   y:0
 }) 
 
 
 
-const resaltadoColores = [
-  "transparent", // quitar subrayado
-  "#d8c3a6",  //crema
-  "#dcc16b",  //amarillo
-  "#ca7f56", // naranje suave
-  "#994d2c",  // rojo suave
-  "#9baa5e", //verde
-  "#54523a", // verde oscuro
-  "#734f3a" //marron
+const highlightColors = [
+  "transparent",
+  "#d8c3a6",  // beige
+  "#dcc16b",  // yellow
+  "#ca7f56", // orange
+  "#994d2c",  // terracota
+  "#9baa5e", // green
+  "#54523a", // dark green
+  "#734f3a" // brown
 ]
 
-//abrir el menu flotante
-const abrirMenuResaltador = (versiculos) => {
+//open the floating menu
+const openHighlighterMenu = (verses) => {
   const selection = window.getSelection()
-  if (!selection.rangeCount) return // 
+  if (!selection.rangeCount) return 
 
   const rect = selection.getRangeAt(0).getBoundingClientRect()
 
-  menuResaltador.value = {
+  highlighterMenu.value = {
     visible: true,
-    versiculos,
+    verses,
     x: rect.left + window.scrollX,
-    y:rect.top + window.scrollY - 50 // un poco arriba
+    y:rect.top + window.scrollY - 50 // a little higher up
   }
 }
 
-//cerrar menu
-const cerrarMenuResaltador = () => {
-  menuResaltador.value.visible = false
+//close menu
+const closeHighlighterMenu = () => {
+  highlighterMenu.value.visible = false
 }
 
 
-const seleccionarColor = (color) => {
-  guardarResaltado(menuResaltador.value.versiculos, color)
-  emitirResaltado()
-  cerrarMenuResaltador()
+const colorSelect = (color) => {
+  saveHighligh(highlighterMenu.value.verses, color)
+  emitHighlight()
+  closeHighlighterMenu()
 }
 
-//guardar en localDtorage los textos selccionados
-const guardarResaltado = (versiculos, color) => {
-  const libroActual = route.params.libro
-  const capituloActual = Number(route.params.capitulo)
+// the selected texts are saved to localStorage 
+const saveHighligh = (verses, color) => {
+  const actualBook = route.params.book
+  const actualChapter = Number(route.params.chapter)
 
-  const textoRango = versiculos.map(v => data.value.verses[v - 1]).join("")
+  const rangeText = verses.map(v => data.value.verses[v - 1]).join("")
 
   const nuevo = {
     id: crypto.randomUUID(),
-    libro: libroActual,
-    capitulo: capituloActual,
-    versiculos,
+    book: actualBook,
+    chapter: actualChapter,
+    verses,
     color,
-    texto: textoRango,
-    fecha:Date.now()
+    text: rangeText,
+    date:Date.now()
   }
 
-  const almacenados = JSON.parse(localStorage.getItem("resaltados") || "[]")
+  const storaged = JSON.parse(localStorage.getItem("highlights") || "[]") /////////////////
 
   if (color === "transparent") {
-    const filtrados = almacenados.filter(
-      r => !(r.libro === libroActual &&
-        r.capitulo === capituloActual &&
-        JSON.stringify(r.versiculos) === JSON.stringify(versiculos))
+    const filtered = storaged.filter(
+      h => !(h.book === actualBook &&
+        h.chapter === actualChapter &&
+        JSON.stringify(h.verses) === JSON.stringify(verses))
   )
-    localStorage.setItem("resaltados", JSON.stringify(filtrados))
+    localStorage.setItem("highlights", JSON.stringify(filtered))
     return
   }
 
-  //guardar el nuevo highlight
-  almacenados.push(nuevo)
-  localStorage.setItem("resaltados", JSON.stringify(almacenados))
+  //save the new highlight
+  storaged.push(nuevo)
+  localStorage.setItem("highlights", JSON.stringify(storaged))
 }
 
-const resaltarVersiculo = (numVers, texto) => {
-  const resaltados = JSON.parse(localStorage.getItem("resaltados") || "[]")
+const verseHighlight = (numVers, text) => {
+  const highlights = JSON.parse(localStorage.getItem("highlights") || "[]")
 
-  const libroActual = route.params.libro
-  const capituloActual = Number(route.params.capitulo)
+  const actualBook = route.params.book
+  const actualChapter = Number(route.params.chapter)
 
-  const delCapitulo = resaltados.filter(
-    r => r.libro === libroActual && r.capitulo === capituloActual
+  const delChapter = highlights.filter(
+    h => h.book === actualBook && h.chapter === actualChapter
   )
 
-  const match = delCapitulo.find(resaltado => resaltado.versiculos.includes(numVers))
+  const match = delChapter.find(highlights => highlights.verses.includes(numVers))
   
-  if (!match) return texto
+  if (!match) return text
 
-  return `<mark style="background:${match.color}; padding:2px; border-radius:4px;">${texto}</mark>` 
+  return `<mark style="background:${match.color}; padding:2px; border-radius:4px;">${text}</mark>` 
 }
 
-const obtenerVersiculosSeleccionados = () => {
+const obtainSelectedVerses = () => {
   const selection = window.getSelection()
   if (!selection.rangeCount) return [] 
 
   const range = selection.getRangeAt(0)
-  const versiculos = [...document.querySelectorAll(".versiculo")]
+  const verses = [...document.querySelectorAll(".verse")]
 
   //detecta que versiculos intersectan la seleccion
-  const seleccionados = versiculos.filter(v => {
+  const selecteds = verses.filter(v => {
     const rect = v.getBoundingClientRect()
     const selRect = range.getBoundingClientRect()
 
@@ -283,23 +282,23 @@ const obtenerVersiculosSeleccionados = () => {
     )
   })
 
-  return seleccionados.map(v => Number(v.dataset.vers))
+  return selecteds.map(v => Number(v.dataset.vers))
 }
 
-//evento que se dispara cuando se crea un resaltado
-const emitirResaltado = () => {
-  window.dispatchEvent(new Event("resaltados-actualizados"))
+// when a highlight is created, an event is dispatched
+const emitHighlight = () => {
+  window.dispatchEvent(new Event("updated-results"))
 }
 
 onMounted(() => {
-  window.addEventListener("resaltados-actualizados", refrescarResaltados)
+  window.addEventListener("updated-results", refreshHighlight)
 })
 
 onUnmounted(() => {
-  window.removeEventListener("resaltados-actualizados", refrescarResaltados)
+  window.removeEventListener("updated-results", refreshHighlight)
 })
 
-const refrescarResaltados = () => {
+const refreshHighlight = () => {
   data.value = { ...data.value} //fuerza el re renderizado
 }
 
@@ -316,14 +315,14 @@ const refrescarResaltados = () => {
   <!--Menu flotante-->
   <transition name="fade-scale">
     <div 
-      v-if="menuResaltador.visible"
+      v-if="highlighterMenu.visible"
       class="fixed z-[600] bg-bg2 border border-border2 shadow-xl rounded-xl p-3 flex gap-2 items-center"
-      :style="{top: menuResaltador.y + 'px', left: menuResaltador.x + 'px'}" 
+      :style="{top: highlighterMenu.y + 'px', left: highlighterMenu.x + 'px'}" 
     >
       <button
-        v-for="color in resaltadoColores"
+        v-for="color in highlightColors"
         :key="color"
-        @click="seleccionarColor(color)"
+        @click="colorSelect(color)"
         class="w-7 h-7 rounded-full"
         :style="{ background: color === 'transparent' ? 'white' : color }"
       >
@@ -332,14 +331,14 @@ const refrescarResaltados = () => {
     </div>
   </transition>
   
-    <!-- Contenedor de Nombre de Libro, Capitulo y botones de navegacion entre capitulos-->
+     <!-- content of book name, chapter and buttons to navigate between chapters -->
     <div class="items-center px-5 py-4 sticky top-0 
           flex md:justify-between md:px-10 md:py-6 md:bg-main ">
       <div>
         <h1
           class="text-3xl font-bold font-lexendExa text-text1 md:text-5xl"
         >
-          {{ mapaLibros[libro]}}
+          {{ booksMap[book]}}
         </h1>
 
         <h2
@@ -355,22 +354,22 @@ const refrescarResaltados = () => {
         <button 
           v-if="previousChapter"
           @click="
-            direccion = 'prev';
-            irACapitulo(previousChapter)">
+            direction = 'prev';
+            goToChapter(previousChapter)">
           <img src="/img/flechaIzq.png" alt="Anterior"class="w-[30px]">
         </button>
         <button
           v-if="nextChapter" 
           @click="
-            direccion = 'next';
-            irACapitulo(nextChapter)">
+            direction = 'next';
+            goToChapter(nextChapter)">
           <img src="/img/flechaDer.png" alt="Siguiente" class="w-[30px]">
         </button>
       </div>
     </div>
 
     <!-- loader -->
-    <div v-if="cargando" class="px-10 animate-pulse">
+    <div v-if="loading" class="px-10 animate-pulse">
       <div class="h-6 w-1/6 bg-bg3 rounded mb-12"></div>
       <div class="h-6 w-4/6 bg-bg4 rounded mb-4"></div>
       <div class="h-6 w-3/6 bg-bg4 rounded mb-4"></div>
@@ -391,18 +390,18 @@ const refrescarResaltados = () => {
         
     <!-- contenedor de versiculos -->
     <Transition
-      :name="direccion === 'next' ? 'slide-next' : 'slide-prev'"
+      :name="direction === 'next' ? 'slide-next' : 'slide-prev'"
       mode="out-in"
     >
       <div
-        v-if="!cargando"
-        :key="`${libro}-${capitulo}`"
+        v-if="!loading"
+        :key="`${book}-${chapter}`"
         class="pl-5 flex flex-col gap-2 leading-relaxed text-lg md:max-w-4xl md:px-10 md:pt-3 md:pb-12"
       >
         <div
           v-for="(vers, index) in data?.verses || []"
           :key="index"
-          class="versiculo flex gap-3"
+          class="verse flex gap-3"
           :data-vers="index + 1"
         >
           <span class="font-bold font-lexendExa text-text2">
@@ -411,7 +410,7 @@ const refrescarResaltados = () => {
 
           <p 
             class="text-text1 font-lexendExa"
-            v-html="resaltarVersiculo(index + 1, vers)"
+            v-html="verseHighlight(index + 1, vers)"
             >
             
           </p>

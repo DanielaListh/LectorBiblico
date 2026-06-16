@@ -1,4 +1,4 @@
-export const mapaLibros = {
+export const booksMap = {
   genesis: "Génesis",
   exodus: "Éxodo",
   leviticus: "Levítico",

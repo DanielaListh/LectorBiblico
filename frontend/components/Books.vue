@@ -1,9 +1,9 @@
 <script setup>
-import { mapaLibros } from '~/data/mapaLibros.js'
+import { booksMap } from '~/data/booksMap'
 
 defineEmits(['select'])
 
-const imagenesPorLibro = {
+const imagesPerBook = {
   genesis: "/img/libros/genesis.webp",
   exodus: "/img/libros/exodo.webp",
   leviticus: "/img/libros/levitico.webp",
@@ -19,7 +19,7 @@ const imagenesPorLibro = {
   >
 
     <button
-      v-for="slug in Object.keys(mapaLibros)"
+      v-for="slug in Object.keys(booksMap)"
       :key="slug"
       @click="$emit('select', slug)"
 
@@ -39,8 +39,8 @@ const imagenesPorLibro = {
 
       <!-- Imagen SOLO en desktop -->
       <img
-        v-if="imagenesPorLibro[slug]"
-        :src="imagenesPorLibro[slug]"
+        v-if="imagesPerBook[slug]"
+        :src="imagesPerBook[slug]"
         class="
           hidden md:block
           absolute inset-0 w-full h-full object-cover opacity-0 scale-110
@@ -81,7 +81,7 @@ const imagenesPorLibro = {
             md:group-hover:drop-shadow-[0_0_8px_rgba(255,220,120,0.6)]
           "
         >
-          {{ mapaLibros[slug] }}
+          {{ booksMap[slug] }}
         </p>
       </div>
 

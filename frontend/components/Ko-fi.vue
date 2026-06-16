@@ -8,7 +8,7 @@ const openBinance = () => {
 </script>
 
 <template>
-    <section id="donar" class="w-[80%] h-screen m-[20px] mx-auto flex justify-between items-center gap-5 ">
+    <section id="donate" class="w-[80%] h-screen m-[20px] mx-auto flex justify-between items-center gap-5 ">
         <div class="flex flex-col items-center text-center bg-bg1 w-[400px] h-[250px] md:h-[200px] p-6 rounded-3xl  " >
             <h2 class="font-bellefair text-text4 text-3xl m-[5px]">Dóname un cafecito</h2>
             <p class="font-lexendExa text-text3">Tu apoyo me ayuda a seguir desarrollando nuevas funciones y 

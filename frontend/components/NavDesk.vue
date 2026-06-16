@@ -1,13 +1,13 @@
 <script setup>
   import { ref, computed, provide, onMounted, onUnmounted } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
-  import Libros from '~/components/Libros'
-  import Resultados from '~/components/Resultados'
+  import Books from '~/components/Books'
+  import Results from '~/components/Results'
   import { useTheme } from '~/composables/useTheme'
-  import { mapaLibros } from '~/data/mapaLibros'
+  import { booksMap } from '~/data/booksMap'
   
 defineProps({
-    mostrarChapter: Boolean
+    showChapter: Boolean
 })
 
 const emit = defineEmits(['toggle-chapter'])
@@ -15,55 +15,55 @@ const emit = defineEmits(['toggle-chapter'])
   const route = useRoute()
   const router = useRouter()
 
-  const busqueda = ref('')
+  const search = ref('')
 
 
   //const mostrarChapter = inject('mostrarChapter')
 
-  const normalizar = (t) => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+  const normalize = (t) => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
   
-  const libros = Object.keys(mapaLibros)
+  const books = Object.keys(booksMap)
 
-  const librosFiltrados = computed(() => {
-    if (!busqueda.value) return libros
+  const filteredBooks = computed(() => {
+    if (!search.value) return books
 
-    return libros.filter( libro =>
-      normalizar(mapaLibros[libro] || libro)
-        .includes(normalizar(busqueda.value))
+    return books.filter( book =>
+      normalize(booksMap[book] || book)
+        .includes(normalize(search.value))
     )
   })
 
-  const esRutaLeer = computed(() => route.path === '/panel/libros')
+  const isReadRoute = computed(() => route.path === '/panel/libros')
 
-  const irLibro = (libro) => {
-    busqueda.value = ''
-    router.push(`/panel/libros/${libro}/1`)
+  const goToBook = (book) => {
+    search.value = ''
+    router.push(`/panel/libros/${book}/1`)
   }
 
 
 const { toggleTheme } = useTheme() 
 
 // menu
-const abierto = ref(null)
+const open = ref(null)
 
-const toggle = (nombre) => {
-  abierto.value = abierto.value === nombre ? 'null' : nombre
+const toggle = (name) => {
+  open.value = open.value === name ? 'null' : name
 }
 
-const cerrar = () => {
-  abierto.value = null
+const close = () => {
+  open.value = null
 }
 
-const clickFuera = (e) => {
-  if(!e.target.closest('.menu-opciones')) cerrar()
+const clickOutside = (e) => {
+  if(!e.target.closest('.menu-opciones')) close()
 }
 
 onMounted(() => {
-  window.addEventListener('click', clickFuera)
+  window.addEventListener('click', clickOutside)
 })
 
 onUnmounted(() => {
-  window.removeEventListener('click', clickFuera)
+  window.removeEventListener('click', clickOutside)
 })
   
 </script>
@@ -107,15 +107,15 @@ onUnmounted(() => {
     <div class="hidden md:relative md:flex md:gap-2 md:mx-auto md:items-center">
       <input
         type="text"
-        v-model="busqueda"
+        v-model="search"
         class="w-[150px] md:w-[300px] md:h-[30px] text-center bg-transparent border-2 rounded-lg border-border1 focus:outline-none placeholder-placeholder"
         placeholder="Buscar libro"
       >
-      <Resultados
-        v-if="!esRutaLeer && busqueda.trim().length > 0"
-        :resultados="librosFiltrados"
-        :busqueda="busqueda"
-        @select="irLibro"
+      <Results
+        v-if="!isReadRoute && search.trim().length > 0"
+        :results="filteredBooks"
+        :search="search"
+        @select="goToBook"
       />
 
     </div>
@@ -146,12 +146,12 @@ onUnmounted(() => {
 
       <transition name="fade">
         <div
-          v-show="abierto === 'opciones'" 
+          v-show="open === 'opciones'" 
           class="w-[150px] font-lexendExa absolute right-0 mt-2 bg-bg2 border border-border2 rounded-lg 
           p-3 flex flex-col gap-2 z-[9999] transition-all duration-300"   
         >
-          <a href="/panel/favoritos" class="text- hover:text-hoverText">Favoritos</a>
-          <a href="/panel/notas" class="hover:text-hoverText">Notas</a>
+          <a href="/panel/favorites" class="text- hover:text-hoverText">Favoritos</a>
+          <a href="/panel/notes" class="hover:text-hoverText">Notas</a>
           <a href="/" class="hover:text-hoverText">Pagina principal</a>
         </div>
       </transition>
@@ -162,10 +162,10 @@ onUnmounted(() => {
   </section>
 
   <!-- /leer → mostrar Libros -->
-  <Libros
-    v-if="esRutaLeer"
-    :libros="librosFiltrados"
-    @select="irLibro"
+  <Books
+    v-if="isReadRoute"
+    :books="filteredBooks"
+    @select="goToBook"
   /> 
    
 </template>

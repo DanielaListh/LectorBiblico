@@ -24,10 +24,10 @@ const { toggleTheme } = useTheme()
 
       <div class="hidden gap-4 md:flex justify-between">
         <a href="#home" class="text-text1 hover:text-hoverText transition">Home</a>
-        <a href="#busqueda" class="text-text1 hover:text-hoverText transition">Búsqueda</a>
+        <a href="#search" class="text-text1 hover:text-hoverText transition">Búsqueda</a>
         <a href="#faq" class="text-text1 hover:text-hoverText transition">FAQs</a>
-        <a href="#audiencia" class="text-text1 hover:text-hoverText transition">Audiencia</a>
-        <a href="#donar" class="text-text1 hover:text-hoverText transition">Donar</a>
+        <a href="#audience" class="text-text1 hover:text-hoverText transition">Audiencia</a>
+        <a href="#donate" class="text-text1 hover:text-hoverText transition">Donar</a>
       </div>
 
       <div class="hidden md:block">
@@ -41,9 +41,9 @@ const { toggleTheme } = useTheme()
     <div class="hidden md:flex absolute top-0 bottom-0 left-[5%] w-[3px] bg-bg2"></div>
     <div class="hidden md:flex absolute top-0 bottom-0 right-[5%] w-[3px] bg-bg2"></div>
     <HeroSection />
-    <Busqueda />
+    <Search />
     <Faq />
-    <Audiencia />
+    <Audience />
     <Ko-fi />
     <div class="h-[3px] bg-bg2"></div>
     <Footer />

@@ -1,11 +1,10 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router';
-import { mapaLibros } from '~/data/mapaLibros';
-import { computed } from 'vue';
+import { booksMap } from '~/data/booksMap';
 
 const router = useRouter();
-const busqueda = ref('');
+const search = ref('');
 
 //listado de libros del antiguo testamento
 const listAncientTestament = ["Génesis", "Éxodo", "Levítico", "Números", "Deuteronomio", "Josué",
@@ -22,17 +21,17 @@ const listNewTestament = ["Mateo", "Marcos", "Lucas", "Juan", "Hechos", "Romanos
     "2 Timoteo", "Tito", "Filemón", "Hebreos", "Santiago", "1 Pedro", "2 Pedro", "1 Juan", "2 Juan", "3 Juan", "Judas", "Apocalipsis"
 ]
 
-const coincidenciaBusqueda = (libro) => {
-    return busqueda.value && libro.toLowerCase().includes(busqueda.value.toLowerCase()); // Si busqueda.value es vacío, no se considera coincidencia
+const matchSearch = (book) => {
+    return search.value && book.toLowerCase().includes(search.value.toLowerCase()); // Si busqueda.value es vacío, no se considera coincidencia
 }
 
-const mapaInverso = Object.fromEntries(
-    Object.entries(mapaLibros).map(([slug, nombre]) => [nombre, slug])
+const reverseMap = Object.fromEntries(
+    Object.entries(booksMap).map(([slug, name]) => [name, slug])
     // Esto crea un nuevo objeto donde las claves son los nombres de los libros y los valores son los slugs
 )
 
-const irLibro = (libro) => {
-    const slug = mapaInverso[libro]; // Obtener el slug del libro usando el mapa inverso
+const goToBook = (book) => {
+    const slug = reverseMap[book]; // Get the book's slug using the inverse booksMap.
     router.push(`/panel/libros/${slug}/1`)
 }
 
@@ -40,7 +39,7 @@ const irLibro = (libro) => {
 
 <template>
 
-    <section id="busqueda" class="h-auto flex items-center justify-center flex-col gap-4 py-20">
+    <section id="search" class="h-auto flex items-center justify-center flex-col gap-4 py-20">
         <div class="flex flex-col justify-center items-center text-center">
             <h2 class="font-cinzel text-3xl text-text1 md:text-5xl">ENCUENTRA EL LIBRO</h2>
             <h3 class="font-cinzel text-text1">DE LA BIBLIA QUE <span class=" text-text2">DESEAS LEER</span> HOY</h3>
@@ -49,7 +48,7 @@ const irLibro = (libro) => {
 
         <div class="hidden md:flex gap-2">
             <input 
-                v-model="busqueda"
+                v-model="search"
                 type="text" 
                 class="border-2 border-border1 bg-transparent rounded-lg  h-8 px-6 p-2 focus:outline-none focus:ring-2 focus:ring-[#d8b48a] text-text1"
                 >
@@ -61,19 +60,19 @@ const irLibro = (libro) => {
             <div class="m-[30px]">
                 <ul class=" flex flex-wrap gap-2 justify-center md:justify-normal md:items-normal">
                     <li 
-                        v-for="libro in listAncientTestament" :key="libro"
+                        v-for="book in listAncientTestament" :key="book"
                         class="text-sm sm:text-base px-2 py-1 border-2 w-auto p-1 text-text1 border-border1 hover:border-hoverBorder2 transition-colors duration-300 rounded-lg text-center "
                        :class="[
-                            coincidenciaBusqueda(libro)
+                            matchSearch(book)
                             ? 'bg-bg4 text-text1 shadow-lg shadow-[#74522baf] scale-105 hover:bg-hoverBg'
                             : 'hover:text-hoverText hover:shadow-md hover:shadow-[#B56B46]/30'
                         ]"
                         >
                     <a
                      
-                     @click="irLibro(libro)"
+                     @click="goToBook(book)"
                     >
-                    {{ libro }}
+                    {{ book }}
                     </a>
                     
                     </li>
@@ -85,18 +84,18 @@ const irLibro = (libro) => {
             <div class="m-[30px]">
                 <ul class=" flex flex-wrap gap-2 justify-center md:justify-normal md:items-normal">
                     <li 
-                        v-for="libro in listNewTestament" :key="libro"
+                        v-for="book in listNewTestament" :key="book"
                         class="text-sm sm:text-base px-2 py-1 border-2 w-auto p-1 text-text1 border-border1 hover:border-hoverBorder2 transition-colors duration-300 rounded-lg text-center "
                        :class="[
-                            coincidenciaBusqueda(libro)
+                            matchSearch(book)
                             ? 'bg-bg4 text-text1 shadow-lg shadow-[#74522baf] scale-105 hover:bg-hoverBg'
                             : 'hover:text-hoverText hover:shadow-md hover:shadow-[#B56B46]/30'
                         ]"
                         >
                     <a
-                        @click="irLibro(libro)"
+                        @click="goToBook(book)"
                     >
-                        {{ libro }}
+                        {{ book }}
                      </a>
                     
                     </li>
