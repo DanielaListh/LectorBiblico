@@ -11,10 +11,15 @@ export function useMenuFav(favorites) {
     const openMenu = (event, item) => {
         event.stopPropagation()
 
+        if (menu.value.visible && menu.value.item?.id === item.id) {
+            menu.value.visible = false
+            return
+        }
+
         menu.value = {
             visible: true,
-            x: event.ClientX,
-            y: event.ClientY,
+            x: event.clientX - 70,
+            y: event.clientY - 70,
             item
         }
     }
@@ -36,7 +41,7 @@ export function useMenuFav(favorites) {
         closeMenu()
     }
 
-    const deleletFavorite = (id) => {
+    const deleteFavorite = (id) => {
         favorites.value = favorites.value.filter(favorite => favorite.id !== id)
         //sortFavorites()
         localStorage.setItem("highlights", JSON.stringify(favorites.value))
@@ -67,7 +72,7 @@ export function useMenuFav(favorites) {
         openMenu,
         closeMenu,
         shareFavorite,
-        deleletFavorite,
+        deleteFavorite,
         togglePin,
         changeColor
     }

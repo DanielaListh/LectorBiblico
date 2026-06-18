@@ -39,7 +39,7 @@ const goToChapter = (num) => {
         class="w-full text-left px-4 py-1 font-lexendExa rounded-lg transition duration-300 text-text1"
         :class="chapter === currentChapter
           ? 'bg-bg3 text-text2 font-bold'
-          : 'text-text1 hover:bg-bg-2/80 hover:text-hoverText'"
+          : 'text-text1 hover:bg-bg-2/80 hover:text-hoverText1'"
       >
         Capítulo {{ chapter }}
       </button>

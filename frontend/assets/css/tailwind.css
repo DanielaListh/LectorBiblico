@@ -6,7 +6,7 @@
 
 
 .icon-redes {
- @apply text-text1 hover:text-hoverText transition-colors duration-300 mx-2 text-xl
+ @apply text-text1 hover:text-hoverText1 transition-colors duration-300 mx-2 text-xl
 }
 
 /*scroll vertical*/
@@ -48,11 +48,13 @@ html {
   --text-2: #b45a2b;    /* terracota suave */
   --text-3: #f8d8c1;    /* texto secundario cálido */
   --text-4: #f9efd3;
+  --text-5: #fcebd5;
 
   --border-1: #d3ae93;  /* borde principal */
   --border-2: #e8d9c7;  /* borde suave */
 
-  --hover-text: #c97a3d;        /* acento cálido */
+  --hover-text1: #c97a3d;        /* acento cálido */
+  --hover-text2: #f5cdb6;
   --hover-border-1: #c97a3d;
   --hover-border-2: #b68a55;
   --hover-bg: #f3d6a4;
@@ -74,15 +76,17 @@ html {
   --bg-4: #8a5638;     /* líneas divisorias terracota oscura */
   --bg-5: #37281f;
 
-  --text-1: #f1d4c0;    /* texto principal cálido */
+  --text-1: #edd1bd;    /* texto principal cálido */
   --text-2: #d27a4a;    /* acento terracota */
   --text-3: #b99b85;    /* texto secundario */
   --text-4: #fed576;
+  --text-5: #3a2416;
 
   --border-1: #7a5a47;  /* borde principal */
   --border-2: #3a2416;  /* borde suave */
 
-  --hover-text: #e89b6b;        /* acento cálido */
+  --hover-text1: #e89b6b;        /* acento cálido */
+  --hover-text2: #31190a;
   --hover-border-1: #e89b6b;
   --hover-border-2: #8a5638;
   --hover-bg: #882206;

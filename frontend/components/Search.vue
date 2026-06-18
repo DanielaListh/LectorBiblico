@@ -65,7 +65,7 @@ const goToBook = (book) => {
                        :class="[
                             matchSearch(book)
                             ? 'bg-bg4 text-text1 shadow-lg shadow-[#74522baf] scale-105 hover:bg-hoverBg'
-                            : 'hover:text-hoverText hover:shadow-md hover:shadow-[#B56B46]/30'
+                            : 'hover:text-hoverText1 hover:shadow-md hover:shadow-[#B56B46]/30'
                         ]"
                         >
                     <a
@@ -89,7 +89,7 @@ const goToBook = (book) => {
                        :class="[
                             matchSearch(book)
                             ? 'bg-bg4 text-text1 shadow-lg shadow-[#74522baf] scale-105 hover:bg-hoverBg'
-                            : 'hover:text-hoverText hover:shadow-md hover:shadow-[#B56B46]/30'
+                            : 'hover:text-hoverText1 hover:shadow-md hover:shadow-[#B56B46]/30'
                         ]"
                         >
                     <a

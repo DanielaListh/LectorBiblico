@@ -47,7 +47,7 @@ const imagesPerBook = {
         "
       >
 
-      <!-- Overlays SOLO en desktop -->
+      <!-- Overlays only in desktop -->
       <div
         class="hidden md:block absolute inset-0 bg-gradient-to-t from-black/20 via-black/20 to-transparent
                opacity-0 transition-all duration-700 group-hover:opacity-100"
@@ -58,7 +58,7 @@ const imagesPerBook = {
                bg-[#ffdc68]/20"
       ></div>
 
-      <!-- Texto -->
+      <!-- text -->
       <div
         class="
           relative z-10 text-center md:text-left
@@ -67,10 +67,10 @@ const imagesPerBook = {
       >
         <p
           class="
-            font-lexendExa text-text1
-            text-sm hover:text-text4
+            font-lexendExa text-text2
+            text-sm hover:text-text5
             md:text-xl md:transition-all md:duration-500
-            md:group-hover:text-text3
+            md:group-hover:text-text5
             md:group-hover:drop-shadow-[0_0_8px_rgba(255,220,120,0.6)]
           "
         >

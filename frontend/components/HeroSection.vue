@@ -12,7 +12,7 @@ const subtitle = "Una fuente de Bendiciones Digital"
 
   <div class="flex flex-col items-center text-center py-4 px-4">
 
-    <h1 class=" font-cinzel text-4xl md:text-5xl text-text1 tracking-tight drop-shadow-sm hover:text-hoverText transition-all duration-700 hover:drop-shadow-[0_0_6px_#efcd9f]">
+    <h1 class=" font-cinzel text-4xl md:text-5xl text-text1 tracking-tight drop-shadow-sm hover:text-hoverText1 transition-all duration-700 hover:drop-shadow-[0_0_6px_#efcd9f]">
       {{ title }}
     </h1>
 

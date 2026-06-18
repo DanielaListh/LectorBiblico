@@ -21,11 +21,11 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
             <!-- LINKS -->
             <div class="flex flex-wrap justify-center md:justify-end m-[10px] font-lexendExa text-text1 gap-3 font-semibold">
-                <a href="#home" class="hover:text-hoverText transition-colors duration-300">Home</a>
-                <a href="#busqueda" class="hover:text-hoverText transition-colors duration-300">Buscar</a>
-                <a href="#faq" class="hover:text-hoverText transition-colors duration-300">FAQ</a>
-                <a href="#audiencia" class="hover:text-hoverText transition-colors duration-300">Audiencia</a>
-                <a href="#donar" class="hover:text-hoverText transition-colors duration-300">Donar</a>
+                <a href="#home" class="hover:text-hoverText1 transition-colors duration-300">Home</a>
+                <a href="#busqueda" class="hover:text-hoverText1 transition-colors duration-300">Buscar</a>
+                <a href="#faq" class="hover:text-hoverText1 transition-colors duration-300">FAQ</a>
+                <a href="#audiencia" class="hover:text-hoverText1 transition-colors duration-300">Audiencia</a>
+                <a href="#donar" class="hover:text-hoverText1 transition-colors duration-300">Donar</a>
             </div>
 
         </div>

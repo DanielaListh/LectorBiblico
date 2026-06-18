@@ -98,7 +98,7 @@ onUnmounted(() => {
     <div>
       <button
         @click="router.push('/panel')"
-        class="font-lexendExa text-center text-xl text-text1 hover:text-hoverText transition duration-300"
+        class="font-lexendExa text-center text-xl text-text1 hover:text-hoverText1 transition duration-300"
       >
       Inicio
       </button>
@@ -128,7 +128,7 @@ onUnmounted(() => {
     <div class="relative menu-opciones">
       <button
         @click.stop="toggle('opciones')" 
-        class="ml-4 text-text hover:text-hoverText transition duration-300">
+        class="ml-4 text-text hover:text-hoverText1 transition duration-300">
         <svg 
           class="w-8 h-8" 
           style="color:var(--icon-color)"
@@ -150,9 +150,9 @@ onUnmounted(() => {
           class="w-[150px] font-lexendExa absolute right-0 mt-2 bg-bg2 border border-border2 rounded-lg 
           p-3 flex flex-col gap-2 z-[9999] transition-all duration-300"   
         >
-          <a href="/panel/favorites" class="text- hover:text-hoverText">Favoritos</a>
-          <a href="/panel/notes" class="hover:text-hoverText">Notas</a>
-          <a href="/" class="hover:text-hoverText">Pagina principal</a>
+          <a href="/panel/favorites" class="hover:text-hoverText1">Favoritos</a>
+          <a href="/panel/notes" class="hover:text-hoverText1">Notas</a>
+          <a href="/" class="hover:text-hoverText1">Pagina principal</a>
         </div>
       </transition>
     </div>

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useMenuFav } from '~/composables/useMenuFav'
 
@@ -7,6 +7,8 @@ const router = useRouter()
 
 // Reactive array where saved favorites will be loaded
 const favorites = ref([])
+
+const showColorMenu = ref(false)
 
 onMounted(() => {
   const data = localStorage.getItem('highlights')
@@ -49,6 +51,14 @@ const sortFavorites = () => {
   })
 }
 
+onMounted(() => {
+  document.addEventListener('click', closeMenu)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', closeMenu)
+})
+
 </script>
 
 
@@ -57,14 +67,14 @@ const sortFavorites = () => {
 
     <div
         v-if="menu.visible"
-        class="relative z-[999] bg-transparent w-40 h-40"
+        class="fixed z-[9999] bg-transparent w-40 h-40"
         :style="{top:menu.y + 'px', left:menu.x + 'px'}"
     >
 
         <!-- Compartir -->
-        <div class="absolute top-10 left-2 -translate-x-1/2 rounded-full bg-bg3 p-1 hover:bg-bg4">
+        <div class="absolute top-10 left-4 -translate-x-1/2 rounded-full bg-bg3 p-1 hover:bg-bg4">
           <button
-            class="flex items-center gap-2 hover:text-text3 transition"
+            class="flex items-center p-1 mx-auto"
             @click="shareFavorite(menu.item)"
           >
             <svg class="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -79,12 +89,12 @@ const sortFavorites = () => {
          
 
         <!-- Eliminar -->
-        <div class="absolute left-12 top-10 -translate-y-1/2 rounded-full bg-bg3 p-1 hover:bg-bg4">
+        <div class="absolute left-8 top-8 -translate-y-1/2 rounded-full bg-bg3 p-1 hover:bg-bg4">
           <button
-            class="flex items-center gap-2 hover:text-red-500 transition"
+            class="flex items-center p-1 mx-auto"
             @click="deleteFavorite(menu.item.id)"
           >
-            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="w-7 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path :style="{ stroke: 'var(--icon-color)' }" d="M20.5001 6H3.5" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
               <path :style="{ stroke: 'var(--icon-color)'}" d="M9.17065 4C9.58249 2.83481 10.6937 2 11.9999 2C13.3062 2 14.4174 2.83481 14.8292 4" 
               stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
@@ -98,9 +108,9 @@ const sortFavorites = () => {
         
 
         <!-- Pinear -->
-        <div class="absolute right-0 top-1/2 -translate-y-1/2 rounded-full bg-bg3 p-1 hover:bg-bg4"> 
+        <div class="absolute right-10 top-8 -translate-y-1/2 rounded-full bg-bg3 p-1 hover:bg-bg4"> 
           <button
-            class="flex items-center gap-2 hover:text-yellow-500 transition"
+            class="flex items-center p-1 mx-auto"
             @click="togglePin(menu.item)"
           >
             <svg class="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -128,10 +138,11 @@ const sortFavorites = () => {
         </div> 
 
         <!-- Cambiar color -->
-        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full bg-bg3 p-1 hover:bg-bg4">
+        <div class="absolute top-12 left-32 -translate-x-1/2 rounded-full bg-bg3 hover:bg-bg4 p-1 mx-auto">
           <button
             :style="{ background: color }"
-            @click="changeColor(menu.item, color)"
+            @click.stop="showColorMenu = !showColorMenu"
+            class="p-1 mx-auto"
           >
             <svg class="w-6 h-6" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
               <path 
@@ -149,6 +160,31 @@ const sortFavorites = () => {
               ></path>
             </svg>
           </button>
+          <Transition name="fade">
+            <div
+              v-if="showColorMenu"
+              class="absolute top-12
+                    block gap-2 bg-bg3 rounded-full p-2"
+            >
+
+              <button
+                v-for="color in [
+                  '#d8c3a6',
+                  '#dcc16b',
+                  '#ca7f56',
+                  '#994d2c',
+                  '#9baa5e',
+                  '#54523a',
+                  '#734f3a'
+                ]"
+                :key="color"
+                class="w-6 h-6 rounded-full"
+                :style="{ background: color }"
+                @click.stop="changeColor(menu.item, color)"
+              />
+
+            </div>
+          </Transition>
         </div>
 
       </div>
@@ -184,7 +220,6 @@ const sortFavorites = () => {
             </span>
           </h3>
           <button
-            class="text-text3 mt-2"
             @click.stop="openMenu($event, item)"
           >
             <svg class="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
