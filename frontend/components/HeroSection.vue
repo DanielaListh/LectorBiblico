@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 
-const title = "SANTA BIBLIA DIGITAL"
+const title = "SANTA BIBLIA DIGITAL DE LA RAMITA"
 const subtitle = "Una fuente de Bendiciones Digital"
  
 </script>
