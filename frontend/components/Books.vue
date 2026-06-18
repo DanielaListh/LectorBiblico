@@ -25,7 +25,7 @@ const imagesPerBook = {
 
       class="
         block w-full text-center border-2 border-border2 text-text1 py-2 px-3 rounded-lg my-2
-        font-lexendExa text-sm hover:bg-bg1 hover:border-none
+        font-lexendExa text-sm md:hover:bg-transparent group
 
         md:relative md:group md:overflow-hidden
         md:w-[230px] md:h-[150px] md:rounded-[25px]
@@ -37,7 +37,6 @@ const imagesPerBook = {
       "
     >
 
-      <!-- Imagen SOLO en desktop -->
       <img
         v-if="imagesPerBook[slug]"
         :src="imagesPerBook[slug]"
@@ -50,7 +49,7 @@ const imagesPerBook = {
 
       <!-- Overlays SOLO en desktop -->
       <div
-        class="hidden md:block absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent
+        class="hidden md:block absolute inset-0 bg-gradient-to-t from-black/20 via-black/20 to-transparent
                opacity-0 transition-all duration-700 group-hover:opacity-100"
       ></div>
 
@@ -62,20 +61,14 @@ const imagesPerBook = {
       <!-- Texto -->
       <div
         class="
-          /* mobile */
           relative z-10 text-center md:text-left
-
-          /* desktop */
           md:absolute md:bottom-0 md:left-0 md:p-5 md:flex md:items-end
         "
       >
         <p
           class="
             font-lexendExa text-text1
-            
             text-sm hover:text-text4
-
-            /* desktop */
             md:text-xl md:transition-all md:duration-500
             md:group-hover:text-text3
             md:group-hover:drop-shadow-[0_0_8px_rgba(255,220,120,0.6)]

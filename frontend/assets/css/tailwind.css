@@ -41,7 +41,8 @@ html {
   --bg-1: #c87336;      /* fondo principal */
   --bg-2: #e8d9c7;      /* botones beige cálido */
   --bg-3: #fcebd5;      /* fondos secundarios */
-  --bg-4: #d0c0ad; 
+  --bg-4: #d0c0ad;
+  --bg-5: #fffffe; 
 
   --text-1: #5b493b;    /* marrón suave */
   --text-2: #b45a2b;    /* terracota suave */
@@ -71,6 +72,7 @@ html {
   --bg-2: #3a2416;      /* botones chocolate suave */
   --bg-3: #84411a;      /* fondos secundarios cálidos */
   --bg-4: #8a5638;     /* líneas divisorias terracota oscura */
+  --bg-5: #37281f;
 
   --text-1: #f1d4c0;    /* texto principal cálido */
   --text-2: #d27a4a;    /* acento terracota */

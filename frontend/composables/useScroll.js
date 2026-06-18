@@ -1,5 +1,9 @@
+import { useRoute } from "vue-router"
 
-export function useScroll() {
+export function useScroll(data) {
+  
+  const route = useRoute()
+  
   const scrollToVerse = (vers) => {
     setTimeout(() => {
       const el = document.querySelector(`[data-vers="${vers}"]`)

@@ -1,9 +1,8 @@
 import { useRoute, useRouter } from 'vue-router'
 import { ref, computed, onMounted, watch } from 'vue'
-import { computed } from 'vue'
 import { chapterPerBooks } from '~/data/chapters'
 
-export function useChaptewrNavigation() {
+export function useChapterNavigation() {
     const route = useRoute()
     const router = useRouter() 
 

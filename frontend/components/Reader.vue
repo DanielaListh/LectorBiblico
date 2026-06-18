@@ -1,10 +1,12 @@
 <script setup>
-import { useChaptewrNavigation } from '~/composables/useChapterNavigation';
+import { useChapterNavigation } from '~/composables/useChapterNavigation';
 import { useHighlight } from '~/composables/useHighlight';
 import { useKeyboardNavigation } from '~/composables/useKeyboardNavigation';
 import { useScroll } from '~/composables/useScroll';
 import { useSwipeNavigation } from '~/composables/useSwipeNavigation';
 import { booksMap } from '~/data/booksMap'
+
+
 
 // chapter Navigation
 const {
@@ -16,7 +18,7 @@ const {
   previousChapter,
   nextChapter,
   goToChapter
-} = useChaptewrNavigation()
+} = useChapterNavigation()
 
 // swipe Navigation
 const { handleTouchStart, handleTouchEnd } = useSwipeNavigation(
@@ -39,7 +41,7 @@ const {
 } = useHighlight(data)
 
 // scroll to verse
-const { scrollToVerse } = useScroll()
+const { scrollToVerse } = useScroll(data)
 
 </script>
 

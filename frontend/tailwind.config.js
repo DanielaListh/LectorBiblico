@@ -29,6 +29,7 @@ export default {
         bg2: "var(--bg-2)",
         bg3: "var(--bg-3)",
         bg4: "var(--bg-4)",
+        bg5:"var(--bg-5)",
         text1: "var(--text-1)",
         text2: "var(--text-2)",
         text3: "var(--text-3)",
