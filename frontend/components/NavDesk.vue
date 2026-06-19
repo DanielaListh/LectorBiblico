@@ -1,72 +1,112 @@
 <script setup>
-  import { ref, computed, provide, onMounted, onUnmounted } from 'vue'
-  import { useRoute, useRouter } from 'vue-router'
-  import Books from '~/components/Books'
-  import Results from '~/components/Results'
-  import { useTheme } from '~/composables/useTheme'
-  import { booksMap } from '~/data/booksMap'
-  
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import Books from '~/components/Books'
+import Results from '~/components/Results'
+import { useTheme } from '~/composables/useTheme'
+import { booksMap } from '~/data/booksMap'
+
 defineProps({
-    showChapter: Boolean
+  showChapter: Boolean
 })
 
 const emit = defineEmits(['toggle-chapter'])
 
-  const route = useRoute()
-  const router = useRouter()
+const route = useRoute()
+const router = useRouter()
 
-  const search = ref('')
+const search = ref('')
+const activeIndex = ref(-1)
 
+const normalize = (t) =>
+  t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
 
-  //const mostrarChapter = inject('mostrarChapter')
+const books = Object.keys(booksMap)
 
-  const normalize = (t) => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-  
-  const books = Object.keys(booksMap)
+const filteredBooks = computed(() => {
+  if (!search.value) return books
+  return books.filter(book =>
+    normalize(booksMap[book] || book).includes(normalize(search.value))
+  )
+})
 
-  const filteredBooks = computed(() => {
-    if (!search.value) return books
+const isReadRoute = computed(() => route.path === '/panel/libros')
 
-    return books.filter( book =>
-      normalize(booksMap[book] || book)
-        .includes(normalize(search.value))
-    )
-  })
+const goToBook = (book) => {
+  search.value = ''
+  activeIndex.value = -1
+  router.push(`/panel/libros/${book}/1`)
+}
 
-  const isReadRoute = computed(() => route.path === '/panel/libros')
+const resultsVisible = computed(() =>
+  !isReadRoute.value && search.value.trim().length > 0
+)
 
-  const goToBook = (book) => {
-    search.value = ''
-    router.push(`/panel/libros/${book}/1`)
+const handleKey = (e) => {
+  if (!resultsVisible.value) return
+
+  const total = filteredBooks.value.length
+
+  switch (e.key) {
+    case 'Escape':
+      search.value = ''
+      activeIndex.value = -1
+      break
+
+    case 'ArrowDown':
+      e.preventDefault()
+      activeIndex.value = (activeIndex.value + 1) % total
+      break
+
+    case 'ArrowUp':
+      e.preventDefault()
+      activeIndex.value = (activeIndex.value - 1 + total) % total
+      break
+
+    case 'Enter':
+      if (activeIndex.value >= 0) {
+        goToBook(filteredBooks.value[activeIndex.value])
+      }
+      break
   }
+}
 
+const clickOutsideSearch = (e) => {
+  if (!e.target.closest('.search-container')) {
+    search.value = ''
+    activeIndex.value = -1
+  }
+}
 
-const { toggleTheme } = useTheme() 
-
-// menu
 const open = ref(null)
 
 const toggle = (name) => {
-  open.value = open.value === name ? 'null' : name
+  open.value = open.value === name ? null : name
 }
 
 const close = () => {
   open.value = null
 }
 
-const clickOutside = (e) => {
-  if(!e.target.closest('.menu-opciones')) close()
+const clickOutsideMenu = (e) => {
+  if (!e.target.closest('.menu-opciones')) close()
 }
 
 onMounted(() => {
-  window.addEventListener('click', clickOutside)
+  window.addEventListener('keydown', handleKey)
+  window.addEventListener('click', clickOutsideSearch)
+  window.addEventListener('click', clickOutsideMenu)
 })
 
 onUnmounted(() => {
-  window.removeEventListener('click', clickOutside)
+  window.removeEventListener('keydown', handleKey)
+  window.removeEventListener('click', clickOutsideSearch)
+  window.removeEventListener('click', clickOutsideMenu)
 })
-  
+
+const { toggleTheme } = useTheme()
 </script>
+
 
 <template>
   <section class="flex px-[10px] py-[15px] gap-3 text-text1 justify-between
@@ -104,7 +144,7 @@ onUnmounted(() => {
       </button>
     </div>
 
-    <div class="hidden md:relative md:flex md:gap-2 md:mx-auto md:items-center">
+    <div class="hidden md:relative md:flex md:gap-2 md:mx-auto md:items-center search-container ">
       <input
         type="text"
         v-model="search"
@@ -112,9 +152,10 @@ onUnmounted(() => {
         placeholder="Buscar libro"
       >
       <Results
-        v-if="!isReadRoute && search.trim().length > 0"
+        v-if="resultsVisible"
         :results="filteredBooks"
         :search="search"
+        :activeIndex="activeIndex"
         @select="goToBook"
       />
 

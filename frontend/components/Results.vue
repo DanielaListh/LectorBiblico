@@ -1,12 +1,14 @@
 <script setup>
 import { booksMap } from '~/data/booksMap';
 
-defineProps({
+const props = defineProps({
     results: Array,
-    search: String
+    search: String,
+    activeIndex: Number
 })
 
 defineEmits(['select'])// realiza la emisión del evento 'select' al hacer clic en un resultado
+
 </script>
 
 <template>
@@ -14,10 +16,15 @@ defineEmits(['select'])// realiza la emisión del evento 'select' al hacer clic 
              rounded-lg bg-bg2 blackdrop-blur-md border-2 border-border1 p-2">
         <div v-if="results.length > 0">
             <button
-                v-for="book in results"
+                v-for="(book, index) in results"
                 :key="book"
                 @click="$emit('select', book)"
-                class=" w-full text-left px-4 py-2 rounded-xl text-text1 hover:bg-bg3 transition"
+                class=" w-full text-left px-4 py-2 rounded-xl transition"
+                :class="[
+                    index === activeIndex
+                        ? 'bg-hoverText1 text-bg2 font-semibold'
+                        : 'text-text1 hover:bg-bg3' 
+                ]"
             >
             {{ booksMap[book]}}
             </button>
