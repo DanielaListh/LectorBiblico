@@ -1,4 +1,5 @@
 import { ref } from "vue";
+import { highlightColors, highlightTextColors } from "~/data/highlightColors";
 
 export function useMenuFav(favorites) {
     const menu = ref({
@@ -56,13 +57,35 @@ export function useMenuFav(favorites) {
             return
         }
         item.pinned = !item.pinned
+
+        favorites.value.sort((a, b) => {
+            if (a.pinned && !b.pinned) return -1
+            if(!a.pinned && b.pinned) return 1
+
+            if (a.book < b.book) return -1
+            if (a.book > b.book) return 1
+            return a.chapter - b.chapter
+        })
+
         localStorage.setItem("highlights", JSON.stringify(favorites.value))
         closeMenu()
     }
 
     const changeColor = (item, color) => {
         item.bgColor = color
-        localStorage.setItem("highlights", JSON.stringify(favorites.value))
+        item.textColor = highlightTextColors[color]
+
+        //sync original colors
+        const stored = JSON.parse(localStorage.getItem("highlights")) || []
+        const index = stored.findIndex(favorite => favorite.id === item.id)
+
+        if (index !== -1) {
+            stored[index].bgColor = color
+            stored[index].textColor = highlightTextColors[color]
+            localStorage.setItem("highlights", JSON.stringify(stored))    
+        }
+
+        window.dispatchEvent(new Event ('updated-results'))
         closeMenu()
     }
 

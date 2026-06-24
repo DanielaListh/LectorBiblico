@@ -1,5 +1,6 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { highlightColors, highlightTextColors } from '~/data/highlightColors';
 
 export function useHighlight(data) {
   const route = useRoute()
@@ -10,17 +11,6 @@ export function useHighlight(data) {
     x: 0,
     y: 0
   })
-
-  const highlightColors = [
-    'transparent',
-    '#d8c3a6',
-    '#dcc16b',
-    '#ca7f56',
-    '#994d2c',
-    '#9baa5e',
-    '#54523a',
-    '#734f3a'
-  ]
 
   const obtainSelectedVerses = () => {
     const selection = window.getSelection()
@@ -45,12 +35,19 @@ export function useHighlight(data) {
 
     const rect = selection.getRangeAt(0).getBoundingClientRect()
 
+    window.removeEventListener('click', handleClickOutside)
+
     highlighterMenu.value = {
       visible: true,
       verses,
       x: rect.left + window.scrollX,
       y: rect.top + window.scrollY - 50
     }
+
+    setTimeout(() => {
+      window.addEventListener('click', handleClickOutside)
+    }, 50)
+
   }
 
   const closeHighlighterMenu = () => {
@@ -72,36 +69,51 @@ export function useHighlight(data) {
     const actualBook = route.params.book
     const actualChapter = Number(route.params.chapter)
 
-    const rangeText = verses.map((v) => data.value.verses[v - 1]).join('')
-
-    const newItem = {
-      id: crypto.randomUUID(),
-      book: actualBook,
-      chapter: actualChapter,
-      verses,
-      color,
-      text: rangeText,
-      date: Date.now()
-    }
-
     const stored = JSON.parse(localStorage.getItem('highlights') || '[]')
 
+    // buscar highlight existente
+    const index = stored.findIndex(
+      h =>
+        h.book === actualBook &&
+        h.chapter === actualChapter &&
+        JSON.stringify(h.verses) === JSON.stringify(verses)
+    )
+
+    // si el color es transparente → borrar highlight
     if (color === 'transparent') {
-      const filtered = stored.filter(
-        (h) =>
-          !(
-            h.book === actualBook &&
-            h.chapter === actualChapter &&
-            JSON.stringify(h.verses) === JSON.stringify(verses)
-          )
-      )
-      localStorage.setItem('highlights', JSON.stringify(filtered))
+      if (index !== -1) {
+        stored.splice(index, 1)
+        localStorage.setItem('highlights', JSON.stringify(stored))
+      }
       return
     }
 
-    stored.push(newItem)
-    localStorage.setItem('highlights', JSON.stringify(stored))
+    // si ya existe → actualizar color
+    if (index !== -1) {
+      stored[index].bgColor = color
+      localStorage.setItem('highlights', JSON.stringify(stored))
+      return
+    }
+
+    // si no existe → crear highlight nuevo
+    const rangeText = verses.map(v => data.value.verses[v - 1]).join('')
+
+  const newItem = {
+    id: crypto.randomUUID(),
+    book: actualBook,
+    chapter: actualChapter,
+    verses,
+    bgColor: color,
+    textColor: highlightTextColors[color],
+    text: rangeText,
+    date: Date.now()
   }
+
+  stored.push(newItem)
+  localStorage.setItem('highlights', JSON.stringify(stored))
+}
+
+
 
   const colorSelect = (color) => {
     saveHighlight(highlighterMenu.value.verses, color)
@@ -123,7 +135,14 @@ export function useHighlight(data) {
 
     if (!match) return text
 
-    return `<mark style="background:${match.color}; padding:2px; border-radius:4px;">${text}</mark>`
+    return `<mark style="
+      background:${match.bgColor};
+      color:${match.textColor}; 
+      padding:2px;
+      border-radius:4px;
+    ">
+        ${text}
+      </mark>`
   }
 
   const emitHighlight = () => {
@@ -134,18 +153,37 @@ export function useHighlight(data) {
     data.value = { ...data.value }
   }
 
+  const handleClickOutside = (event) => {
+    const menuEl = document.querySelector('.highlighter-menu')
+    if (menuEl && !menuEl.contains(event.target)) {
+      closeHighlighterMenu()
+    }
+  }
+
   onMounted(() => {
+    document.addEventListener('mouseup', handleSelection)
+
+    setTimeout(() => {
+      window.addEventListener('click', handleClickOutside)
+    }, 50)
+
     window.addEventListener('updated-results', refreshHighlight)
   })
 
   onUnmounted(() => {
+    document.removeEventListener('mouseup', handleSelection)
+    window.removeEventListener('click', handleClickOutside)
     window.removeEventListener('updated-results', refreshHighlight)
   })
+
+  
+
 
   return {
     highlighterMenu,
     highlightColors,
     handleSelection,
+    handleClickOutside,
     colorSelect,
     verseHighlight
   }

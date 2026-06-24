@@ -1,7 +1,9 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useMenuFav } from '~/composables/useMenuFav'
+import { booksMap } from '~/data/booksMap'
+import { highlightColors, highlightTextColors } from '~/data/highlightColors'
 
 const router = useRouter()
 
@@ -12,9 +14,23 @@ const showColorMenu = ref(false)
 
 onMounted(() => {
   const data = localStorage.getItem('highlights')
-  favorites.value = data ? JSON.parse(data) : []
+  favorites.value = data
+    ? JSON.parse(data).map(favorite => ({
+      pinned: favorite.pinned ?? false,
+      bgColor: favorite.bgColor,
+      ...favorite
+    }))
+    : []
   sortFavorites()
 })
+
+const pinnedFavorites = computed(() => 
+  favorites.value.filter(favorite => favorite.pinned )
+)
+
+const normalFavorites = computed(() => 
+  favorites.value.filter(favorite => !favorite.pinned)
+)
 
 const goToFavorite = (item) => {
   router.push({
@@ -45,6 +61,9 @@ const getFavoriteText = (item) => {
 
 const sortFavorites = () => {
   favorites.value.sort((a, b) => {
+    if (a.pinned && !b.pinned) return -1
+    if(!a.pinned && b.pinned) return 1
+
     if (a.book < b.book) return -1
     if (a.book > b.book) return 1
     return a.chapter - b.chapter
@@ -63,7 +82,7 @@ onUnmounted(() => {
 
 
 <template> 
-  <section class="p-4 flex flex-col h-[500px] overflow-y-auto">
+  <section class="p-4 pr-20 flex flex-col h-[500px] overflow-y-auto">
 
     <div
         v-if="menu.visible"
@@ -114,7 +133,7 @@ onUnmounted(() => {
             @click="togglePin(menu.item)"
           >
             <svg class="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path  :style="{ fill: 'var(--icon-color)'}"
+              <path :style="{ fill: 'var(--icon-color)'}"
               d="M17.1218 1.87023C15.7573 0.505682 13.4779 0.76575 12.4558 2.40261L9.61062 
               6.95916C9.61033 6.95965 9.60913 6.96167 9.6038 6.96549C9.59728 6.97016 9.58336 6.97822 
               9.56001 6.9848C9.50899 6.99916 9.44234 6.99805 9.38281 6.97599C8.41173 6.61599 6.74483 
@@ -168,20 +187,13 @@ onUnmounted(() => {
             >
 
               <button
-                v-for="color in [
-                  '#d8c3a6',
-                  '#dcc16b',
-                  '#ca7f56',
-                  '#994d2c',
-                  '#9baa5e',
-                  '#54523a',
-                  '#734f3a'
-                ]"
+                v-for="color in highlightColors"
                 :key="color"
                 class="w-6 h-6 rounded-full"
                 :style="{ background: color }"
                 @click.stop="changeColor(menu.item, color)"
-              />
+              >
+              </button>
 
             </div>
           </Transition>
@@ -189,26 +201,93 @@ onUnmounted(() => {
 
       </div>
 
-    <h2 class="text-[#5b493b] font-lexendExa flex  w-full text-4xl h-[50px] font-semibold my-2">Mis favoritos</h2>
+    <!-- tittle -->
+
+    <h2 class="text-text1 font-lexendExa flex  w-full text-4xl h-[50px] font-semibold my-2">Mis favoritos</h2>
     
-    <!-- masonry-->
+    <!-- fav pinned  -->
+    <div v-if="pinnedFavorites.length" class="columns-3 gap-4 w-full mb-6">
+
+      <div 
+        v-for="item in pinnedFavorites"
+        :key="item.id"
+        @click="goToFavorite(item)"
+        class="cursor-pointer break-inside-avoid p-3 rounded-xl font-lexendExa mb-4 relative"
+        :style="{ background:item.bgColor}"
+      >
+
+        <!-- HEADER: título + iconos -->
+        <div class="flex justify-between items-center">
+
+          <!-- TÍTULO -->
+          <h3 class="font-semibold text-text1">
+            {{ booksMap[item.book] }} {{ item.chapter }}:
+            <span v-if="item.verses.length === 1">{{ item.verses[0] }}</span>
+            <span v-else>[{{ item.verses[0] }} - {{ item.verses[item.verses.length - 1] }}]</span>
+          </h3>
+
+          <!-- ICONO DE PIN -->
+          <svg class="w-6 h-6" viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M17.1218 1.87023C15.7573 0.505682 13.4779 0.76575 12.4558 2.40261L9.61062 
+              6.95916C9.61033 6.95965 9.60913 6.96167 9.6038 6.96549C9.59728 6.97016 9.58336 6.97822 
+              9.56001 6.9848C9.50899 6.99916 9.44234 6.99805 9.38281 6.97599C8.41173 6.61599 6.74483 
+              6.22052 5.01389 6.87251C4.08132 7.22378 3.61596 8.03222 3.56525 8.85243C3.51687 9.63502 
+              3.83293 10.4395 4.41425 11.0208L7.94975 14.5563L1.26973 21.2363C0.879206 21.6269 0.879206 
+              22.26 1.26973 22.6506C1.66025 23.0411 2.29342 23.0411 2.68394 22.6506L9.36397 
+              15.9705L12.8995 19.5061C13.4808 20.0874 14.2853 20.4035 15.0679 20.3551C15.8881 20.3044 
+              16.6966 19.839 17.0478 18.9065C17.6998 17.1755 17.3043 15.5086 16.9444 14.5375C16.9223 
+              14.478 16.9212 14.4114 16.9355 14.3603C16.9421 14.337 16.9502 14.3231 16.9549 14.3165C16.9587 
+              14.3112 16.9606 14.31 16.9611 14.3098L21.5177 11.4645C23.1546 10.4424 23.4147 8.16307 22.0501 
+              6.79853L17.1218 1.87023Z"/>
+          </svg>
+
+          <!-- BOTÓN MENÚ -->
+          <button @click.stop="openMenu($event, item)">
+            <svg class="w-6 h-6" viewBox="0 0 24 24">
+              <path :style="{ fill: 'var(--icon-color)' }"
+                d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 
+                3.89543 10 5 10C6.10457 10 7 10.8954 7 12Z" />
+              <path :style="{ fill: 'var(--icon-color)' }"
+                d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 
+                10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z" />
+              <path :style="{ fill: 'var(--icon-color)' }"
+                d="M21 12C21 13.1046 20.1046 14 19 14C17.8954 14 17 13.1046 17 12C17 10.8954 
+                17.8954 10 19 10C20.1046 10 21 10.8954 21 12Z" />
+            </svg>
+          </button>
+
+        </div>
+
+        <!-- TEXTO -->
+        <p class="text-text5 mt-2"
+           :style="{color: highlightTextColors[item.bgColor]}"
+        >
+          {{ getFavoriteText(item) }}
+        </p>
+
+      </div>
+    </div>
+
+
+
+
+    <!-- Favoritos normales en masonry-->
     <div class=" columns-3 gap-4 w-full ">
 
       <!-- cards -->
       <div
-        v-for="item in favorites"
+        v-for="item in normalFavorites"
         :key="item.id"
         @click="goToFavorite(item)"
         class=" cursor-pointer break-inside-avoid p-3 rounded-xl font-lexendExa mb-4"
         :style="{ background:item.bgColor || 'var(--bg2)'}"
       >
-        <div
-          
-          class="flex justify-between items-center">
+        <div class="flex justify-between items-center">
           <h3 class="font-semibold text-text1 font-lexendExa">
-            {{ item.book }} {{ item.chapter }} :
+            {{ booksMap[item.book] }} {{ item.chapter }} :
             <span v-if="item.verses && item.verses.length === 1">
-            {{ item.verses[0] }}
+            {{ item.verses[0] }} 
             </span> 
             <span 
               v-else-if="item.verses && item.verses.length > 1"
@@ -233,6 +312,7 @@ onUnmounted(() => {
           </button>
         </div>
           <p class="text-text2 mt-2"
+              :style="{color: highlightTextColors[item.bgColor]}"
           >
             {{ getFavoriteText(item) }}
           </p>

@@ -36,6 +36,7 @@ const {
   highlighterMenu,
   highlightColors,
   handleSelection,
+  handleClickOutside,
   colorSelect,
   verseHighlight
 } = useHighlight(data)
@@ -57,18 +58,26 @@ const { scrollToVerse } = useScroll(data)
   <transition name="fade-scale">
     <div 
       v-if="highlighterMenu.visible"
-      class="fixed z-[600] bg-bg2 border border-border2 shadow-xl rounded-xl p-3 flex gap-2 items-center"
+      class="highlighter-menu fixed z-[600] bg-bg2 border border-border2 shadow-xl 
+      rounded-xl p-3 flex gap-2 items-center transition-opacity duration-300"
       :style="{top: highlighterMenu.y + 'px', left: highlighterMenu.x + 'px'}" 
     >
       <button
         v-for="color in highlightColors"
         :key="color"
-        @click="colorSelect(color)"
-        class="w-7 h-7 rounded-full"
-        :style="{ background: color === 'transparent' ? 'white' : color }"
+        @click.stop="colorSelect(color)"
+        class="w-6 h-6 flex items-center justify-center rounded-full"
+        :style="color !== 'transparent' ? { background: color } : {}"
       >
-        <span v-if="color === 'transparent'" class="text-text1 text-xs font-bold"></span>
+        <!-- Botón especial para transparente -->
+        <template v-if="color === 'transparent'">
+          <svg width="12" height="12" viewBox="0 0 24 24" stroke="#7a6f63" stroke-width="2" fill="none">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </template>
       </button>
+
     </div>
   </transition>
   
