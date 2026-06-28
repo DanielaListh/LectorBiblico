@@ -1,5 +1,4 @@
 import { ref } from "vue";
-import { highlightColors, highlightTextColors } from "~/data/highlightColors";
 
 export function useMenuFav(favorites) {
     const menu = ref({

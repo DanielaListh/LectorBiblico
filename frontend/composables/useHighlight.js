@@ -1,9 +1,22 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { highlightColors, highlightTextColors } from '~/data/highlightColors';
+import {
+    highlightColorsLight,
+    highlightTextColorsLight,
+    highlightColorsDark,
+    highlightTextColorsDark
+} from '~/data/highlightColors.js';
+  
 
 export function useHighlight(data) {
   const route = useRoute()
+
+  const colorMode = useColorMode() 
+  const isDark = computed(() => colorMode.value === 'dark')
+
+
+  const highlightColors = computed(() => isDark ? highlightColorsDark : highlightColorsLight)
+  const highlightTextColors = computed(() => isDark ? highlightTextColorsDark : highlightTextColorsLight)
 
   const highlighterMenu = ref({
     visible: false,
@@ -104,7 +117,7 @@ export function useHighlight(data) {
     chapter: actualChapter,
     verses,
     bgColor: color,
-    textColor: highlightTextColors[color],
+    textColor: highlightTextColors.value[color],
     text: rangeText,
     date: Date.now()
   }

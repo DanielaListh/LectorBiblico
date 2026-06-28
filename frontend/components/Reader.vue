@@ -7,7 +7,6 @@ import { useSwipeNavigation } from '~/composables/useSwipeNavigation';
 import { booksMap } from '~/data/booksMap'
 
 
-
 // chapter Navigation
 const {
   book,

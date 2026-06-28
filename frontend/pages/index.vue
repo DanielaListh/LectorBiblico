@@ -22,12 +22,12 @@ const { toggleTheme } = useTheme()
         </RouterLink>
       </div>
 
-      <div class="hidden gap-4 md:flex justify-between">
-        <a href="#home" class="text-text1 hover:text-hoverText transition">Home</a>
-        <a href="#search" class="text-text1 hover:text-hoverText transition">Búsqueda</a>
-        <a href="#faq" class="text-text1 hover:text-hoverText transition">FAQs</a>
-        <a href="#audience" class="text-text1 hover:text-hoverText transition">Audiencia</a>
-        <a href="#donate" class="text-text1 hover:text-hoverText transition">Donar</a>
+      <div class="hidden gap-4 md:flex justify-between text-text1">
+        <a href="#home" class="hover:text-hoverText1 transition-colors duration-300">Home</a>
+        <a href="#search" class="hover:text-hoverText1 transition-colors duration-300">Búsqueda</a>
+        <a href="#faq" class="hover:text-hoverText1 transition-colors duration-300">FAQs</a>
+        <a href="#audience" class="hover:text-hoverText1 transition-colors duration-300">Audiencia</a>
+        <a href="#donate" class="hover:text-hoverText1 transition-colors duration-300">Donar</a>
       </div>
 
       <div class="hidden md:block">

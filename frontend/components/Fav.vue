@@ -3,7 +3,8 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useMenuFav } from '~/composables/useMenuFav'
 import { booksMap } from '~/data/booksMap'
-import { highlightColors, highlightTextColors } from '~/data/highlightColors'
+import { useHighlight } from '~/composables/useHighlight'
+
 
 const router = useRouter()
 
@@ -159,7 +160,7 @@ onUnmounted(() => {
         <!-- Cambiar color -->
         <div class="absolute top-12 left-32 -translate-x-1/2 rounded-full bg-bg3 hover:bg-bg4 p-1 mx-auto">
           <button
-            :style="{ background: color }"
+            :style="{ background: item.bgColor, color: item.textColor }"
             @click.stop="showColorMenu = !showColorMenu"
             class="p-1 mx-auto"
           >
@@ -190,7 +191,7 @@ onUnmounted(() => {
                 v-for="color in highlightColors"
                 :key="color"
                 class="w-6 h-6 rounded-full"
-                :style="{ background: color }"
+                :style="{ background: item.bgColor, color: item.textColor }"
                 @click.stop="changeColor(menu.item, color)"
               >
               </button>
@@ -213,7 +214,7 @@ onUnmounted(() => {
         :key="item.id"
         @click="goToFavorite(item)"
         class="cursor-pointer break-inside-avoid p-3 rounded-xl font-lexendExa mb-4 relative"
-        :style="{ background:item.bgColor}"
+        :style="{background: item.bgColor, color: item.textColor}"
       >
 
         <!-- HEADER: título + iconos -->
@@ -261,7 +262,7 @@ onUnmounted(() => {
 
         <!-- TEXTO -->
         <p class="text-text5 mt-2"
-           :style="{color: highlightTextColors[item.bgColor]}"
+           :style="{background: item.bgColor, color: item.textColor}"
         >
           {{ getFavoriteText(item) }}
         </p>
@@ -312,7 +313,7 @@ onUnmounted(() => {
           </button>
         </div>
           <p class="text-text2 mt-2"
-              :style="{color: highlightTextColors[item.bgColor]}"
+              :style="{background: item.bgColor, color: item.textColor}"
           >
             {{ getFavoriteText(item) }}
           </p>

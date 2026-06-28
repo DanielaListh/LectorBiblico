@@ -1,34 +1,126 @@
 <script setup>
+import { ref } from "vue";
+
+const openQuestion = ref(null);
+
+const toggleQuestion = (index) => {
+  openQuestion.value = openQuestion.value === index ? null : index;
+};
+
 const questions = [
-    { title: "¿Cómo encontrar un versículo o libro específico? ", description: "Puedes usar el buscador en la parte superior de la página para ingresar el nombre del libro. A medida que escribes, el sistema te va mostrando sugerencias para que encuentres rápidamente el pasaje que estás buscando." },
-    { title: "¿Por qué leer la Biblia online?", description: "Leer la Biblia online permite acceder a la Palabra de Dios desde cualquier lugar y en cualquier momento, sin necesidad de tener una copia física. Además, las plataformas digitales ofrecen herramientas interactivas como búsqueda por versículo, notas personales y textos resaltados, que enriquecen la experiencia de lectura y estudio "},
-    { title: "¿Necesito registrarme para usar la plataforma?", description: "No es necesario, puedes leer la Biblia, guardar notas, textos resaltados o personalizar tu experiencia sin necesidad de registro" },
-    { title: "¿Puedo compartir versículos con amigos?", description: "Sí, cada versículo tiene una opción para compartir por redes sociales o copiar el enlace. Las notas personales son privadas, pero podés copiarlas y compartirlas manualmente." },
-    { title: "¿De dónde proviene el contenido bíblico?", description: "El texto bíblico se obtiene de Midvash API (https://api.midvash.com/), una fuente confiable que ofrece de manera gratuita y libre la versión Reina-Valera 1960 (RVR1960). Esta API proporciona los capítulos y versículos completos directamente desde su servidor, asegurando precisión y consistencia en cada lectura." },
-    { title: "¿La plataforma funciona en dispositivos móviles?", description: "Sí, el sitio está diseñado para ser completamente responsivo y puede usarse desde celulares, tablets o computadoras sin perder calidad ni funcionalidad. La interfaz se adapta automáticamente al tamaño de la pantalla para que puedas leer, buscar y navegar de forma cómoda desde cualquier dispositivo."},
-    
-]
+  {
+    title: "¿Cómo encontrar un versículo o libro específico?",
+    description:
+      "Puedes usar el buscador en la parte superior de la página para ingresar el nombre del libro. A medida que escribes, el sistema te mostrará sugerencias para encontrar rápidamente el pasaje que buscas."
+  },
+  {
+    title: "¿Por qué leer la Biblia online?",
+    description:
+      "Leer la Biblia online te permite acceder a la Palabra de Dios desde cualquier lugar. Además, puedes buscar versículos, guardar favoritos, resaltar textos y personalizar tu experiencia."
+  },
+  {
+    title: "¿Necesito registrarme para usar la plataforma?",
+    description:
+      "No. Puedes leer la Biblia, guardar favoritos, notas y resaltados sin crear una cuenta."
+  },
+  {
+    title: "¿Puedo compartir versículos?",
+    description:
+      "Sí. Puedes copiar el versículo o compartirlo fácilmente con tus amigos mediante las opciones disponibles."
+  },
+  {
+    title: "¿De dónde proviene el contenido bíblico?",
+    description:
+      "El texto bíblico proviene de Midvash API, utilizando la versión Reina-Valera 1960 de forma gratuita."
+  },
+  {
+    title: "¿Funciona en dispositivos móviles?",
+    description:
+      "Sí. El lector es completamente responsivo y funciona perfectamente en computadoras, tablets y celulares."
+  }
+];
 </script>
 
 <template>
-    <section 
-        id="faq" 
-        class="h-auto mx-auto flex flex-col items-center py-20"
-    >
-       <h2 class="font-cinzel text-center text-text1 m-[10px] text-4xl md:text-5xl">Preguntas Frecuentes</h2> 
-       <div 
-        class=" group h-auto mx-auto m-[10px] md:gap-1 md:space-y-3 md:h-screen md:w-[90%] 
-                md:bg-[url('/img/moises1.png')] md:bg-cover md:bg-center lg:columns-3"
-       >
-            <div v-for="(question, index) in questions" :key="index"
-                class=" flex flex-col bg-bg3 text-text1 md:bg-bg3 border m-[20px]
-                    border-border2 md:text-text1 rounded-2xl shadow-md
-                    hover:border-hoverBorder1 transition-all duration-500 ease-out p-2
-                    transform hover:translate-y-2 hover:shadow-2xl hover:shadow-[#754a1a]
-                    break-inside-avoid">
-                <h3 class="font-cinzel text-xl mb-2">{{ question.title }}</h3>
-                <p class="font-lexendExa text-sm">{{ question.description }}</p>
+  <section
+    id="faq"
+    class="py-24 px-6 bg-bg5 mx-auto"
+  >
+
+    <div class="max-w-4xl mx-auto">
+
+      <!-- título -->
+
+      <h2
+        class="font-cinzel text-4xl md:text-5xl text-center text-text1 font-bold"
+      >
+        Preguntas Frecuentes
+      </h2>
+
+      <p
+        class="mt-5 text-center text-text2 font-lexendExa max-w-2xl mx-auto"
+      >
+        Resolvemos las dudas más comunes para que disfrutes de una mejor
+        experiencia leyendo la Biblia.
+      </p>
+
+      <!-- preguntas -->
+
+      <div class="mt-8 space-y-2">
+
+        <div
+          v-for="(question,index) in questions"
+          :key="index"
+          class="rounded-lg border-2 border-border1 transition-all duration-300 hover:shadow-xl overflow-hidden"
+        >
+
+          <!-- cabecera -->
+
+          <button
+            @click="toggleQuestion(index)"
+            class="w-full flex justify-between items-center px-7 py-5 text-left"
+          >
+
+            <h3
+              class="font-semibold text-lg text-text1"
+            >
+              {{ question.title }}
+            </h3>
+
+            <div
+              class="text-3xl text-text1 font-light transition-transform duration-300"
+              :class="openQuestion === index ? 'rotate-180' : ''"
+            >
+              {{ openQuestion === index ? "−" : "+" }}
             </div>
-       </div>    
-    </section>
+
+          </button>
+
+          <!-- respuesta -->
+
+          <Transition
+            enter-active-class="transition-all duration-300 ease-out"
+            leave-active-class="transition-all duration-200 ease-in"
+            enter-from-class="max-h-0 opacity-0"
+            enter-to-class="max-h-96 opacity-100"
+            leave-from-class="max-h-96 opacity-100"
+            leave-to-class="max-h-0 opacity-0"
+          >
+
+            <div
+              v-if="openQuestion === index"
+              class="border-l-4 border-[#e78c65] px-7 pb-6 text-text2 font-lexendExa leading-8"
+            >
+              {{ question.description }}
+            </div>
+
+          </Transition>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
 </template>
