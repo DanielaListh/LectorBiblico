@@ -18,7 +18,6 @@ export default {
         cinzel: ['Cinzel', 'serif'],
         lexendExa: ['Lexend Exa', 'sans-serif'],
         bellefair: ['Bellefair', 'serif'],
-        corinthia: ['Corinthia', 'cursive'],
       },
       backgroundImage: {
         main: "var(--bg-image)"

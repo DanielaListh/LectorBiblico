@@ -4,15 +4,11 @@
 
       <!-- Texto -->
       <div>
-        <span class="inline-block bg-bg3 text-text1 px-4 py-2 rounded-full text-sm font-semibold mb-6">
-          Para ti
-        </span>
-
-        <h2 class="font-cinzel text-4xl md:text-5xl text-text1 leading-tight">
+        <h2 class="tittle-secondary-left">
           Hecha para quienes buscan esperanza.
         </h2>
 
-        <p class="mt-3 text-text1 font-lexendExa leading-relaxed text-sl">
+        <p class="paragraph">
           La Santa Biblia Digital fue creada para acompañarte cada día en tu caminar con Dios. Un lugar donde puedes leer, estudiar y guardar la Palabra de una forma sencilla y sin distracciones.
         </p>
 
@@ -20,7 +16,7 @@
         <div class="mt-6 space-y-4">
           <!-- Item 1 -->
           <div class="flex gap-4">
-            <div class="w-12 h-12 rounded-xl bg-bg3 flex items-center justify-center shrink-0">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
               <!-- Icono 1 -->
               <svg class="w-8 h-8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path 
@@ -50,14 +46,14 @@
               </svg>
             </div>
             <div>
-              <h3 class="font-semibold text-text1 text-lg">Encuentra paz</h3>
-              <p class="text-text1">La Palabra de Dios puede acompañarte en los momentos difíciles y darte esperanza.</p>
+              <h3 class="subtittle">Encuentra paz</h3>
+              <p class="paragraph">La Palabra de Dios puede acompañarte en los momentos difíciles y darte esperanza.</p>
             </div>
           </div>
 
           <!-- Item 2 -->
           <div class="flex gap-4">
-            <div class="w-12 h-12 rounded-xl bg-bg3 flex items-center justify-center shrink-0">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
               <!-- Icono libro -->
               <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none">
                 <!-- Contorno del libro -->
@@ -97,21 +93,21 @@
 
             </div>
             <div>
-              <h3 class="font-semibold text-text1 text-lg">Aprende cada día</h3>
-              <p class="text-text1">Lee la Biblia de forma sencilla, resalta versículos y guarda tus favoritos.</p>
+              <h3 class="subtittle">Aprende cada día</h3>
+              <p class="paragraph">Lee la Biblia de forma sencilla, resalta versículos y guarda tus favoritos.</p>
             </div>
           </div>
 
           <!-- Item 3 -->
           <div class="flex gap-4">
-            <div class="w-12 h-12 rounded-xl bg-bg3 flex items-center justify-center shrink-0">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
               <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none">
                 <path :style="{ stroke: 'var(--icon-color)' }" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M18 11V5C18 3.9 17.1 3 16 3H8C6.9 3 6 3.9 6 5V7M18 16V19C18 20.1 17.1 21 16 21H8C6.9 21 6 20.1 6 19V11M12 18V18.01" />
               </svg>
             </div>
             <div>
-              <h3 class="font-semibold text-text1 text-lg">Disponible donde estés</h3>
-              <p class="text-text1">Funciona desde computadora, tablet y celular sin necesidad de registrarte.</p>
+              <h3 class="subtittle">Disponible donde estés</h3>
+              <p class="paragraph">Funciona desde computadora, tablet y celular sin necesidad de registrarte.</p>
             </div>
           </div>
         </div>
@@ -123,11 +119,11 @@
             <div class="absolute w-[420px] h-[420px] bg-[#f0be6d] rounded-full blur-2xl opacity-70"></div>
 
             <!-- Card -->
-            <div class="mt-12 relative bg-bg2 backdrop-blur-md rounded-2xl p-6 w-[90%] md:w-[420px]">
+            <div class="relative bg-bg2 backdrop-blur-md rounded-2xl p-6 w-[90%] md:w-[360px]">
                 <img
                     src="/img/roca2.png"
                     alt="La tumba vacía de Jesucristo"
-                    class="relative mx-auto z-10 w-[75%] rounded-lg max-w-lg hover:scale-105 transition duration-700"
+                    class="w-[340px] mx-auto rounded-lg"
                 />
 
                 <!-- Versículo -->
@@ -138,7 +134,7 @@
 
                 
 
-                <p class="italic text-text1 leading-7">
+                <p class="italic text-text1 leading-6">
                     <span>
                         <svg class="w-5 h-5 float-left mr-[2px] mt-1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                             <path 
@@ -155,7 +151,7 @@
                     <span class="text-text2 font-semibold"> ha resucitado</span>,
                     no está aquí; mirad el lugar en donde le pusieron.
                     <span>
-                        <svg class="w-5 h-5 float-rigth ml-80 -mt-6" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="w-5 h-5 float-rigth ml-32 -mt-6" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 :style="{ fill: 'var(--icon-color)' }"
                                 transform="scale(-1,1) translate(-32,0)"

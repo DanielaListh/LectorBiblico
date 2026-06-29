@@ -4,10 +4,70 @@
 
 @import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Aboreto&family=Bellefair&family=Cinzel:wght@400..900&family=Coiny&family=Corinthia:wght@400;700&family=Lexend+Exa:wght@100..900&display=swap');
 
-
-.icon-redes {
- @apply text-text1 hover:text-hoverText1 transition-colors duration-300 mx-2 text-xl
+.tittle-primary{
+  @apply font-cinzel text-text1 text-4xl md:text-6xl leading-tight text-center md:my-5;
 }
+
+.tittle-secondary{
+  @apply text-3xl md:text-5xl text-text1 font-cinzel text-center my-3;
+}
+
+.tittle-secondary-left{
+  @apply text-3xl md:text-5xl text-text1 font-cinzel my-3;
+}
+
+.subtittle{
+  @apply text-lg text-text2 font-lexendExa md:text-xl
+}
+
+.paragraph{
+  @apply text-text1 font-lexendExa text-base md:text-lg;
+}
+
+.text-tiny{
+  @apply text-lg mt-6 text-text1 opacity-60 font-bellefair;
+}
+
+.icon-base {
+ @apply w-8 h-8 text-text1 ease-in-out hover:text-hoverText1 transition-colors duration-300 mx-2 text-xl;
+}
+
+.section {
+  @apply px-6 md:px-12 py-10;
+}
+
+.button-primary{
+  @apply px-8 py-4 rounded-xl bg-bg2 text-text1 hover:bg-bg1 text-base font-semibold 
+   hover:scale-105 transition-all duration-300 m-5;
+}
+
+.button-secondary {
+  @apply px-4 py-2 rounded-lg border-2 border-border1 text-text2 font-lexendExa transition-all duration-300 ease-in-out;
+}
+
+.button-secondary-hover {
+  @apply border-border1 bg-border1 text-text1 
+         hover:bg-border1 hover:text-text1 
+         transition-all duration-300 ease-in-out;
+}
+
+.button-secondary-focus {
+  @apply focus:outline-none focus:ring-2 focus:ring-border1 
+         focus:ring-offset-2 focus:ring-offset-bg1;
+}
+
+.badges{
+  @apply inline-flex items-center px-2 py-1
+         border-r-2 border-border1
+         text-text1 text-sm font-lexendExa;
+}
+
+.input{
+  @apply border-2 border-border1 bg-transparent rounded-lg  h-8 px-6 py-2 m-2
+  focus:outline-none focus:ring-2 focus:ring-[#d8b48a]
+  text-text1 text-lg;
+}
+
 
 /*scroll vertical*/
 ::-webkit-scrollbar {

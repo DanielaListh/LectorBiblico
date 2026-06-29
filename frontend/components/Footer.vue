@@ -21,9 +21,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
             <!-- LINKS -->
             <div class="flex flex-wrap justify-center md:justify-end m-[10px] font-lexendExa text-text1 gap-3 font-semibold">
-                <a href="#home" class="hover:text-hoverText1 transition-colors duration-300">Home</a>
-                <a href="#busqueda" class="hover:text-hoverText1 transition-colors duration-300">Buscar</a>
-                <a href="#faq" class="hover:text-hoverText1 transition-colors duration-300">FAQ</a>
+                <a href="#home" class="hover:text-hoverText1 transition-colors duration-300">Inicio</a>
+                <a href="#busqueda" class="hover:text-hoverText1 transition-colors duration-300">Búsqueda</a>
+                <a href="#faq" class="hover:text-hoverText1 transition-colors duration-300">Dudas</a>
                 <a href="#audiencia" class="hover:text-hoverText1 transition-colors duration-300">Audiencia</a>
                 <a href="#donar" class="hover:text-hoverText1 transition-colors duration-300">Donar</a>
             </div>
@@ -33,7 +33,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
         <!-- TEXTO FINAL -->
         <div class="flex justify-center items-center mt-4">
             <img src="/img/heart.png" alt="corazon" class="w-4 mr-2">
-            <p class="font-cinzel text-text1 text-center">Created by Daniela Berrios</p>
+            <p class="font-cinzel text-text1 text-center">Creado con cariño por Daniela Berrios</p>
             <img src="/img/heart.png" alt="corazon" class="w-4 ml-2">
         </div>
         <div class="h-[30px]"></div>

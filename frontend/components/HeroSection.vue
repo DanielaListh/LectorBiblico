@@ -11,7 +11,7 @@ const features = [
   "Gratis",
   "Computadora",
   "Celular",
-  "Lectrua continua",
+  "Lectura continua",
   "Playlist de Spotify",
   "Favoritos",
   "Resaltados",
@@ -29,14 +29,14 @@ const features = [
 
       <!-- Título -->
       <h1
-        class="font-cinzel text-4xl md:text-5xl text-text1 font-bold transition-all duration-500 hover:text-hoverText1 md:mt-6"
+        class="tittle-primary"
       >
         {{ title }}
       </h1>
 
       <!-- Descripción -->
       <p
-        class="mt-6 max-w-1xl text-lg text-text2 font-lexendExa"
+        class="paragraph"
       >
         {{ description }}
       </p>
@@ -46,7 +46,7 @@ const features = [
 
         <RouterLink to="/panel">
           <button
-            class="px-10 py-4 rounded-xl bg-bg1 text-text1 hover:bg-bg3  text-lg font-semibold shadow-xl hover:scale-105 transition-all duration-300"
+            class="button-primary"
           >
             Comenzar a leer
           </button>
@@ -55,12 +55,12 @@ const features = [
 
       <!-- Badges -->
       <div
-        class="mt-8 flex flex-wrap justify-center gap-3 font-lexendExa text-sm"
+        class="m-5 flex flex-wrap justify-center gap-2"
       >
         <span
           v-for="item in features"
           :key="item"
-          class="px-4 py-2 rounded-lg border-2 border-border1 text-text2 shadow"
+          class="badges"
         >
           {{ item }}
         </span>
@@ -70,9 +70,9 @@ const features = [
 
     </div>
 
-    <div class="flex items-center justify-center w-[80%] mx-auto mt-10">
+    <div class="flex items-center justify-center w-[80%] md:h-[150px] lg:h-[200px] overflow-hidden mx-auto mt-5">
       <div class="w-16 bg-bg2 h-[3px]"></div>
-      <img src="/img/pastor2.png" alt="El buen pastor" class="w-full h-[200px]">
+      <img src="/img/pastor2.png" alt="El buen pastor" class="w-full h-full object-cover">
       <div class="w-16 bg-bg2 h-[3px]"></div>
     </div>
 

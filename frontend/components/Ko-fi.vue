@@ -14,35 +14,33 @@ const openBinance = () => {
 <section id="donate" class="my-[100px]">
 
     <!-- Imagen + halo -->
-    <div class="flex items-center w-[80%] mx-auto mt-10 justify-center">
+    <div class="flex items-center w-[80%] mx-auto my-10 md:h-[150px] lg:h-[200px] overflow-hidden justify-center">
 
         <div class="w-16 bg-bg2 h-[3px]"></div>
-
         <img
             src="/img/david.png"
             alt="Daniel"
-            class="w-full h-[200px]"
+            class="w-full h-full object-cover"
         />
         <div class="w-16 bg-bg2 h-[3px]"></div>
     </div>
 
-    <div class="border-b-4 border-border2 rounded-2xl p-10 text-center w-[60%] mx-auto mt-12">
+    <div class="border-b-4 border-t-4 border-border2 rounded-2xl p-10 text-center w-[60%] mx-auto">
 
-        <h2 class="font-cinzel text-3xl md:text-4xl text-text1 leading-tight mb-6">
-            Este proyecto existe gracias a personas como tú.
+        <h2 class="tittle-secondary">
+            Este proyecto existe gracias a personas como tú
         </h2>
 
-        <p class="max-w-3xl mx-auto text-text1 font-lexendExa">
-            La Santa Biblia Digital nació con un propósito: <span class="text-text2 font-bold"> acercar la Palabra de Dios
+        <p class="paragraph">
+            La Santa Biblia Digital nació con un propósito: <span class="text-text2"> acercar la Palabra de Dios
             a cualquier persona,</span> sin anuncios, sin registros y completamente gratis. 
-            Si este proyecto ha sido de bendición para ti, <span class="text-text2 font-bold"> puedes ayudarme a seguir desarrollándolo para que continúe creciendo.</span> 
+            Si este proyecto ha sido de bendición para ti, <span class="text-text2"> puedes ayudarme a seguir desarrollándolo para que continúe creciendo.</span> 
         </p>
 
         <button
             @click="openBinance"
-            class="my-3 px-10 py-4 rounded-xl bg-bg1 text-text1 hover:bg-bg3 text-lg font-semibold 
-            shadow-xl hover:scale-105 transition-all duration-300">
-            <svg class="w-12 h-12 float-left -mt-4" viewBox="-7 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            class="button-primary">
+            <svg class="w-11 h-11 float-left -mt-3" viewBox="-7 0 32 32" xmlns="http://www.w3.org/2000/svg">
                 <path :style="{fill:'var(--icon-color)'}" d="M14 16.6c-0.2 0-0.4 0-0.56 0.040v-1.32c0-0.48-0.36-0.84-0.84-0.84h-11.8c-0.48 0-0.84 
                 0.36-0.84 0.84v4.2c0 3.72 3 6.72 6.72 6.72 2.080 0 3.92-0.96 5.16-2.44 0.64 0.4 1.36 0.64 2.12 
                 0.64 2.16 0 3.92-1.76 3.92-3.92 0.040-2.16-1.68-3.92-3.88-3.92zM6.68 24.6c-2.8 
@@ -56,7 +54,7 @@ const openBinance = () => {
             Invítame un cafecito
         </button>
 
-        <p class="mt-6 text-sm text-text1 opacity-60 font-corinthia">
+        <p class="text-tiny">
             Cada aporte me ayuda a mejorar este espacio digital.
         </p>
 

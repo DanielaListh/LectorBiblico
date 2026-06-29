@@ -23,9 +23,9 @@ const { toggleTheme } = useTheme()
       </div>
 
       <div class="hidden gap-4 md:flex justify-between text-text1">
-        <a href="#home" class="hover:text-hoverText1 transition-colors duration-300">Home</a>
+        <a href="#home" class="hover:text-hoverText1 transition-colors duration-300">Inicio</a>
         <a href="#search" class="hover:text-hoverText1 transition-colors duration-300">Búsqueda</a>
-        <a href="#faq" class="hover:text-hoverText1 transition-colors duration-300">FAQs</a>
+        <a href="#faq" class="hover:text-hoverText1 transition-colors duration-300">Dudas</a>
         <a href="#audience" class="hover:text-hoverText1 transition-colors duration-300">Audiencia</a>
         <a href="#donate" class="hover:text-hoverText1 transition-colors duration-300">Donar</a>
       </div>

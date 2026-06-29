@@ -39,10 +39,10 @@ const goToBook = (book) => {
 
 <template>
 
-    <section id="search" class="h-auto flex items-center justify-center flex-col gap-4 py-20">
+    <section id="search" class="h-auto flex items-center justify-center flex-col gap-4 py-5">
         <div class="flex flex-col justify-center items-center text-center">
-            <h2 class="font-cinzel text-3xl text-text1 md:text-5xl">ENCUENTRA EL LIBRO</h2>
-            <h3 class="font-cinzel text-text1">DE LA BIBLIA QUE <span class=" text-text2">DESEAS LEER</span> HOY</h3>
+            <h2 class="tittle-primary">Explora la Biblia</h2>
+            <p class="paragraph">Busca un libro o explora el Antiguo y Nuevo Testamento.</p>
         </div>
         
 
@@ -50,9 +50,8 @@ const goToBook = (book) => {
             <input 
                 v-model="search"
                 type="text" 
-                class="border-2 border-border1 bg-transparent rounded-lg  h-8 px-6 p-2 focus:outline-none focus:ring-2 focus:ring-[#d8b48a] text-text1"
-                >
-            <img src="/img/loupe.png" alt="lupa" class="w-auto h-[30px]">
+                class="input"
+            >
         </div>
 
         <div class="w-full font-lexendExa md:w-[85%]">
@@ -61,19 +60,19 @@ const goToBook = (book) => {
                 <ul class=" flex flex-wrap gap-2 justify-center md:justify-normal md:items-normal">
                     <li 
                         v-for="book in listAncientTestament" :key="book"
-                        class="text-sm sm:text-base px-2 py-1 border-2 w-auto p-1 text-text1 border-border1 hover:border-hoverBorder2 transition-colors duration-300 rounded-lg text-center "
+                        class=" "
                        :class="[
                             matchSearch(book)
                             ? 'bg-bg4 text-text1 shadow-lg shadow-[#74522baf] scale-105 hover:bg-hoverBg'
                             : 'hover:text-hoverText1 hover:shadow-md hover:shadow-[#B56B46]/30'
                         ]"
                         >
-                    <a
-                     
-                     @click="goToBook(book)"
-                    >
-                    {{ book }}
-                    </a>
+                        <button
+                            class="text-sm sm:text-base px-2 py-1 border-2 w-auto p-1 text-text2 border-border1 hover:border-hoverBorder2 transition-colors duration-300 rounded-lg text-center"
+                            @click="goToBook(book)"
+                        >
+                            {{ book }}
+                        </button>
                     
                     </li>
                 </ul>
