@@ -21,15 +21,22 @@
 }
 
 .paragraph{
-  @apply text-text1 font-lexendExa text-base md:text-lg;
+  @apply text-text3 font-lexendExa text-base md:text-lg p-2;
 }
 
 .text-tiny{
   @apply text-lg mt-6 text-text1 opacity-60 font-bellefair;
 }
 
+.icon-line{
+  @apply w-8 h-8 transition-all duration-300 ease-in-out;
+  stroke: var(--icon-stroke);
+  fill:none;
+}
+
 .icon-base {
- @apply w-8 h-8 text-text1 ease-in-out hover:text-hoverText1 transition-colors duration-300 mx-2 text-xl;
+  @apply w-8 h-8 transition-all duration-300 ease-in-out;
+  fill:var(--icon-color);
 }
 
 .section {
@@ -106,7 +113,7 @@ html {
 
   --text-1: #5b493b;    /* marrón suave */
   --text-2: #b45a2b;    /* terracota suave */
-  --text-3: #f8d8c1;    /* texto secundario cálido */
+  --text-3: #997254;    /* texto secundario cálido */
   --text-4: #f9efd3;
   --text-5: #fcebd5;
 
@@ -122,7 +129,7 @@ html {
   --shadow: 0 2px 6px rgba(203, 175, 126, 0.543);
   --placeholder: #a06a45;       /* cálido, suave */
 
-  --bg-image: url('/img/fondo-light.png');
+  --icon-stroke: #5b493b;
   --icon-color: #5b493b;
 
   --scroll-track: #f3e7db;
@@ -136,9 +143,9 @@ html {
   --bg-4: #8a5638;     /* líneas divisorias terracota oscura */
   --bg-5: #291e17;
 
-  --text-1: #edd1bd;    /* texto principal cálido */
-  --text-2: #d27a4a;    /* acento terracota */
-  --text-3: #b99b85;    /* texto secundario */
+  --text-1: #cca88e;    /* texto principal cálido */
+  --text-2: #cf6933;    /* acento terracota */
+  --text-3: #c58d64;    /* texto secundario */
   --text-4: #fed576;
   --text-5: #3a2416;
 
@@ -154,7 +161,7 @@ html {
   --shadow: 0 2px 6px rgb(247, 116, 9);
   --placeholder: #b48a6a;
 
-  --bg-image: url('/img/fondo-dark.png');
+  --icon-stroke: #b99b85;
   --icon-color: #b99b85;
 
   --scroll-track: #2f1e14;
@@ -162,15 +169,6 @@ html {
 }
 
 
-
-
-.theme-icon{
-  content:url('../../public/img/dark-icon.png')
-}
-
-.dark .theme-icon{
-  content:url('../../public/img/light-icon.png')
-}
 
 .logo {
   content: url('/img/logo-light.png');
@@ -180,7 +178,13 @@ html {
   content: url('/img/logo-dark.png');
 }
 
+.bg-main{
+  background-image: url('/img/fondo-light.png');
+}
 
+.dark .bg-main{
+  background-image: url('/img/fondo-dark.png');
+}
 
 .slide-next-enter-active,
 .slide-next-leave-active,

@@ -105,24 +105,23 @@ const questions = [
                   : ''
               "
             >
-
               <svg
-                class="h-6 w-6 transition-all duration-300"
-                viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
+                class="icon-line"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke-width="1"
+                stroke-linecap="round"
+                stroke-linejoin="round"
               >
-                <path
-                  :style="{ fill: 'var(--icon-color)' }"
-                  d="M9 17a1 1 0 102 0v-6h6a1 1 0 100-2h-6V3a1 1 0 10-2 0v6H3a1 1 0 000 2h6v6z"
-                />
+                <path d="M12 5l0 14" />
+                <path d="M5 12l14 0" />
               </svg>
-
             </div>
 
           </button>
 
           <!-- Contenido -->
-
           <Transition
             enter-active-class="transition-all duration-1000 ease-out"
             leave-active-class="transition-all duration-500 ease-in"
