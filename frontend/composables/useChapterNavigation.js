@@ -1,10 +1,15 @@
 import { useRoute, useRouter } from 'vue-router'
 import { ref, computed, onMounted, watch } from 'vue'
 import { chapterPerBooks } from '~/data/chapters'
+import { getChapter } from '@/utils/getChapter'
 
 export function useChapterNavigation() {
     const route = useRoute()
     const router = useRouter() 
+
+    console.log(import.meta.env.VITE_SUPABASE_URL)
+    console.log(import.meta.env.VITE_SUPABASE_ANON_KEY)
+
 
     const book = computed(() => route.params.book)
     const chapter = computed(() => Number(route.params.chapter))
@@ -22,15 +27,11 @@ export function useChapterNavigation() {
 
     const loadChapter = async () => {
         loading.value = true
-
         try {
-            const res = await fetch(`https://api.midvash.com/v1/rvr1960/${book.value}/${chapter.value}`)
-            const json = await res.json()
-            data.value = json.data 
-            console.log(data.value)
-
-        } catch (e){
-            console.error("Error al cargar el capitulo: ", error)
+            const content = await getChapter(book.value, chapter.value)
+            data.value = content
+        } catch (error) {
+            console.error('Error al cargar el capítulo:', error)
         }
         loading.value = false
     }

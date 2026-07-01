@@ -11,6 +11,13 @@ const imagesPerBook = {
   deuteronomy: "/img/libros/deuteronomio.webp",
   joshua: "/img/libros/josue.webp",
 }
+
+
+console.log(import.meta.env.VITE_SUPABASE_URL)
+const { data, error } = await supabase.from('cached_chapters').select('*')
+console.log(data)
+console.log(error)
+
 </script>
 
 <template>
