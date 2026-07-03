@@ -1,8 +1,3 @@
-<script setup>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-
-</script>
-
 <template>
     <footer class="w-[85%] mx-auto">
         <div class="flex flex-col md:flex-row justify-between items-center mt-4 gap-4 md:gap-0">

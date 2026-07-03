@@ -1,5 +1,6 @@
 <script setup>
 import { booksMap } from '~/data/booksMap'
+import {chapterPerBooks} from '~/data/chapters'
 
 defineEmits(['select'])
 
@@ -10,85 +11,113 @@ const imagesPerBook = {
   numbers: "/img/libros/numeros.webp",
   deuteronomy: "/img/libros/deuteronomio.webp",
   joshua: "/img/libros/josue.webp",
+  // agrega los demás libros
 }
 
 
-console.log(import.meta.env.VITE_SUPABASE_URL)
-const { data, error } = await supabase.from('cached_chapters').select('*')
-console.log(data)
-console.log(error)
+const shortName = (slug) => {
+  const cleanSlug = slug.replace(/\s+/g, '');
+
+  if (/^\d/.test(cleanSlug)) {
+    const [num, word] = cleanSlug.split('-');
+    return num + word.slice(0, 2).toUpperCase(); // 1SA, 2KI, 1CH
+  }
+
+  return cleanSlug.slice(0, 3).toUpperCase();
+};
+
 
 </script>
 
 <template>
   <section
-    class="p-3 h-auto md:h-screen md:flex md:flex-wrap md:justify-center md:gap-4 md:overflow-y-auto"
+    class="p-4 h-auto overflow-y-hidden md:h-screen md:overflow-y-auto bg-bg1"
   >
+    <!-- Banner mobile -->
+    <img src="/img/portadaMobile.png" alt="banner" class="block md:hidden mb-4 rounded-xl shadow-md">
 
-    <img src="/img/david.png" alt="david" class="block md:hidden">
-
-    <button
-      v-for="slug in Object.keys(booksMap)"
-      :key="slug"
-      @click="$emit('select', slug)"
-
-      class="
-        block w-full text-center border-2 border-border2 text-text1 py-2 px-3 rounded-lg my-2
-        font-lexendExa text-sm md:hover:bg-transparent group
-
-        md:relative md:group md:overflow-hidden
-        md:w-[230px] md:h-[150px] md:rounded-[25px]
-        md:border md:border-border2 md:bg-transparent
-        md:transition-all md:duration-500
-        md:hover:-translate-y-1
-        md:hover:shadow-[0_0_25px_rgba(220,193,107,0.3)]
-        md:hover:border-hoverBorder2
-      "
-    >
-
-      <img
-        v-if="imagesPerBook[slug]"
-        :src="imagesPerBook[slug]"
+    <!-- MOBILE: grid 2 columnas -->
+    <div class="flex flex-col gap-3 w-full md:hidden">
+      <button
+        v-for="slug in Object.keys(booksMap)"
+        :key="slug"
+        @click="$emit('select', slug)"
         class="
-          hidden md:block
-          absolute inset-0 w-full h-full object-cover opacity-0 scale-110
-          transition-all duration-700 group-hover:opacity-100 group-hover:scale-100
+          bg-bg2 rounded-xl p-3
+          flex justify-content hover:bg-hoverBg
+          focus:outline-none focus:ring-2 focus:ring-hoverBorder2
         "
       >
+        <div class="w-[80px]">
+          <p
+            class="flex items-center justify-center w-[60px] h-[60px] bg-bg1 object-cover rounded-full m-2 text-text5 p-2 text-center font-lexendExa text-lx"
+          >{{ shortName(slug) }}</p>
+        </div>
+        <div class="flex flex-col justify-center items-start gap-1">
+          <p class="text-xl text-text2 font-lexendExa leading-tight font-semibold">{{ booksMap[slug] }}</p>
+          <p
+            class="text-base text-text3 font-lexendExa md:text-xl leading-tight">
+            capitulos: {{ chapterPerBooks[slug]}}
+          </p>
+        </div>
+        
+      </button>
+    </div>
 
-      <!-- Overlays only in desktop -->
-      <div
-        class="hidden md:block absolute inset-0 bg-gradient-to-t from-black/20 via-black/20 to-transparent
-               opacity-0 transition-all duration-700 group-hover:opacity-100"
-      ></div>
-
-      <div
-        class="hidden md:block absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500
-               bg-[#ffdc68]/20"
-      ></div>
-
-      <!-- text -->
-      <div
+    <!-- DESKTOP: grid 4 columnas con tu diseño original -->
+    <div class="hidden md:grid md:grid-cols-4 md:gap-4 md:justify-center w-full">
+      <button
+        v-for="slug in Object.keys(booksMap)"
+        :key="slug"
+        @click="$emit('select', slug)"
         class="
-          relative z-10 text-center md:text-left
-          md:absolute md:bottom-0 md:left-0 md:p-5 md:flex md:items-end
+          group relative w-full h-[150px] rounded-[25px]
+          border border-border2 bg-transparent overflow-hidden
+          transition-all duration-500 hover:-translate-y-1
+          hover:shadow-[0_0_25px_rgba(220,193,107,0.3)]
+          hover:border-hoverBorder2
         "
       >
-        <p
+        <!-- Imagen con hover -->
+        <img
+          v-if="imagesPerBook[slug]"
+          :src="imagesPerBook[slug]"
           class="
-            font-lexendExa text-text2
-            text-sm hover:text-text5
-            md:text-xl md:transition-all md:duration-500
-            md:group-hover:text-text5
-            md:group-hover:drop-shadow-[0_0_8px_rgba(255,220,120,0.6)]
+            absolute inset-0 w-full h-full object-cover opacity-0 scale-110
+            transition-all duration-700 group-hover:opacity-100 group-hover:scale-100
           "
         >
-          {{ booksMap[slug] }}
-        </p>
-      </div>
 
-    </button>
+        <!-- Overlay oscuro -->
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-black/20 via-black/20 to-transparent
+                 opacity-0 transition-all duration-700 group-hover:opacity-100"
+        ></div>
 
+        <!-- Overlay dorado -->
+        <div
+          class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500
+                 bg-[#ffdc68]/20"
+        ></div>
+
+        <!-- Texto -->
+        <div
+          class="absolute bottom-0 left-0 p-5 flex items-end z-10"
+        >
+          <p
+            class="
+              font-lexendExa text-text2 text-xl transition-all duration-500
+              group-hover:text-text5 group-hover:drop-shadow-[0_0_8px_rgba(255,220,120,0.6)]
+            "
+          >
+            {{ booksMap[slug] }}
+          </p>
+        </div>
+      </button>
+    </div>
   </section>
 </template>
+
+
+
 

@@ -52,7 +52,7 @@ const questions = [
         Preguntas Frecuentes
       </h2>
 
-      <h4 class="h4 w-[400px]">
+      <h4 class="h4 w-[60%]">
         Resolvemos las dudas más comunes para que disfrutes de una mejor experiencia leyendo la Biblia
       </h4>
 
@@ -61,7 +61,7 @@ const questions = [
         <div
           v-for="(question, index) in questions"
           :key="index"
-          class="overflow-hidden rounded-2xl border transition-all duration-300 ease-out w-[400px] mx-auto"
+          class="overflow-hidden rounded-2xl border transition-all duration-300 ease-out ms:w-[60%] md:w-[80%] mx-auto"
           :class="[
             openQuestion === index
               ? 'border-border1'

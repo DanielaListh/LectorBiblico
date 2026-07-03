@@ -11,6 +11,7 @@ const features = [
     label: "Sin registro",
     icon:`<svg
             xmlns="http://www.w3.org/2000/svg"
+            class="icon-badge"
             viewBox="0 0 24 24"
             stroke-width="1"
             stroke-linecap="round"
@@ -27,6 +28,7 @@ const features = [
     icon:`<svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            class="icon-line"
             stroke-width="1"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -41,6 +43,7 @@ const features = [
     icon:`<svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            class="icon-badge"
             stroke-width="1"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -60,6 +63,7 @@ const features = [
     icon:`<svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            class="icon-badge"
             stroke-width="1"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -75,6 +79,7 @@ const features = [
     icon:`<svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            class="icon-badge"
             stroke-width="1"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -90,6 +95,7 @@ const features = [
     icon:`<svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            class="icon-badge"
             stroke-width="1"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -102,6 +108,7 @@ const features = [
     icon:`<svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            class="icon-badge"
             stroke-width="1"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -117,6 +124,7 @@ const features = [
     icon:`<svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            class="icon-badge"
             stroke-width="1"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -130,6 +138,7 @@ const features = [
     icon:`<svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            class="icon-badge"
             stroke-width="1"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -175,7 +184,7 @@ const features = [
           :key="item.label"
           class="badges"
         >
-          <span v-html="item.icon" class="md:icon-badge mr-2"></span>
+          <span v-html="item.icon" class="hidden md:block mr-2"></span>
           {{ item.label }}
         </span>
       </div>
