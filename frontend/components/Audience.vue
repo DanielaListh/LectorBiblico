@@ -116,21 +116,6 @@
                     Mas él les dijo: No os asustéis; buscáis a Jesús nazareno, el que fue crucificado;
                     <span class="text-text5 font-semibold"> ha resucitado</span>,
                     no está aquí; mirad el lugar en donde le pusieron.
-                    <span>
-                        <svg class="w-5 h-5 float-rigth ml-[250px] -mt-5 md:ml-32 md:-mt-6" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                :style="{ fill: 'var(--icon-color)' }"
-                                transform="scale(-1,1) translate(-32,0)"
-                                d="M9.563 8.469l-0.813-1.25c-5.625 3.781-8.75 8.375-8.75 12.156 0 3.656 
-                                2.688 5.375 4.969 5.375 2.875 0 4.906-2.438 4.906-5 
-                                0-2.156-1.375-4-3.219-4.688-0.531-0.188-1.031-0.344-1.031-1.25 
-                                0-1.156 0.844-2.875 3.938-5.344zM21.969 8.469l-0.813-1.25c-5.563 
-                                3.781-8.75 8.375-8.75 12.156 0 3.656 2.75 5.375 5.031 5.375 
-                                2.906 0 4.969-2.438 4.969-5 0-2.156-1.406-4-3.313-4.688-0.531-0.188-1-0.344-1-1.25 
-                                0-1.156 0.875-2.875 3.875-5.344z"
-                            />
-                        </svg>
-                    </span>
                 </p>
             </div>
         </div>
