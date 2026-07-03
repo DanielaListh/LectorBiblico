@@ -4,24 +4,44 @@
 
 @import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Aboreto&family=Bellefair&family=Cinzel:wght@400..900&family=Coiny&family=Corinthia:wght@400;700&family=Lexend+Exa:wght@100..900&display=swap');
 
-.tittle-primary{
-  @apply font-cinzel text-text3 text-4xl md:text-6xl leading-tight text-center md:my-5;
+/*H1*/
+.h1{
+  @apply font-cinzel text-4xl text-text2 md:text-6xl text-center md:my-2;
 }
 
-.tittle-secondary{
-  @apply text-3xl md:text-5xl text-text1 font-cinzel text-center my-3;
+/*H2*/
+.h2{
+  @apply text-3xl md:text-5xl text-text2 font-cinzel text-center my-1 ;
 }
 
-.tittle-secondary-left{
-  @apply text-3xl md:text-5xl text-text1 font-cinzel my-3;
+/*H2*/
+.h2-left{
+  @apply text-3xl md:text-5xl text-text2 font-cinzel my-3;
 }
 
-.subtittle{
-  @apply text-lg text-text2 font-lexendExa md:text-xl
+/*H3*/
+.h3{
+  @apply text-2xl text-text3 font-lexendExa md:text-4xl mt-1 leading-tight my-2;
+}
+
+.h4{
+  @apply text-base text-text3 font-lexendExa md:text-xl max-w-[650px] mt-1 leading-tight py-2 text-center mx-auto;
+}
+
+.h4-left{
+  @apply text-base text-text2 font-lexendExa md:text-xl max-w-[650px] mt-1 leading-tight py-1;
 }
 
 .paragraph{
-  @apply text-text1 font-lexendExa text-base md:text-lg p-2;
+  @apply text-text3 text-base font-lexendExa md:text-lg max-w-[600px] leading-tight;
+}
+
+.paragraph-2{
+  @apply text-text5 text-base font-lexendExa md:text-lg leading-tight;
+}
+
+.verse-paragraph{
+  @apply text-text1 text-lg font-lexendExa md:text-xl leading-tight;
 }
 
 .text-tiny{
@@ -30,7 +50,8 @@
 
 .icon-line{
   @apply w-8 h-8 transition-all duration-300 ease-in-out;
-  stroke: var(--icon-stroke);
+  color: var(--icon-stroke);
+  stroke: currentColor;
   fill:none;
 }
 
@@ -44,33 +65,37 @@
 }
 
 .button-primary{
-  @apply px-8 py-4 rounded-xl bg-bg2 text-text1 hover:bg-bg1 text-base font-semibold 
+  @apply px-8 py-4 rounded-xl bg-bg4 text-text2 hover:bg-hoverBg text-base font-semibold 
    hover:scale-105 transition-all duration-300 m-5;
 }
 
 .button-secondary {
-  @apply px-4 py-2 rounded-lg border-2 border-border1 text-text2 font-lexendExa transition-all duration-300 ease-in-out;
+  @apply px-4 py-2 rounded-lg border-2 border-border1 text-text3 font-lexendExa transition-all duration-300 ease-in-out;
 }
 
 .button-secondary-hover {
-  @apply border-border1 bg-border1 text-text1 
-         hover:bg-border1 hover:text-text1 
-         transition-all duration-300 ease-in-out;
+  @apply text-sm sm:text-base px-2 py-1 border-2 w-auto p-1 text-text3 border-border1 hover:border-hoverBorder2 transition-colors duration-300 rounded-lg text-center
 }
 
 .button-secondary-focus {
-  @apply focus:outline-none focus:ring-2 focus:ring-border1 
-         focus:ring-offset-2 focus:ring-offset-bg1;
+  @apply bg-bg4 text-text3 shadow-lg  scale-105 hover:bg-hoverBg
 }
 
 .badges{
-  @apply inline-flex items-center px-2 py-1
-         border-r-2 border-border1
-         text-text1 text-sm font-lexendExa;
+  @apply inline-flex items-center px-2 p-2
+          bg-bg2 
+         text-text3 text-sm font-lexendExa;
+}
+
+.icon-badge{
+  @apply w-6 h-6 transition-all duration-300 ease-in-out;
+  color: var(--icon-stroke);
+  stroke: currentColor;
+  fill:none;
 }
 
 .input{
-  @apply border-2 border-border1 bg-transparent rounded-lg  h-8 px-6 py-2 m-2
+  @apply border-2 border-border1 bg-transparent rounded-lg  h-8 px-6 py-3 m-2
   focus:outline-none focus:ring-2 focus:ring-[#d8b48a]
   text-text1 text-lg;
 }
@@ -105,67 +130,69 @@ html {
 }
 
 :root {
-  --bg-1: #c87336;      /* fondo principal */
-  --bg-2: #e8d9c7;      /* botones beige cálido */
-  --bg-3: #fcebd5;      /* fondos secundarios */
-  --bg-4: #d0c0ad;
-  --bg-5: #f5f2ec; 
+  --bg-1: #f5f2ec;      /* fondo principal */
+  --bg-2: #f3e6d4;      /* botones beige cálido */
+  --bg-3: #E8DDCF;      /* fondos secundarios */
+  --bg-4: #DCCAB5;
+  --bg-5: #C7A98A; 
 
-  --text-1: #5b493b;    /* marrón suave */
-  --text-2: #b45a2b;    /* terracota suave */
-  --text-3: #997254;    /* texto secundario cálido */
-  --text-4: #f9efd3;
-  --text-5: #fcebd5;
+  --text-1: #4B392C;    /* marrón suave */
+  --text-2: #7f593f;    /* terracota suave */
+  --text-3: #9B7A5B;    /* texto secundario cálido */
+  --text-4: #FFF9F0;
+  --text-5: #947150;
 
-  --border-1: #d3ae93;  /* borde principal */
-  --border-2: #e8d9c7;  /* borde suave */
+  --border-1: #D6C3AF;  /* borde principal */
+  --border-2: #E7DDD2;  /* borde suave */
 
-  --hover-text1: #c97a3d;        /* acento cálido */
-  --hover-text2: #f5cdb6;
-  --hover-border-1: #c97a3d;
-  --hover-border-2: #b68a55;
-  --hover-bg: #f3d6a4;
+  --hover-text1: #9A6643;        /* acento cálido */
+  --hover-text2: #FFF4E6;
+  --hover-border-1: #BC835A;
+  --hover-border-2: #C7A98A;
+  --hover-bg: #E7D5BE;
 
-  --shadow: 0 2px 6px rgba(203, 175, 126, 0.543);
-  --placeholder: #a06a45;       /* cálido, suave */
+  --shadow:0 6px 18px rgba(78,53,32,.10);
+  --placeholder: #A48467;       /* cálido, suave */
 
-  --icon-stroke: #5b493b;
-  --icon-color: #5b493b;
+  --icon-stroke: #9B7A5B;
+  --icon-stroke-hover: #9A6643;
+  --icon-color: #9B7A5B;
 
-  --scroll-track: #f3e7db;
-  --scroll-thumb: #d2b89c;
+  --scroll-track: #EFE7DC;
+  --scroll-thumb: #CCB196;
 }
 
 .dark {
-  --bg-1: #5b493b;      /* fondo principal */
-  --bg-2: #3a2416;      /* botones chocolate suave */
-  --bg-3: #84411a;      /* fondos secundarios cálidos */
-  --bg-4: #8a5638;     /* líneas divisorias terracota oscura */
-  --bg-5: #291e17;
+  --bg-1: #291e17;      /* fondo principal */
+  --bg-2: #3a2d25;      /* botones chocolate suave */
+  --bg-3: #36291F;      /* fondos secundarios cálidos */
+  --bg-4: #4A3627;     /* líneas divisorias terracota oscura */
+  --bg-5: #654935;
 
-  --text-1: #cca88e;    /* texto principal cálido */
-  --text-2: #cf6933;    /* acento terracota */
-  --text-3: #c58d64;    /* texto secundario */
-  --text-4: #fed576;
-  --text-5: #3a2416;
+  --text-1:#f9e5cd;
+  --text-2:#e2b07d;
+  --text-3:#cdb39b;
+  --text-4:#FFF6E7;
+  --text-5:#a48971;
 
-  --border-1: #7a5a47;  /* borde principal */
-  --border-2: #3a2416;  /* borde suave */
+  --border-1:#5A4637;
+  --border-2:#3E3127;
 
-  --hover-text1: #e89b6b;        /* acento cálido */
-  --hover-text2: #31190a;
-  --hover-border-1: #e89b6b;
-  --hover-border-2: #8a5638;
-  --hover-bg: #882206;
+  --hover-text1: #FFD1A6;        /* acento cálido */
+  --hover-text2: #1F1713;
+  --hover-border-1: #D59C6E;
+  --hover-border-2: #7A5D49;
+  --hover-bg: #5C422F;
 
-  --shadow: 0 2px 6px rgb(247, 116, 9);
-  --placeholder: #b48a6a;
+  --shadow:0 8px 22px rgba(0,0,0,.45);
+  --placeholder: #9F8268;
 
-  --icon-stroke: #b99b85;
-  --icon-color: #b99b85;
+  --icon-color:#be9e81;
+  --icon-stroke:#be9e81;
+  --icon-stroke-hover: #FFD1A6;
 
-  --scroll-track: #2f1e14;
-  --scroll-thumb: #4a3326;
+  --scroll-track: #2D221B;
+  --scroll-thumb: #5A4535;
 }
 
 

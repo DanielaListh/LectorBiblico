@@ -25,6 +25,8 @@ console.log(error)
     class="p-3 h-auto md:h-screen md:flex md:flex-wrap md:justify-center md:gap-4 md:overflow-y-auto"
   >
 
+    <img src="/img/david.png" alt="david" class="block md:hidden">
+
     <button
       v-for="slug in Object.keys(booksMap)"
       :key="slug"

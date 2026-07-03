@@ -39,10 +39,12 @@ const goToBook = (book) => {
 
 <template>
 
-    <section id="search" class="h-auto flex items-center justify-center flex-col gap-4 py-5">
+    <section 
+        id="search" 
+        class="h-auto flex items-center justify-center flex-col gap-4 py-5 max-w-[80%] mx-auto">
         <div class="flex flex-col justify-center items-center text-center">
-            <h2 class="tittle-primary">Explora la Biblia</h2>
-            <p class="paragraph">Busca un libro o explora el Antiguo y Nuevo Testamento.</p>
+            <h2 class="h2">Explora la Biblia</h2>
+            <h4 class="h4">Busca un libro o explora el Antiguo y Nuevo Testamento</h4>
         </div>
         
 
@@ -66,21 +68,21 @@ const goToBook = (book) => {
 
         </div>
 
-        <div class="w-full font-lexendExa md:w-[85%]">
-            <h2 class="m-[30px] text-center text-2xl text-text2 md:text-3xl md:text-left">Antiguo testamento</h2>
-            <div class="m-[30px]">
+        <div class="w-full font-lexendExa">
+            <h3 class="h3">Antiguo testamento</h3>
+            <div class="">
                 <ul class=" flex flex-wrap gap-2 justify-center md:justify-normal md:items-normal">
                     <li 
                         v-for="book in listAncientTestament" :key="book"
-                        class=" "
+                        class="button-secondary-hover"
                        :class="[
                             matchSearch(book)
-                            ? 'bg-bg4 text-text1 shadow-lg shadow-[#74522baf] scale-105 hover:bg-hoverBg'
-                            : 'hover:text-hoverText1 hover:shadow-md hover:shadow-[#B56B46]/30'
+                            ? 'button-secondary-focus'
+                            : 'button-secondary'
                         ]"
                         >
                         <button
-                            class="text-sm sm:text-base px-2 py-1 border-2 w-auto p-1 text-text2 border-border1 hover:border-hoverBorder2 transition-colors duration-300 rounded-lg text-center"
+                            class=""
                             @click="goToBook(book)"
                         >
                             {{ book }}
@@ -90,24 +92,24 @@ const goToBook = (book) => {
                 </ul>
             </div>
         </div>
-        <div class="w-full font-lexendExa md:w-[85%]">
-            <h2 class="m-[30px] text-center text-2xl text-text1 md:text-3xl md:text-left">Nuevo testamento</h2>
-            <div class="m-[30px]">
+        <div class="w-full font-lexendExa">
+            <h3 class="h3">Nuevo testamento</h3>
+            <div class="">
                 <ul class=" flex flex-wrap gap-2 justify-center md:justify-normal md:items-normal">
                     <li 
                         v-for="book in listNewTestament" :key="book"
-                        class="text-sm sm:text-base px-2 py-1 border-2 w-auto p-1 text-text1 border-border1 hover:border-hoverBorder2 transition-colors duration-300 rounded-lg text-center "
+                        class="button-secondary-hover"
                        :class="[
                             matchSearch(book)
-                            ? 'bg-bg4 text-text1 shadow-lg shadow-[#74522baf] scale-105 hover:bg-hoverBg'
-                            : 'hover:text-hoverText1 hover:shadow-md hover:shadow-[#B56B46]/30'
+                            ? 'button-secondary-focus'
+                            : 'button-secondary'
                         ]"
                         >
-                    <a
+                    <button
                         @click="goToBook(book)"
                     >
                         {{ book }}
-                     </a>
+                    </button>
                     
                     </li>
                 </ul>

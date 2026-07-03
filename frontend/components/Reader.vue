@@ -47,7 +47,7 @@ const { scrollToVerse } = useScroll(data)
 
 <template>
   <section 
-    class="w-auto h-auto overflow-x-hidden md:h-screen md:overflow-y-auto md:w-full" 
+    class="w-auto h-auto overflow-x-hidden md:h-screen md:overflow-y-auto md:w-full md:pr-20" 
     @touchstart="handleTouchStart" 
     @touchend="handleTouchEnd"
     @mouseup="handleSelection"
@@ -81,21 +81,20 @@ const { scrollToVerse } = useScroll(data)
   </transition>
   
      <!-- content of book name, chapter and buttons to navigate between chapters -->
-    <div class="items-center px-5 py-4 sticky top-0 
-          flex md:justify-between md:px-10 md:py-6 md:bg-main ">
+    <div class="items-center px-5 h-[120px] sticky top-0 flex md:justify-between bg-bg1 md:px-0 md:pl-5">
       <div>
         <h1
-          class="text-3xl font-bold font-lexendExa text-text1 md:text-5xl"
+          class="font-cinzel text-4xl text-text2 md:text-6xl md:my-2"
         >
           {{ booksMap[book]}}
         </h1>
 
-        <h2
+        <h3
           v-if="data?.chapter"
-          class="font-lexendExa  text-1xl font-semibold text-text1 md:mt-4 md:text-2xl"
+          class="h3"
         >
           Capítulo {{ data.chapter }}
-        </h2>
+        </h3>
       </div>
           
       <!-- permitir navegacion mobile con el tactil -->
@@ -104,22 +103,47 @@ const { scrollToVerse } = useScroll(data)
           v-if="previousChapter"
           @click="
             direction = 'prev';
-            goToChapter(previousChapter)">
-          <img src="/img/flechaIzq.png" alt="Anterior"class="w-[30px]">
+            goToChapter(previousChapter)"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon-line"
+              viewBox="0 0 24 24"
+              stroke-width="1"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M5 12l14 0" />
+              <path d="M5 12l6 6" />
+              <path d="M5 12l6 -6" />
+            </svg>
+
         </button>
         <button
           v-if="nextChapter" 
           @click="
             direction = 'next';
-            goToChapter(nextChapter)">
-          <img src="/img/flechaDer.png" alt="Siguiente" class="w-[30px]">
+            goToChapter(nextChapter)"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon-line"
+            viewBox="0 0 24 24"
+            stroke-width="1"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M5 12l14 0" />
+            <path d="M13 18l6 -6" />
+            <path d="M13 6l6 6" />
+          </svg>
         </button>
       </div>
     </div>
 
     <!-- loader -->
-    <div v-if="loading" class="px-10 animate-pulse">
-      <div class="h-6 w-1/6 bg-bg3 rounded mb-12"></div>
+    <div v-if="loading" class="px-5 animate-pulse">
+      <div class="h-8 w-1/6 bg-bg3 rounded mb-12"></div>
       <div class="h-6 w-4/6 bg-bg4 rounded mb-4"></div>
       <div class="h-6 w-3/6 bg-bg4 rounded mb-4"></div>
       <div class="h-6 w-5/6 bg-bg4 rounded mb-4"></div>
@@ -145,7 +169,7 @@ const { scrollToVerse } = useScroll(data)
       <div
         v-if="!loading"
         :key="`${book}-${chapter}`"
-        class="pl-5 flex flex-col gap-2 leading-relaxed text-lg md:max-w-4xl md:px-10 md:pt-3 md:pb-12"
+        class="flex flex-col gap-2 leading-relaxed text-lg md:max-w-4xl md:px-10 md:pt-3 md:pb-12 px-5 pb-4"
       >
         <div
           v-for="(vers, index) in data?.verses || []"
@@ -158,7 +182,7 @@ const { scrollToVerse } = useScroll(data)
           </span>
 
           <p 
-            class="text-text1 font-lexendExa"
+            class="verse-paragraph"
             v-html="verseHighlight(index + 1, vers)"
             >
             

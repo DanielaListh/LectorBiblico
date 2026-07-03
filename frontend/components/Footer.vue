@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
                 <a href="https://www.linkedin.com/in/daniela-berrios/" target="_blank" class="icon-redes">
                     <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="icon-line"
+                    class="icon-line hover:stroke-iconStrokeHover"
                     viewBox="0 0 24 24"
                     stroke-width="1"
                     stroke-linecap="round"
@@ -27,7 +27,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
                 <a href="https://github.com/DanielaListh" target="_blank" class="icon-redes">
                     <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="icon-line"
+                    class="icon-line hover:stroke-iconStrokeHover"
                     viewBox="0 0 24 24"
                     stroke-width="1"
                     stroke-linecap="round"
@@ -39,10 +39,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
                         -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
                     </svg>
                 </a>
-                <a href="https://www.facebook.com/Dani.listh/" target="_blank" class="icon-redes">
+                <a href="https://www.facebook.com/Dani.listh/" target="_blank" class="icon-line">
                     <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="icon-line"
+                    class="icon-line hover:stroke-iconStrokeHover"
                     viewBox="0 0 24 24"
                     stroke-width="1"
                     stroke-linecap="round"
@@ -55,7 +55,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
             </div>
 
             <!-- LINKS -->
-            <div class="flex flex-wrap justify-center md:justify-end m-[10px] font-lexendExa text-text1 gap-3 font-semibold">
+            <div class="flex flex-wrap justify-center md:justify-end m-[10px] font-lexendExa text-text3 gap-3 font-semibold">
                 <a href="#home" class="hover:text-hoverText1 transition-colors duration-300">Inicio</a>
                 <a href="#busqueda" class="hover:text-hoverText1 transition-colors duration-300">Búsqueda</a>
                 <a href="#faq" class="hover:text-hoverText1 transition-colors duration-300">Dudas</a>
@@ -66,26 +66,22 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
         </div>
 
         <!-- TEXTO FINAL -->
-        <div class="flex justify-center items-center mt-4">
+        <div class="flex justify-center items-center mt-4 gap-2">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="icon-line"
+                class="icon-badge"
                 viewBox="0 0 24 24"
-                fill="none"
-                stroke="#8d6e63"
                 stroke-width="1"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 >
                 <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
             </svg>
-            <p class="font-lexendExa text-text1 text-center m-2 items-center">Creado con cariño por Daniela Berrios</p>
+            <p class="paragraph">Creado con cariño por Daniela Berrios</p>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="icon-line"
+                class="icon-badge"
                 viewBox="0 0 24 24"
-                fill="none"
-                stroke="#8d6e63"
                 stroke-width="1"
                 stroke-linecap="round"
                 stroke-linejoin="round"

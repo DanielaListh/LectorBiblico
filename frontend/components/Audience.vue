@@ -4,8 +4,8 @@
 
       <!-- Texto -->
       <div>
-        <h2 class="tittle-secondary-left">
-          Hecha para quienes buscan esperanza.
+        <h2 class="h2-left">
+          Hecha para quienes buscan esperanza
         </h2>
 
         <p class="paragraph">
@@ -15,14 +15,12 @@
         <!-- Beneficios -->
         <div class="mt-6 space-y-4">
           <!-- Item 1 -->
-          <div class="flex gap-4">
+          <div class="flex gap-2">
             <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-line"
                 viewBox="0 0 24 24"
-                fill="none"
-                stroke="#8d6e63"
                 stroke-width="1"
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -34,20 +32,19 @@
 
             </div>
             <div>
-              <h3 class="subtittle">Encuentra paz</h3>
+              <h3 class="h4-left">Encuentra paz</h3>
               <p class="paragraph">La Palabra de Dios puede acompañarte en los momentos difíciles y darte esperanza.</p>
             </div>
           </div>
 
           <!-- Item 2 -->
-          <div class="flex gap-4">
+          <div class="flex gap-2">
             <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
               <!-- Icono libro -->
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-line"
                 viewBox="0 0 24 24"
-                fill="none"
               >
                 <path d="M12.088 4.82a10 10 0 0 1 9.412 .314a1 1 0 0 1 .493 .748l.007 .118v13a1 1 0 0 1 -1.5 
                 .866a8 8 0 0 0 -8 0a1 1 0 0 1 -1 0a8 8 0 0 0 -7.733 -.148l-.327 .18l-.103 .044l-.049 .016l-.11 
@@ -57,20 +54,18 @@
               </svg>
             </div>
             <div>
-              <h3 class="subtittle">Aprende cada día</h3>
+              <h3 class="h4-left">Aprende cada día</h3>
               <p class="paragraph">Lee la Biblia de forma sencilla, resalta versículos y guarda tus favoritos.</p>
             </div>
           </div>
 
           <!-- Item 3 -->
-          <div class="flex gap-4">
+          <div class="flex gap-2">
             <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-line"
                 viewBox="0 0 24 24"
-                fill="none"
-                stroke="#8d6e63"
                 stroke-width="1"
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -82,35 +77,30 @@
 
             </div>
             <div>
-              <h3 class="subtittle">Disponible donde estés</h3>
+              <h3 class="h4-left">Disponible donde estés</h3>
               <p class="paragraph">Funciona desde computadora, tablet y celular sin necesidad de registrarte.</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Imagen con blur detrás -->
         <div class="relative flex justify-center items-center">
-            <!-- Halo detrás -->
-            <div class="absolute w-[420px] h-[420px] bg-[#f0be6d] rounded-full blur-2xl opacity-70"></div>
+            <div class="absolute md:w-[420px] md:h-[420px] md:bg-[#f0be6d] rounded-full blur-2xl opacity-70"></div>
 
-            <!-- Card -->
+            <!-- card -->
             <div class="relative bg-bg2 backdrop-blur-md rounded-2xl p-6 w-[90%] md:w-[360px]">
                 <img
                     src="/img/roca2.png"
                     alt="La tumba vacía de Jesucristo"
-                    class="w-[340px] mx-auto rounded-lg"
+                    class="hidden md:block md:w-[340px] md:mx-auto md:rounded-lg"
                 />
 
                 <!-- Versículo -->
                 <div class="flex items-center gap-2 mb-3 mt-4">
-                    <i class="bx bxs-quote-alt-left text-3xl text-text4"></i>
-                    <span class="font-semibold text-text1">Marcos 16:6</span>
+                    <span class="paragraph-2 font-semibold">Marcos 16:6</span>
                 </div>
-
                 
-
-                <p class="italic text-text1 leading-6">
+                <p class="italic text-text3 leading-6">
                     <span>
                         <svg class="w-5 h-5 float-left mr-[2px] mt-1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                             <path 
@@ -124,10 +114,10 @@
                         </svg>
                     </span>
                     Mas él les dijo: No os asustéis; buscáis a Jesús nazareno, el que fue crucificado;
-                    <span class="text-text2 font-semibold"> ha resucitado</span>,
+                    <span class="text-text5 font-semibold"> ha resucitado</span>,
                     no está aquí; mirad el lugar en donde le pusieron.
                     <span>
-                        <svg class="w-5 h-5 float-rigth ml-32 -mt-6" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="w-5 h-5 float-rigth ml-[250px] -mt-5 md:ml-32 md:-mt-6" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 :style="{ fill: 'var(--icon-color)' }"
                                 transform="scale(-1,1) translate(-32,0)"

@@ -48,7 +48,7 @@ const stopResize = () => {
 </script>
 
 <template>
-  <div class="md:flex md:w-full md:h-screen bg-main bg-cover bg-center">
+  <div class="md:flex md:w-full md:h-screen bg-bg1">
 
     <aside class="hidden md:flex md:w-[20%] md:h-full md:flex-col">
       <Name  class="hidden md:block"/>

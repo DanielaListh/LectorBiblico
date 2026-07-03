@@ -44,39 +44,30 @@ const questions = [
 <template>
   <section
     id="faq"
-    class="py-24 px-6 bg-bg5 mx-auto"
+    class="py-24 px-6 bg-bg1 mx-auto"
   >
-
     <div class="max-w-4xl mx-auto">
 
-      <!-- título -->
-
-      <h2
-        class="tittle-secondary"
-      >
+      <h2 class="h2">
         Preguntas Frecuentes
       </h2>
 
-      <p class="paragraph">
+      <h4 class="h4 w-[400px]">
         Resolvemos las dudas más comunes para que disfrutes de una mejor experiencia leyendo la Biblia
-      </p>
-
-      <!-- preguntas -->
+      </h4>
 
       <div class="mt-10 max-w-4xl mx-auto space-y-4">
 
         <div
           v-for="(question, index) in questions"
           :key="index"
-          class="overflow-hidden rounded-2xl border transition-all duration-300 ease-out"
+          class="overflow-hidden rounded-2xl border transition-all duration-300 ease-out w-[400px] mx-auto"
           :class="[
             openQuestion === index
               ? 'border-border1'
               : 'border-border2 bg-transparent'
           ]"
         >
-
-          <!-- Header -->
 
           <button
             @click="toggleQuestion(index)"
@@ -85,7 +76,7 @@ const questions = [
           >
 
             <h3
-              class="subtittle"
+              class="paragraph"
               :class="
                 openQuestion === index
                   ? 'text-text2'
@@ -94,8 +85,6 @@ const questions = [
             >
               {{ question.title }}
             </h3>
-
-            <!-- Icono -->
 
             <div
               class="flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300"
@@ -109,7 +98,6 @@ const questions = [
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon-line"
                 viewBox="0 0 24 24"
-                fill="none"
                 stroke-width="1"
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -159,19 +147,14 @@ const questions = [
               v-if="openQuestion === index"
               class="overflow-hidden"
             >
-
               <div class="flex">
 
-                <!-- Barra lateral -->
-
                 <div
-                  class="ml-7 mr-6 mb-2 w-1 h-auto rounded-full bg-bg1"
+                  class="ml-7 mr-2 mb-2 w-1 h-auto rounded-full bg-bg4"
                 ></div>
 
-                <!-- Texto -->
-
                 <div
-                  class="paragraph"
+                  class="paragraph-2 mb-2 pr-2"
                 >
                   {{ question.description }}
                 </div>

@@ -12,17 +12,17 @@ const { toggleTheme } = useTheme()
     <nav class="font-lexendExa font-semibold flex justify-center items-center py-3 
       md:flex-wrap md:px-[100px] md:justify-between 
       top-0 sticky z-[100] bg-main backdrop-blur-lg 
-      border-border2 border-[3px] ">
+      border-border1 border-b-[3px] ">
 
       <div>
         <RouterLink to="/">
-          <button>
+          <button class="focus:outline-none focus:ring-0">
             <span src="img/logo-dark.png" class="logo h-[50px]"></span>
           </button>
         </RouterLink>
       </div>
 
-      <div class="hidden gap-4 md:flex justify-between text-text1">
+      <div class="hidden gap-4 md:flex justify-between text-text3">
         <a href="#home" class="hover:text-hoverText1 transition-colors duration-300">Inicio</a>
         <a href="#search" class="hover:text-hoverText1 transition-colors duration-300">Búsqueda</a>
         <a href="#faq" class="hover:text-hoverText1 transition-colors duration-300">Dudas</a>
@@ -31,10 +31,12 @@ const { toggleTheme } = useTheme()
       </div>
 
       <div class="hidden md:block">
-        <button @click="toggleTheme">
+        <button @click="toggleTheme" class="focus:outline-none focus:ring-0">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="w-8 h-8 icon-line"
+            class="w-10 h-10"
+            color="var(--icon-stroke)"
+            stroke="currentColor"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1"
@@ -53,14 +55,14 @@ const { toggleTheme } = useTheme()
       
     </nav> 
     
-    <div class="hidden md:flex absolute top-0 bottom-0 left-[5%] w-[3px] bg-bg2"></div>
-    <div class="hidden md:flex absolute top-0 bottom-0 right-[5%] w-[3px] bg-bg2"></div>
+    <div class="hidden md:flex absolute top-0 bottom-0 left-[5%] w-[3px] bg-bg4"></div>
+    <div class="hidden md:flex absolute top-0 bottom-0 right-[5%] w-[3px] bg-bg4"></div>
     <HeroSection />
     <Search />
     <Faq />
     <Audience />
     <Ko-fi />
-    <div class="h-[3px] bg-bg2"></div>
+    <div class="h-[3px] bg-bg4"></div>
     <Footer />
     
   </div>

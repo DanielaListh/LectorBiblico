@@ -34,7 +34,6 @@ export default {
         text3: "var(--text-3)",
         text4: "var(--text-4)",
         text5: "var(--text-5)",
-        iconStroke:"var(--icon-stroke)",
         border1: "var(--border-1)",
         border2: "var(--border-2)",
         hoverText1: "var(--hover-text1)",
@@ -43,7 +42,11 @@ export default {
         placeholder: "var(--placeholder)",
         hoverBorder1: "var(--hover-border-1)",
         hoverBorder2: "var(--hover-border-2)",
-        hoverBg: "var(--hover-bg)"
+        hoverBg: "var(--hover-bg)",
+      },
+      stroke: {
+        iconStroke: "var(--icon-stroke)",
+        iconStrokeHover: "var(--icon-stroke-hover)",
       }
     }
   },

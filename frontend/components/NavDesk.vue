@@ -110,26 +110,22 @@ const { toggleTheme } = useTheme()
 
 <template>
   <section class="flex px-[10px] py-[15px] gap-3 text-text1 justify-between
-    md:px-[30px] md:h-[80px] md:py-[20px]  md:gap-4">
+     md:h-[80px] md:py-[20px]  md:gap-4 md:pr-20">
 
     
 
     <div class="my-auto">
-      <button class="block md:hidden"
+      <button class="block md:hidden focus:outline-none focus:ring-0"
         @click="emit('toggle-chapter')"
       >
         <svg 
-        class="w-8 h-8" 
-        style="color: var(--icon-color)" 
-        fill="currentColor" 
-        xmlns="http://www.w3.org/2000/svg">
-          <path 
-          transform="scale(1.3)" 
+        class="icon-line"
+          viewBox="0 0 24 24"
+          stroke-width="1"
+          stroke-linecap="round"
+          stroke-linejoin="round">
+          <path  
           d="M4 6H20M4 12H14M4 18H9" 
-          stroke="currentColor" 
-          stroke-width="3" 
-          stroke-linecap="round" 
-          stroke-linejoin="round"
           />
         </svg>
       </button>
@@ -138,7 +134,7 @@ const { toggleTheme } = useTheme()
     <div>
       <button
         @click="router.push('/panel')"
-        class="font-lexendExa text-center text-xl text-text1 hover:text-hoverText1 transition duration-300"
+        class="font-lexendExa text-center text-xl text-text1 hover:text-hoverText1 transition duration-300 focus:outline-none focus:ring-0"
       >
       Inicio
       </button>
@@ -161,10 +157,12 @@ const { toggleTheme } = useTheme()
 
     </div>
 
-    <button @click="toggleTheme" class="hidden md:block">
+    <button @click="toggleTheme" class="hidden md:block focus:outline-none focus:ring-0">
       <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="w-8 h-8 icon-line"
+            class="w-10 h-10"
+            color="var(--icon-stroke)"
+            stroke="currentColor"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1"
@@ -184,19 +182,19 @@ const { toggleTheme } = useTheme()
     <div class="relative menu-opciones">
       <button
         @click.stop="toggle('opciones')" 
-        class="ml-4 text-text hover:text-hoverText1 transition duration-300">
-        <svg 
-          class="w-8 h-8" 
-          style="color:var(--icon-color)"
-          fill="currentColor" 
-          xmlns="http://www.w3.org/2000/svg">
-          <path 
-          d="M4 6H20M4 12H20M4 18H20"
-          transform="scale(1.3)" 
-          stroke="currentColor" 
-          stroke-width="3" 
-          stroke-linecap="round" 
-          stroke-linejoin="round"/>
+        class="ml-4 text-text hover:text-hoverText1 transition duration-300 focus:outline-none focus:ring-0"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon-line"
+          viewBox="0 0 24 24"
+          stroke-width="1"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M4 6h16" />
+          <path d="M7 12h13" />
+          <path d="M10 18h10" />
         </svg>
       </button>
 
@@ -206,9 +204,9 @@ const { toggleTheme } = useTheme()
           class="w-[150px] font-lexendExa absolute right-0 mt-2 bg-bg2 border border-border2 rounded-lg 
           p-3 flex flex-col gap-2 z-[9999] transition-all duration-300"   
         >
-          <a href="/panel/favorites" class="hover:text-hoverText1">Favoritos</a>
-          <a href="/panel/notes" class="hover:text-hoverText1">Notas</a>
-          <a href="/" class="hover:text-hoverText1">Pagina principal</a>
+          <a href="/panel/favorites" class="paragraph hover:text-hoverText1">Favoritos</a>
+          <a href="/panel/notes" class="paragraph hover:text-hoverText1">Notas</a>
+          <a href="/" class="paragraph hover:text-hoverText1">Página principal</a>
         </div>
       </transition>
     </div>
