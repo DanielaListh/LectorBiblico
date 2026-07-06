@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Aboreto&family=Bellefair&family=Cinzel:wght@400..900&family=Coiny&family=Corinthia:wght@400;700&family=Lexend+Exa:wght@100..900&display=swap');
-
 /*H1*/
 .h1{
   @apply font-cinzel text-4xl text-text2 md:text-6xl text-center md:my-2;
