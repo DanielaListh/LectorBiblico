@@ -1,4 +1,3 @@
-import { useRoute } from "vue-router"
 
 export function useScroll(data) {
   

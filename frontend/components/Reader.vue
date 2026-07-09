@@ -81,19 +81,18 @@ const { scrollToVerse } = useScroll(data)
   </transition>
   
      <!-- content of book name, chapter and buttons to navigate between chapters -->
-    <div class="items-center px-5 h-[120px] sticky top-0 flex md:justify-between bg-bg1 md:px-0 md:pl-5">
+    <div class="items-center p-5 md:h-[120px] md:w-[70%] md:fixed md:top-[82px] flex md:justify-between bg-bg1 md:px-0 md:pl-5">
       <div>
         <h1
-          class="font-cinzel text-4xl text-text2 md:text-6xl md:my-2"
+          class="font-cinzel text-4xl text-text2 md:text-5xl"
         >
           {{ booksMap[book]}}
         </h1>
 
         <h3
-          v-if="data?.chapter"
-          class="h3"
+          class="text-text3 font-lexendExa text-2xl md:text-3xl h-[36px]"
         >
-          Capítulo {{ data.chapter }}
+          {{ loading ? '' : `Capítulo ${data?.chapter}` }}
         </h3>
       </div>
           
@@ -140,25 +139,29 @@ const { scrollToVerse } = useScroll(data)
         </button>
       </div>
     </div>
+    
+    <div class="md:w-full md:h-[120px]"></div>
 
     <!-- loader -->
-    <div v-if="loading" class="px-5 animate-pulse">
-      <div class="h-8 w-1/6 bg-bg3 rounded mb-12"></div>
-      <div class="h-6 w-4/6 bg-bg4 rounded mb-4"></div>
-      <div class="h-6 w-3/6 bg-bg4 rounded mb-4"></div>
-      <div class="h-6 w-5/6 bg-bg4 rounded mb-4"></div>
-      <div class="h-6 w-3/6 bg-bg4 rounded mb-4"></div>
-      <div class="h-6 w-4/6 bg-bg4 rounded mb-4"></div>
-      <div class="h-6 w-3/6 bg-bg4 rounded mb-4"></div>
-      <div class="h-6 w-5/6 bg-bg4 rounded mb-4"></div>
-      <div class="h-6 w-3/6 bg-bg4 rounded mb-4"></div>
-      <div class="h-6 w-3/6 bg-bg4 rounded mb-4"></div>
-      <div class="h-6 w-4/6 bg-bg4 rounded mb-4"></div>
-      <div class="h-6 w-3/6 bg-bg4 rounded mb-4"></div>
-      <div class="h-6 w-5/6 bg-bg4 rounded mb-4"></div>
-      <div class="h-6 w-3/6 bg-bg4 rounded mb-4"></div>
-      <div class="h-6 w-5/6 bg-bg4 rounded mb-4"></div>
-      <div class="h-6 w-3/6 bg-bg4 rounded mb-4"></div>
+    <div
+      v-if="loading"
+      class="-mt-[45px] px-5 animate-pulse">
+      <div class="h-8 w-1/4 bg-bg3 rounded mb-12"></div>
+      <div class="ml-[40px] h-6 w-4/6 bg-bg4 rounded mb-4"></div>
+      <div class="ml-[40px] h-6 w-3/6 bg-bg4 rounded mb-4"></div>
+      <div class="ml-[40px] h-6 w-5/6 bg-bg4 rounded mb-4"></div>
+      <div class="ml-[40px] h-6 w-3/6 bg-bg4 rounded mb-4"></div>
+      <div class="ml-[40px] h-6 w-4/6 bg-bg4 rounded mb-4"></div>
+      <div class="ml-[40px] h-6 w-3/6 bg-bg4 rounded mb-4"></div>
+      <div class="ml-[40px] h-6 w-5/6 bg-bg4 rounded mb-4"></div>
+      <div class="ml-[40px] h-6 w-3/6 bg-bg4 rounded mb-4"></div>
+      <div class="ml-[40px] h-6 w-3/6 bg-bg4 rounded mb-4"></div>
+      <div class="ml-[40px] h-6 w-4/6 bg-bg4 rounded mb-4"></div>
+      <div class="ml-[40px] h-6 w-3/6 bg-bg4 rounded mb-4"></div>
+      <div class="ml-[40px] h-6 w-5/6 bg-bg4 rounded mb-4"></div>
+      <div class="ml-[40px] h-6 w-3/6 bg-bg4 rounded mb-4"></div>
+      <div class="ml-[40px] h-6 w-5/6 bg-bg4 rounded mb-4"></div>
+      <div class="ml-[40px] h-6 w-3/6 bg-bg4 rounded mb-4"></div>
     </div>
         
     <!-- contenedor de versiculos -->
@@ -181,12 +184,11 @@ const { scrollToVerse } = useScroll(data)
             {{ index + 1 }}
           </span>
 
-          <p 
-            class="verse-paragraph"
+          <p
+            class="text-text1 text-[18px] md:text-[20px] font-lexendExa leading-[1.7] max-w-[65ch]"
             v-html="verseHighlight(index + 1, vers)"
-            >
-            
-          </p>
+          ></p>
+
         </div>
       </div>
     </Transition>

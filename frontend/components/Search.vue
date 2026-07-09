@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router';
 import { booksMap } from '~/data/booksMap';
 
 const router = useRouter();
@@ -32,7 +31,7 @@ const reverseMap = Object.fromEntries(
 
 const goToBook = (book) => {
     const slug = reverseMap[book]; // Get the book's slug using the inverse booksMap.
-    router.push(`/panel/libros/${slug}/1`)
+    navigateTo(`/panel/libros/${slug}/1`)
 }
 
 </script>

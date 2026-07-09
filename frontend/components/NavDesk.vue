@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
 import Books from '~/components/Books'
 import Results from '~/components/Results'
 import { useTheme } from '~/composables/useTheme'
@@ -35,7 +34,7 @@ const isReadRoute = computed(() => route.path === '/panel/libros')
 const goToBook = (book) => {
   search.value = ''
   activeIndex.value = -1
-  router.push(`/panel/libros/${book}/1`)
+  navigateTo(`/panel/libros/${book}/1`)
 }
 
 const resultsVisible = computed(() =>
@@ -119,7 +118,7 @@ const { toggleTheme } = useTheme()
         @click="emit('toggle-chapter')"
       >
         <svg 
-        class="icon-line"
+        class="icon-line hover:stroke-iconStrokeHover"
           viewBox="0 0 24 24"
           stroke-width="1"
           stroke-linecap="round"
@@ -133,10 +132,25 @@ const { toggleTheme } = useTheme()
 
     <div>
       <button
-        @click="router.push('/panel')"
+        @click="navigateTo('/panel')"
         class="font-lexendExa text-center text-xl text-text1 hover:text-hoverText1 transition duration-300 focus:outline-none focus:ring-0"
       >
-      Inicio
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon-line hover:stroke-iconStrokeHover"
+          viewBox="0 0 24 24"
+          stroke-width="1"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M5 4m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />
+          <path d="M9 4m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />
+          <path d="M5 8h4" />
+          <path d="M9 16h4" />
+          <path d="M13.803 4.56l2.184 -.53c.562 -.135 1.133 .19 1.282 .732l3.695 13.418a1.02 1.02 0 0 1 -.634 1.219l-.133 .041l-2.184 .53c-.562 .135 -1.133 -.19 -1.282 -.732l-3.695 -13.418a1.02 1.02 0 0 1 .634 -1.219l.133 -.041z" />
+          <path d="M14 9l4 -1" />
+          <path d="M16 16l3.923 -.98" />
+        </svg>
       </button>
     </div>
 
@@ -160,7 +174,7 @@ const { toggleTheme } = useTheme()
     <button @click="toggleTheme" class="hidden md:block focus:outline-none focus:ring-0">
       <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="w-10 h-10"
+            class="w-10 h-10 hover:stroke-iconStrokeHover"
             color="var(--icon-stroke)"
             stroke="currentColor"
             fill="none"
@@ -186,7 +200,7 @@ const { toggleTheme } = useTheme()
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="icon-line"
+          class="icon-line hover:stroke-iconStrokeHover"
           viewBox="0 0 24 24"
           stroke-width="1"
           stroke-linecap="round"

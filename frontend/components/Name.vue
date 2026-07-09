@@ -1,16 +1,10 @@
-<script setup>
-
-import { RouterLink } from 'vue-router';
-
-</script>
-
 <template>
     <section class="flex mx-auto">
-        <RouterLink to="/">
+        <NuxtLink to="/">
             <button>
                 <span src="/img/logo-dark.png" class="logo h-[70px]"></span>
             </button>
-        </RouterLink>
+        </NuxtLink>
         
     </section>
 </template>

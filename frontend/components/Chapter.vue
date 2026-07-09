@@ -1,6 +1,4 @@
 <script setup>
-import { computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
 import { chapterPerBooks } from '~/data/chapters'
 
 const route = useRoute()
@@ -23,7 +21,7 @@ const chapters = computed(() =>
 )
 
 const goToChapter = (num) => {
-  router.push(`/panel/libros/${book.value}/${num}`)
+  navigateTo(`/panel/libros/${book.value}/${num}`) ///////////////
 }
 </script>
 
@@ -36,7 +34,7 @@ const goToChapter = (num) => {
         v-for="chapter in chapters"
         :key="chapter"
         @click="goToChapter(chapter)"
-        class="w-full text-left px-4 py-1 font-lexendExa rounded-lg transition duration-300 text-text1"
+        class="w-full text-left px-4 py-1 font-lexendExa rounded-lx transition duration-300 text-text1"
         :class="chapter === currentChapter
           ? 'bg-bg3 text-text2 font-bold'
           : 'text-text1 hover:bg-bg-2/80 hover:text-hoverText1'"

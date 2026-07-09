@@ -36,7 +36,6 @@ export async function getChapter(book, chapter) {
     if (insertError) { 
         console.error("supabase insert error:", insertError);
     }
-    console.log('Saved to cache');
-
+    
     return content;
 }

@@ -1,6 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Bellefair&family=Cinzel:wght@400..900&family=Corinthia:wght@400;700&family=Lexend+Exa:wght@100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+    
+
+
 
 /*H1*/
 .h1{
@@ -137,13 +143,13 @@ html {
   --text-1: #4B392C;    /* marrón suave */
   --text-2: #7f593f;    /* terracota suave */
   --text-3: #9B7A5B;    /* texto secundario cálido */
-  --text-4: #FFF9F0;
+  --text-4: #f5f2ec;
   --text-5: #947150;
 
   --border-1: #D6C3AF;  /* borde principal */
   --border-2: #E7DDD2;  /* borde suave */
 
-  --hover-text1: #9A6643;        /* acento cálido */
+  --hover-text1: #d86619;        /* acento cálido */
   --hover-text2: #FFF4E6;
   --hover-border-1: #BC835A;
   --hover-border-2: #C7A98A;
@@ -153,7 +159,7 @@ html {
   --placeholder: #A48467;       /* cálido, suave */
 
   --icon-stroke: #9B7A5B;
-  --icon-stroke-hover: #9A6643;
+  --icon-stroke-hover: #d86619;
   --icon-color: #9B7A5B;
 
   --scroll-track: #EFE7DC;
@@ -291,3 +297,13 @@ html {
   transform: scale(0.85);
 }
 
+.fade-enter-active,
+.fade-leave-active {
+  transition: all .25s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}

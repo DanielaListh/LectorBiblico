@@ -1,5 +1,4 @@
 <script setup>
-import { RouterLink } from "vue-router";
 
 const title = "La Biblia en un solo lugar";
 
@@ -166,13 +165,13 @@ const features = [
       </h4>
 
       <div class=" flex flex-col sm:flex-row gap-4 mt-3">
-        <RouterLink to="/panel">
+        <NuxtLink to="/panel">
           <button
             class="button-primary"
           >
             Comenzar a leer
           </button>
-        </RouterLink>
+        </NuxtLink>
       </div>
 
       <!-- badges -->

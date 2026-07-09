@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { useMenuFav } from '~/composables/useMenuFav'
 import { booksMap } from '~/data/booksMap'
 import { useHighlight } from '~/composables/useHighlight'
@@ -34,7 +33,7 @@ const normalFavorites = computed(() =>
 )
 
 const goToFavorite = (item) => {
-  router.push({
+  navigateTo({
     path: `/panel/libros/${item.book}/${item.chapter}`,
     query: { verses: item.verses[0] } // If it is a range, we take the first one.
     

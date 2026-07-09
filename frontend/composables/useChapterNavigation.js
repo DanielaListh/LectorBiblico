@@ -1,4 +1,4 @@
-import { useRoute, useRouter } from 'vue-router'
+
 import { ref, computed, onMounted, watch } from 'vue'
 import { chapterPerBooks } from '~/data/chapters'
 import { getChapter } from '@/utils/getChapter'
@@ -6,10 +6,6 @@ import { getChapter } from '@/utils/getChapter'
 export function useChapterNavigation() {
     const route = useRoute()
     const router = useRouter() 
-
-    console.log(import.meta.env.VITE_SUPABASE_URL)
-    console.log(import.meta.env.VITE_SUPABASE_ANON_KEY)
-
 
     const book = computed(() => route.params.book)
     const chapter = computed(() => Number(route.params.chapter))

@@ -1,5 +1,5 @@
 import { ref, onMounted, onUnmounted } from 'vue'
-import { useRoute } from 'vue-router'
+
 import {
     highlightColorsLight,
     highlightTextColorsLight,

@@ -36,7 +36,7 @@ const shortName = (slug) => {
     <!-- Banner mobile -->
     <img src="/img/portadaMobile.png" alt="banner" class="block md:hidden mb-4 rounded-xl shadow-md">
 
-    <!-- MOBILE: grid 2 columnas -->
+    <!-- mobile: grid 2 columnas -->
     <div class="flex flex-col gap-3 w-full md:hidden">
       <button
         v-for="slug in Object.keys(booksMap)"
@@ -106,8 +106,8 @@ const shortName = (slug) => {
         >
           <p
             class="
-              font-lexendExa text-text2 text-xl transition-all duration-500
-              group-hover:text-text5 group-hover:drop-shadow-[0_0_8px_rgba(255,220,120,0.6)]
+              font-lexendExa text-text5 text-lx transition-all duration-500
+              group-hover:text-text4 group-hover:drop-shadow-[0_0_8px_rgba(255,220,120,0.6)]
             "
           >
             {{ booksMap[slug] }}
