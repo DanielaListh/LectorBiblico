@@ -1,22 +1,17 @@
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useRoute } from '#imports'
 
 import {
-    highlightColorsLight,
-    highlightTextColorsLight,
-    highlightColorsDark,
-    highlightTextColorsDark
-} from '~/data/highlightColors.js';
-  
+  highlightColorsLight,
+  highlightTextColorsLight,
+} from '~/data/highlightColors.js'
 
 export function useHighlight(data) {
   const route = useRoute()
 
-  const colorMode = useColorMode() 
-  const isDark = computed(() => colorMode.value === 'dark')
-
-
-  const highlightColors = computed(() => isDark ? highlightColorsDark : highlightColorsLight)
-  const highlightTextColors = computed(() => isDark ? highlightTextColorsDark : highlightTextColorsLight)
+  // ✔ Paleta única (sin computed)
+  const highlightColors = highlightColorsLight
+  const highlightTextColors = highlightTextColorsLight
 
   const highlighterMenu = ref({
     visible: false,
@@ -35,7 +30,6 @@ export function useHighlight(data) {
     const selected = verses.filter((v) => {
       const rect = v.getBoundingClientRect()
       const selRect = range.getBoundingClientRect()
-
       return !(rect.bottom < selRect.top || rect.top > selRect.bottom)
     })
 
@@ -60,7 +54,6 @@ export function useHighlight(data) {
     setTimeout(() => {
       window.addEventListener('click', handleClickOutside)
     }, 50)
-
   }
 
   const closeHighlighterMenu = () => {
@@ -84,7 +77,6 @@ export function useHighlight(data) {
 
     const stored = JSON.parse(localStorage.getItem('highlights') || '[]')
 
-    // buscar highlight existente
     const index = stored.findIndex(
       h =>
         h.book === actualBook &&
@@ -92,7 +84,6 @@ export function useHighlight(data) {
         JSON.stringify(h.verses) === JSON.stringify(verses)
     )
 
-    // si el color es transparente → borrar highlight
     if (color === 'transparent') {
       if (index !== -1) {
         stored.splice(index, 1)
@@ -101,32 +92,29 @@ export function useHighlight(data) {
       return
     }
 
-    // si ya existe → actualizar color
     if (index !== -1) {
       stored[index].bgColor = color
+      stored[index].textColor = highlightTextColors[color]
       localStorage.setItem('highlights', JSON.stringify(stored))
       return
     }
 
-    // si no existe → crear highlight nuevo
     const rangeText = verses.map(v => data.value.verses[v - 1]).join('')
 
-  const newItem = {
-    id: crypto.randomUUID(),
-    book: actualBook,
-    chapter: actualChapter,
-    verses,
-    bgColor: color,
-    textColor: highlightTextColors.value[color],
-    text: rangeText,
-    date: Date.now()
+    const newItem = {
+      id: crypto.randomUUID(),
+      book: actualBook,
+      chapter: actualChapter,
+      verses,
+      bgColor: color,
+      textColor: highlightTextColors[color],
+      text: rangeText,
+      date: Date.now()
+    }
+
+    stored.push(newItem)
+    localStorage.setItem('highlights', JSON.stringify(stored))
   }
-
-  stored.push(newItem)
-  localStorage.setItem('highlights', JSON.stringify(stored))
-}
-
-
 
   const colorSelect = (color) => {
     saveHighlight(highlighterMenu.value.verses, color)
@@ -150,12 +138,10 @@ export function useHighlight(data) {
 
     return `<mark style="
       background:${match.bgColor};
-      color:${match.textColor}; 
+      color:${match.textColor};
       padding:2px;
       border-radius:4px;
-    ">
-        ${text}
-      </mark>`
+    ">${text}</mark>`
   }
 
   const emitHighlight = () => {
@@ -189,9 +175,6 @@ export function useHighlight(data) {
     window.removeEventListener('updated-results', refreshHighlight)
   })
 
-  
-
-
   return {
     highlighterMenu,
     highlightColors,
@@ -201,3 +184,4 @@ export function useHighlight(data) {
     verseHighlight
   }
 }
+

@@ -19,7 +19,7 @@ export function useChapterNavigation() {
 
     const loading = ref(true)
     const direction = ref('next')
-    const data = ref({ verses: [] })
+    const data = ref({ verses: [], chapter: null }) /////////////
 
     const loadChapter = async () => {
         loading.value = true

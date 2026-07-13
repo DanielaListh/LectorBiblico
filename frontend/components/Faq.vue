@@ -76,7 +76,7 @@ const questions = [
           >
 
             <h3
-              class="paragraph"
+              class="paragraph font-semibold"
               :class="
                 openQuestion === index
                   ? 'text-text2'

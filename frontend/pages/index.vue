@@ -1,8 +1,9 @@
 <script setup>
 import { useTheme } from '~/composables/useTheme'
-import { ref } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 
 const menuOpen = ref(false)
+const menuRef = ref(null)
 
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value
@@ -11,6 +12,20 @@ const toggleMenu = () => {
 const closeMenu = () => {
   menuOpen.value = false
 }
+
+const clickOutsideMenu = (event) => {
+  if (menuRef.value && !menuRef.value.contains(event.target)) {
+    closeMenu()
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', clickOutsideMenu)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', clickOutsideMenu)
+})
 
 const { toggleTheme } = useTheme()
 </script>
@@ -32,43 +47,76 @@ const { toggleTheme } = useTheme()
         </NuxtLink>
       </div>
 
-      <button
-        class="md:hidden"
-        @click="toggleMenu"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="icon-line hover:stroke-iconStrokeHover"
-          viewBox="0 0 24 24"
-          stroke-width="1"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+      <div ref="menuRef" class="relative md:hidden">
+        <!-- Botón hamburguesa -->
+        <button
+          @click.stop="toggleMenu"
+          class="text-text3"
         >
-          <path d="M4 6l16 0" />
-          <path d="M4 12l16 0" />
-          <path d="M4 18l16 0" />
-        </svg>
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon-line hover:stroke-iconStrokeHover"
+            viewBox="0 0 24 24"
+            stroke-width="1"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M4 6l16 0" />
+            <path d="M4 12l16 0" />
+            <path d="M4 18l16 0" />
+          </svg>
+        </button>
 
-      <Transition name="fade">
-        <div
-          v-if="menuOpen"
-          class="absolute right-0 top-14 border border-border2 bg-bg2 shadow-xl 
-          w-[150px] font-lexendExa mt-2 rounded-lg 
-          p-3 flex flex-col gap-2 transition-all duration-300 z-50 md:hidden"
-        >
-          <a href="#home" @click="closeMenu" class="text-text3 hover:text-hoverText1 transition-colors"
-          >Inicio</a>
-          <a href="#search" @click="closeMenu" class="text-text3 hover:text-hoverText1 transition-colors"
-          >Búsqueda</a>
-          <a href="#faq" @click="closeMenu" class="text-text3 hover:text-hoverText1 transition-colors"
-          >Dudas</a>
-          <a href="#audience" @click="closeMenu" class="text-text3 hover:text-hoverText1 transition-colors"
-          >Audiencia</a>
-          <a href="#donate" @click="closeMenu" class="text-text3 hover:text-hoverText1 transition-colors"
-          >Donar</a>
-        </div>
-      </Transition>
+        <!-- Menú -->
+        <Transition name="fade">
+          <div
+            v-if="menuOpen"
+            class="absolute right-0 top-6 border border-border2 bg-bg2 shadow-xl
+            w-[150px] font-lexendExa mt-2 rounded-lg
+            p-3 flex flex-col gap-2 transition-all duration-300 z-50"
+          >
+            <a
+              href="#home"
+              @click="closeMenu"
+              class="text-text3 hover:text-hoverText1 transition-colors"
+            >
+              Inicio
+            </a>
+
+            <a
+              href="#search"
+              @click="closeMenu"
+              class="text-text3 hover:text-hoverText1 transition-colors"
+            >
+              Búsqueda
+            </a>
+
+            <a
+              href="#faq"
+              @click="closeMenu"
+              class="text-text3 hover:text-hoverText1 transition-colors"
+            >
+              Dudas
+            </a>
+
+            <a
+              href="#audience"
+              @click="closeMenu"
+              class="text-text3 hover:text-hoverText1 transition-colors"
+            >
+              Audiencia
+            </a>
+
+            <a
+              href="#donate"
+              @click="closeMenu"
+              class="text-text3 hover:text-hoverText1 transition-colors"
+            >
+              Donar
+            </a>
+          </div>
+        </Transition>
+      </div>
 
 
       <div class="hidden gap-4 md:flex justify-between text-text3">

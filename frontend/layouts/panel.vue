@@ -2,11 +2,24 @@
 import Chapter from '~/components/Chapter.vue'
 import Name from '~/components/Name.vue'
 import NavDesk from '~/components/NavDesk.vue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import Player from '~/components/Player.vue'
 
 const showChapter = ref(false)
 const chapterHeight = ref(500)
+
+const handleClickOutside = (e) => {
+  if (!showChapter.value) return
+
+  // Si el click viene del botón que abre el drawer → ignorar
+  if (e.target.closest('.toggle-chapter-btn')) return
+
+  const drawer = document.querySelector('.mobile-chapter-drawer')
+  if (drawer && !drawer.contains(e.target)) {
+    showChapter.value = false
+  }
+}
+
 
 onMounted(() => {
   const saved = localStorage.getItem('chapterHeight')
@@ -14,6 +27,12 @@ onMounted(() => {
   if (saved) {
     chapterHeight.value = Number(saved)
   }
+
+  document.addEventListener('click', handleClickOutside)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
 })
 
 let startY = 0
@@ -79,7 +98,7 @@ const stopResize = () => {
     <transition name="slide-chapter">
         <div
           v-if="showChapter"
-          class="fixed top-[60px] left-0 h-auto w-[200px] max-w-[300px] 
+          class="mobile-chapter-drawer fixed top-[60px] left-0 h-auto w-[200px] max-w-[300px] 
           bg-bg2 shadow-xl z-[9999] rounded-xl overflow-y-hidden
           md:hidden"
         >

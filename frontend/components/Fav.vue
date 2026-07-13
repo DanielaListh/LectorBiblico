@@ -5,24 +5,10 @@ import { booksMap } from '~/data/booksMap'
 import { useHighlight } from '~/composables/useHighlight'
 
 
-const router = useRouter()
-
 // Reactive array where saved favorites will be loaded
 const favorites = ref([])
 
 const showColorMenu = ref(false)
-
-onMounted(() => {
-  const data = localStorage.getItem('highlights')
-  favorites.value = data
-    ? JSON.parse(data).map(favorite => ({
-      pinned: favorite.pinned ?? false,
-      bgColor: favorite.bgColor,
-      ...favorite
-    }))
-    : []
-  sortFavorites()
-})
 
 const pinnedFavorites = computed(() => 
   favorites.value.filter(favorite => favorite.pinned )
@@ -31,15 +17,6 @@ const pinnedFavorites = computed(() =>
 const normalFavorites = computed(() => 
   favorites.value.filter(favorite => !favorite.pinned)
 )
-
-const goToFavorite = (item) => {
-  navigateTo({
-    path: `/panel/libros/${item.book}/${item.chapter}`,
-    query: { verses: item.verses[0] } // If it is a range, we take the first one.
-    
-  })
-
-}
 
 const {
   menu,
@@ -71,12 +48,26 @@ const sortFavorites = () => {
 }
 
 onMounted(() => {
+  const data = localStorage.getItem('highlights')
+  favorites.value = data
+    ? JSON.parse(data).map(favorite => ({
+      pinned: favorite.pinned ?? false,
+      bgColor: favorite.bgColor,
+      ...favorite
+    }))
+    : []
+  sortFavorites()
+
   document.addEventListener('click', closeMenu)
 })
 
 onUnmounted(() => {
   document.removeEventListener('click', closeMenu)
 })
+
+const goToFavorite = (item) => {
+  navigateTo(`/panel/libros/${item.book}/${item.chapter}?vers=${item.verses[0]}`)
+}
 
 </script>
 
@@ -85,9 +76,9 @@ onUnmounted(() => {
   <section class="p-4 pr-20 flex flex-col h-[500px] overflow-y-auto">
 
     <div
-        v-if="menu.visible"
-        class="fixed z-[9999] bg-transparent w-40 h-40"
-        :style="{top:menu.y + 'px', left:menu.x + 'px'}"
+      v-if="menu.visible"
+      class="fixed z-[9999] bg-transparent w-40 h-40"
+      :style="{top:menu.y + 'px', left:menu.x + 'px'}"
     >
 
         <!-- Compartir -->
@@ -159,7 +150,7 @@ onUnmounted(() => {
         <!-- Cambiar color -->
         <div class="absolute top-12 left-32 -translate-x-1/2 rounded-full bg-bg3 hover:bg-bg4 p-1 mx-auto">
           <button
-            :style="{ background: item.bgColor, color: item.textColor }"
+            v-if="menu.item.bgColor && menu.item.textColor"
             @click.stop="showColorMenu = !showColorMenu"
             class="p-1 mx-auto"
           >
@@ -179,27 +170,29 @@ onUnmounted(() => {
               ></path>
             </svg>
           </button>
+
           <Transition name="fade">
             <div
               v-if="showColorMenu"
-              class="absolute top-12
-                    block gap-2 bg-bg3 rounded-full p-2"
+              class="absolute top-12 block gap-2 bg-bg3 rounded-full p-2"
             >
-
               <button
                 v-for="color in highlightColors"
                 :key="color"
                 class="w-6 h-6 rounded-full"
-                :style="{ background: item.bgColor, color: item.textColor }"
+                :style="{ background: color }"
                 @click.stop="changeColor(menu.item, color)"
               >
               </button>
 
             </div>
           </Transition>
+          
         </div>
+    </div>
 
-      </div>
+
+
 
     <!-- tittle -->
 
@@ -220,7 +213,7 @@ onUnmounted(() => {
         <div class="flex justify-between items-center">
 
           <!-- TÍTULO -->
-          <h3 class="font-semibold text-text1">
+          <h3 class="font-semibold text-[#4B392C]">
             {{ booksMap[item.book] }} {{ item.chapter }}:
             <span v-if="item.verses.length === 1">{{ item.verses[0] }}</span>
             <span v-else>[{{ item.verses[0] }} - {{ item.verses[item.verses.length - 1] }}]</span>
@@ -256,11 +249,10 @@ onUnmounted(() => {
                 17.8954 10 19 10C20.1046 10 21 10.8954 21 12Z" />
             </svg>
           </button>
-
         </div>
 
         <!-- TEXTO -->
-        <p class="text-text5 mt-2"
+        <p class="text-[#4B392C] mt-2"
            :style="{background: item.bgColor, color: item.textColor}"
         >
           {{ getFavoriteText(item) }}
@@ -284,7 +276,7 @@ onUnmounted(() => {
         :style="{ background:item.bgColor || 'var(--bg2)'}"
       >
         <div class="flex justify-between items-center">
-          <h3 class="font-semibold text-text1 font-lexendExa">
+          <h3 class="font-semibold text-[#4B392C] font-lexendExa">
             {{ booksMap[item.book] }} {{ item.chapter }} :
             <span v-if="item.verses && item.verses.length === 1">
             {{ item.verses[0] }} 
@@ -302,16 +294,16 @@ onUnmounted(() => {
             @click.stop="openMenu($event, item)"
           >
             <svg class="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path :style="{ fill: 'var(--icon-color)'}" d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 
+              <path :style="{ fill: '#4B392C'}" d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954
               3.89543 10 5 10C6.10457 10 7 10.8954 7 12Z" />
-              <path :style="{ fill: 'var(--icon-color)'}" d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 
+              <path :style="{ fill: '#4B392C'}" d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 
               10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z" />
-              <path :style="{ fill: 'var(--icon-color)'}" d="M21 12C21 13.1046 20.1046 14 19 14C17.8954 14 17 13.1046 17 12C17 10.8954 
+              <path :style="{ fill: '#4B392C'}" d="M21 12C21 13.1046 20.1046 14 19 14C17.8954 14 17 13.1046 17 12C17 10.8954 
               17.8954 10 19 10C20.1046 10 21 10.8954 21 12Z" />
             </svg>
           </button>
         </div>
-          <p class="text-text2 mt-2"
+          <p class="text-[#4B392C] mt-2"
               :style="{background: item.bgColor, color: item.textColor}"
           >
             {{ getFavoriteText(item) }}

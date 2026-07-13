@@ -114,7 +114,7 @@ const { toggleTheme } = useTheme()
     
 
     <div class="my-auto">
-      <button class="block md:hidden focus:outline-none focus:ring-0"
+      <button class="toggle-chapter-btn block md:hidden focus:outline-none focus:ring-0"
         @click="emit('toggle-chapter')"
       >
         <svg 

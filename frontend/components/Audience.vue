@@ -4,18 +4,18 @@
 
       <!-- Texto -->
       <div>
-        <h2 class="h2-left">
+        <h2 class="h2 md:text-left">
           Hecha para quienes buscan esperanza
         </h2>
 
-        <p class="paragraph">
+        <p class="paragraph text-center md:text-left">
           La Santa Biblia Digital fue creada para acompañarte cada día en tu caminar con Dios. Un lugar donde puedes leer, estudiar y guardar la Palabra de una forma sencilla y sin distracciones.
         </p>
 
-        <!-- Beneficios -->
+        <!-- caracteristicas -->
         <div class="mt-6 space-y-4">
           <!-- Item 1 -->
-          <div class="flex gap-2">
+          <div class="flex gap-2 ">
             <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

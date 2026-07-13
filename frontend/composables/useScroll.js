@@ -1,3 +1,5 @@
+import { watch, nextTick } from "vue"
+import { useRoute } from "#imports"
 
 export function useScroll(data) {
   
@@ -12,15 +14,16 @@ export function useScroll(data) {
           block:"center"
         })
       }
-    }, 300)
+    }, 1800)
   }
 
   // if the vers change, wait to make a scroll 
   watch(
     () => data.value,
-    () => {
+    async () => {
       const vers = route.query.vers
       if (vers) {
+        await nextTick() // wait for the DOM to update before scrolling
         scrollToVerse(vers)
       }
     }
