@@ -9,7 +9,6 @@ import {
 export function useHighlight(data) {
   const route = useRoute()
 
-  // ✔ Paleta única (sin computed)
   const highlightColors = highlightColorsLight
   const highlightTextColors = highlightTextColorsLight
 
@@ -60,6 +59,7 @@ export function useHighlight(data) {
     highlighterMenu.value.visible = false
   }
 
+  //desktop
   const handleSelection = () => {
     const selection = window.getSelection()
     const text = selection.toString().trim()
@@ -159,8 +159,39 @@ export function useHighlight(data) {
     }
   }
 
+
+
+
+  //mobile
+  const handleSelectionMobile = (e) => {
+    const selection = window.getSelection()
+    if (!selection || selection.isCollapsed) return
+    
+    const text = selection.toString().trim()
+    if (!text) return
+    
+    const verses = obtainSelectedVerses()
+    if (verses.length === 0) return
+    
+    const range = selection.getRangeAt(0)
+    const rect = range.getBoundingClientRect()
+
+    highlighterMenu.value = {
+      visible: true,
+      verses,
+      x: rect.left + window.scrollX,
+      y: rect.top + window.scrollY -50
+    }
+
+  }
+
+
+
+
   onMounted(() => {
     document.addEventListener('mouseup', handleSelection)
+    document.addEventListener('touchend', handleSelectionMobile)
+
 
     setTimeout(() => {
       window.addEventListener('click', handleClickOutside)
@@ -171,6 +202,8 @@ export function useHighlight(data) {
 
   onUnmounted(() => {
     document.removeEventListener('mouseup', handleSelection)
+    document.removeEventListener('touchend', handleSelectionMobile)
+
     window.removeEventListener('click', handleClickOutside)
     window.removeEventListener('updated-results', refreshHighlight)
   })
@@ -179,6 +212,7 @@ export function useHighlight(data) {
     highlighterMenu,
     highlightColors,
     handleSelection,
+    handleSelectionMobile,
     handleClickOutside,
     colorSelect,
     verseHighlight

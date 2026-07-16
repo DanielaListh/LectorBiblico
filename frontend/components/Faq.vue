@@ -36,7 +36,7 @@ const questions = [
   {
     title: "¿Funciona en dispositivos móviles?",
     description:
-      "Sí. El lector es completamente responsivo y funciona perfectamente en computadoras, tablets y celulares."
+      "Sí. Puedes usar el lector desde cualquier dispositivo: computadora, tablet o celular. La lectura se adapta sola al tamaño de tu pantalla, así que siempre se ve cómoda y ordenada. Para que todo funcione rápido y sin trabas en teléfonos, algunas funciones más pesadas —como las anotaciones y el reproductor de Spotify— están disponibles solo en computadoras. Esto ayuda a que la experiencia en el celular sea más liviana y fluida."
   }
 ];
 </script>

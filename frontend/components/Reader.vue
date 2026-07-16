@@ -35,6 +35,7 @@ const {
   highlighterMenu,
   highlightColors,
   handleSelection,
+  handleSelectionMobile,
   handleClickOutside,
   colorSelect,
   verseHighlight
@@ -49,7 +50,7 @@ const { scrollToVerse } = useScroll(data)
   <section 
     class="w-auto h-auto overflow-x-hidden md:h-screen md:overflow-y-auto md:w-full md:pr-20" 
     @touchstart="handleTouchStart" 
-    @touchend="handleTouchEnd"
+    @touchend="(e) => { handleTouchEnd(e);  handleSelectionMobile(e)}"
     @mouseup="handleSelection"
     
   >
@@ -65,6 +66,7 @@ const { scrollToVerse } = useScroll(data)
         v-for="color in highlightColors"
         :key="color"
         @click.stop="colorSelect(color)"
+        @touchend.stop="colorSelect(color)"
         class="w-6 h-6 flex items-center justify-center rounded-full"
         :style="color !== 'transparent' ? { background: color } : {}"
       >
