@@ -2,13 +2,14 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useMenuFav } from '~/composables/useMenuFav'
 import { booksMap } from '~/data/booksMap'
-import { useHighlight } from '~/composables/useHighlight'
+import { highlightColorsLight } from '~/data/highlightColors'
 
 
 // Reactive array where saved favorites will be loaded
 const favorites = ref([])
 
 const showColorMenu = ref(false)
+let scrollContainer = null
 
 const pinnedFavorites = computed(() => 
   favorites.value.filter(favorite => favorite.pinned )
@@ -47,6 +48,11 @@ const sortFavorites = () => {
   })
 }
 
+const closeMenuOnScroll = () => {
+  showColorMenu.value = false
+  closeMenu()
+}
+
 onMounted(() => {
   const data = localStorage.getItem('highlights')
   favorites.value = data
@@ -59,10 +65,18 @@ onMounted(() => {
   sortFavorites()
 
   document.addEventListener('click', closeMenu)
+
+  scrollContainer = document.querySelector('.favorites-scroll')
+  if (scrollContainer) {
+    scrollContainer.addEventListener('scroll', closeMenuOnScroll)
+  }
 })
 
 onUnmounted(() => {
   document.removeEventListener('click', closeMenu)
+  if (scrollContainer) {
+    scrollContainer.removeEventListener('scroll', closeMenuOnScroll)
+  }
 })
 
 const goToFavorite = (item) => {
@@ -73,7 +87,7 @@ const goToFavorite = (item) => {
 
 
 <template> 
-  <section class="p-4 pr-20 flex flex-col h-[500px] overflow-y-auto">
+  <section class="favorites-scroll p-4 flex flex-col h-auto md:h-[500px] overflow-y-auto">
 
     <div
       v-if="menu.visible"
@@ -177,7 +191,7 @@ const goToFavorite = (item) => {
               class="absolute top-12 block gap-2 bg-bg3 rounded-full p-2"
             >
               <button
-                v-for="color in highlightColors"
+                v-for="color in highlightColorsLight"
                 :key="color"
                 class="w-6 h-6 rounded-full"
                 :style="{ background: color }"
@@ -196,10 +210,10 @@ const goToFavorite = (item) => {
 
     <!-- tittle -->
 
-    <h2 class="text-text1 font-lexendExa flex  w-full text-4xl h-[50px] font-semibold my-2">Mis favoritos</h2>
+    <h2 class="text-text1 font-lexendExa flex w-full text-4xl h-auto font-semibold my-2">Mis favoritos</h2>
     
     <!-- fav pinned  -->
-    <div v-if="pinnedFavorites.length" class="columns-3 gap-4 w-full mb-6">
+    <div v-if="pinnedFavorites.length" class="md:columns-3 gap-4 w-[400px] md:w-full mb-6 pl-3 pr-14 mx-auto">
 
       <div 
         v-for="item in pinnedFavorites"
@@ -238,13 +252,13 @@ const goToFavorite = (item) => {
           <!-- BOTÓN MENÚ -->
           <button @click.stop="openMenu($event, item)">
             <svg class="w-6 h-6" viewBox="0 0 24 24">
-              <path :style="{ fill: 'var(--icon-color)' }"
+              <path :style="{ fill: '#4B392C' }"
                 d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 
                 3.89543 10 5 10C6.10457 10 7 10.8954 7 12Z" />
-              <path :style="{ fill: 'var(--icon-color)' }"
+              <path :style="{ fill: '#4B392C' }"
                 d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 
                 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z" />
-              <path :style="{ fill: 'var(--icon-color)' }"
+              <path :style="{ fill: '#4B392C' }"
                 d="M21 12C21 13.1046 20.1046 14 19 14C17.8954 14 17 13.1046 17 12C17 10.8954 
                 17.8954 10 19 10C20.1046 10 21 10.8954 21 12Z" />
             </svg>
@@ -261,11 +275,8 @@ const goToFavorite = (item) => {
       </div>
     </div>
 
-
-
-
     <!-- Favoritos normales en masonry-->
-    <div class=" columns-3 gap-4 w-full ">
+    <div class=" md:columns-3 gap-4 w-[400px] md:w-full mb-6 pl-3 pr-14  mx-auto">
 
       <!-- cards -->
       <div
@@ -284,9 +295,8 @@ const goToFavorite = (item) => {
             <span 
               v-else-if="item.verses && item.verses.length > 1"
               @click="goToFavorite(item)" 
-            > ?
-              [{{ item.verses[0] }} - {{ item.verses[item.verses.length - 1] }}] 
-              // 😭 range of numbers for the selected and highlights verses, example: [4 - 7]
+            >
+              {{ item.verses[0] }} - {{ item.verses[item.verses.length - 1] }}
 
             </span>
           </h3>

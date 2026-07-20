@@ -5,6 +5,77 @@ import { useKeyboardNavigation } from '~/composables/useKeyboardNavigation';
 import { useScroll } from '~/composables/useScroll';
 import { useSwipeNavigation } from '~/composables/useSwipeNavigation';
 import { booksMap } from '~/data/booksMap'
+import { ref, onMounted, onUnmounted } from 'vue'
+
+
+
+const touchStartVerse = ref(null)
+const touchEndVerse = ref(null)
+
+const isMobile = ref(false)
+
+let scrollContainer = null
+
+const closeMenuOnScroll = () => {
+  highlighterMenu.value.visible = false
+  closeMenu()
+}
+
+onMounted(() => {
+  isMobile.value = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+
+  if (!isMobile.value) {
+    document.addEventListener('mouseup', handleSelection)
+  }
+
+  if (isMobile.value) {
+    document.addEventListener('touchstart', handleVerseTouchStart)
+    document.addEventListener('touchend', handleVerseTouchEnd)
+  }
+
+  scrollContainer = document.querySelector('.highlightMenu-scroll')
+  if (scrollContainer) {
+    scrollContainer.addEventListener('scroll', closeMenuOnScroll)
+  }
+})
+
+onUnmounted(() => {
+  if (scrollContainer) {
+    scrollContainer.removeEventListener('scroll', closeMenuOnScroll)
+  }
+})
+
+const handleVerseTouchStart = (event) => {
+  if (!isMobile) return
+
+  const verseEl = event.target.closest('.verse')
+  if (!verseEl) return
+
+  touchStartVerse.value = Number(verseEl.dataset.vers)
+}
+
+const handleVerseTouchEnd = (event) => {
+  if (!isMobile) return
+
+  const verseEl = event.target.closest('.verse')
+  if (!verseEl) return
+
+  touchEndVerse.value = Number(verseEl.dataset.vers)
+
+  const start = touchStartVerse.value
+  const end = touchEndVerse.value
+
+  if (!start || !end) return
+
+  const min = Math.min(start, end)
+  const max = Math.max(start, end)
+
+  highlighterMenu.visible = true
+  highlighterMenu.x = event.changedTouches[0].clientX
+  highlighterMenu.y = event.changedTouches[0].clientY
+
+  highlighterMenu.selectedVerses = { start: min, end: max }
+}
 
 
 // chapter Navigation
@@ -48,7 +119,7 @@ const { scrollToVerse } = useScroll(data)
 
 <template>
   <section 
-    class="w-auto h-auto overflow-x-hidden md:h-screen md:overflow-y-auto md:w-full md:pr-20" 
+    class="highlightMenu-scroll w-auto h-auto overflow-x-hidden md:h-screen md:overflow-y-auto md:w-full md:pr-20" 
     @touchstart="handleTouchStart" 
     @touchend="(e) => { handleTouchEnd(e);  handleSelectionMobile(e)}"
     @mouseup="handleSelection"
@@ -60,12 +131,16 @@ const { scrollToVerse } = useScroll(data)
       v-if="highlighterMenu.visible"
       class="highlighter-menu fixed z-[600] bg-bg2 border border-border2 shadow-xl 
       rounded-xl p-3 flex gap-2 items-center transition-opacity duration-300"
+      @touchstart.stop
+      @touchend.stop
+      @click.stop
       :style="{top: highlighterMenu.y + 'px', left: highlighterMenu.x + 'px'}" 
     >
       <button
         v-for="color in highlightColors"
         :key="color"
         @click.stop="colorSelect(color)"
+        @touchstart.stop="colorSelect(color)"
         @touchend.stop="colorSelect(color)"
         class="w-6 h-6 flex items-center justify-center rounded-full"
         :style="color !== 'transparent' ? { background: color } : {}"
@@ -181,6 +256,8 @@ const { scrollToVerse } = useScroll(data)
           :key="index"
           class="verse flex gap-3"
           :data-vers="index + 1"
+          @touchstart="handleVerseTouchStart"
+          @touchend="handleVerseTouchEnd"
         >
           <span class="font-bold font-lexendExa text-text2">
             {{ index + 1 }}

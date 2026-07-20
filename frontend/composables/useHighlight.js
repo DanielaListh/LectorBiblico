@@ -117,10 +117,26 @@ export function useHighlight(data) {
   }
 
   const colorSelect = (color) => {
-    saveHighlight(highlighterMenu.value.verses, color)
+    let verses = []
+
+    // Desktop: selección de texto nativa
+    if (highlighterMenu.value.verses?.length) {
+      verses = highlighterMenu.value.verses
+    }
+
+    // Mobile: selección por versículo
+    else if (highlighterMenu.value.selectedVerses) {
+      const { start, end } = highlighterMenu.value.selectedVerses
+      verses = Array.from({ length: end - start + 1 }, (_, i) => start + i)
+    }
+
+    // Guardar highlight
+    saveHighlight(verses, color)
+
     emitHighlight()
     closeHighlighterMenu()
   }
+
 
   const verseHighlight = (numVers, text) => {
     const highlights = JSON.parse(localStorage.getItem('highlights') || '[]')

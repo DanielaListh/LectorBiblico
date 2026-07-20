@@ -1,4 +1,5 @@
 import { ref } from "vue";
+import {booksMap} from "~/data/booksMap"
 
 export function useMenuFav(favorites) {
     const menu = ref({
@@ -29,7 +30,7 @@ export function useMenuFav(favorites) {
     }
 
     const shareFavorite = async (item) => {
-        const text = `${item.book} ${item.chapter}:${item.verses.join(', ')} - ${item.text}`
+        const text = `${booksMap[item.book]} ${item.chapter}:${item.verses.join(', ')} - ${item.text}`
 
         if (navigator.share) {
             await navigator.share({ text })

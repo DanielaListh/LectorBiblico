@@ -17,11 +17,10 @@ export function useTheme() {
             isDark.value = saved === 'dark'
         } else {
             //detectar el tema del sistema
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-            isDark.value = prefersDark
+            
+            isDark.value = false
         }
     })
-
 
     const toggleTheme = () => {
         setTheme(!isDark.value)
