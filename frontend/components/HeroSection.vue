@@ -138,7 +138,7 @@ const features = [
 
 <template>
   <section id="home"
-    class="w-[80%] min-h-screen justify-center block mx-auto py-5"
+    class="w-[80%] justify-center block mx-auto py-5"
   >
     <div class="w-full flex flex-col items-center text-center mx-auto">
       <h1 class="h1" >

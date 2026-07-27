@@ -8,7 +8,6 @@ import { booksMap } from '~/data/booksMap'
 import { ref, onMounted, onUnmounted } from 'vue'
 
 
-
 const touchStartVerse = ref(null)
 const touchEndVerse = ref(null)
 
