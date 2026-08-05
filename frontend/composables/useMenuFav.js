@@ -6,7 +6,6 @@ export function useMenuFav(favorites) {
         visible: false,
         x: 0,
         y: 0,
-        item: null
     })
 
     const openMenu = (event, item) => {
@@ -17,11 +16,12 @@ export function useMenuFav(favorites) {
             return
         }
 
+        const rect = event.target.getBoundingClientRect()
+
         menu.value = {
             visible: true,
             x: event.clientX - 70,
-            y: event.clientY - 70,
-            item
+            y: event.clientY - 70
         }
     }
 

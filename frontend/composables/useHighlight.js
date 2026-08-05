@@ -1,3 +1,4 @@
+// ~/composables/useHighlight.js
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute } from '#imports'
 
@@ -12,65 +13,7 @@ export function useHighlight(data) {
   const highlightColors = highlightColorsLight
   const highlightTextColors = highlightTextColorsLight
 
-  const highlighterMenu = ref({
-    visible: false,
-    verses: [],
-    x: 0,
-    y: 0
-  })
-
-  const obtainSelectedVerses = () => {
-    const selection = window.getSelection()
-    if (!selection.rangeCount) return []
-
-    const range = selection.getRangeAt(0)
-    const verses = [...document.querySelectorAll('.verse')]
-
-    const selected = verses.filter((v) => {
-      const rect = v.getBoundingClientRect()
-      const selRect = range.getBoundingClientRect()
-      return !(rect.bottom < selRect.top || rect.top > selRect.bottom)
-    })
-
-    return selected.map((v) => Number(v.dataset.vers))
-  }
-
-  const openHighlighterMenu = (verses) => {
-    const selection = window.getSelection()
-    if (!selection.rangeCount) return
-
-    const rect = selection.getRangeAt(0).getBoundingClientRect()
-
-    window.removeEventListener('click', handleClickOutside)
-
-    highlighterMenu.value = {
-      visible: true,
-      verses,
-      x: rect.left + window.scrollX,
-      y: rect.top + window.scrollY - 50
-    }
-
-    setTimeout(() => {
-      window.addEventListener('click', handleClickOutside)
-    }, 50)
-  }
-
-  const closeHighlighterMenu = () => {
-    highlighterMenu.value.visible = false
-  }
-
-  //desktop
-  const handleSelection = () => {
-    const selection = window.getSelection()
-    const text = selection.toString().trim()
-    if (!text) return
-
-    const verses = obtainSelectedVerses()
-    if (verses.length === 0) return
-
-    openHighlighterMenu(verses)
-  }
-
+  // Guardar highlight
   const saveHighlight = (verses, color) => {
     const actualBook = route.params.book
     const actualChapter = Number(route.params.chapter)
@@ -84,6 +27,7 @@ export function useHighlight(data) {
         JSON.stringify(h.verses) === JSON.stringify(verses)
     )
 
+    // Eliminar highlight
     if (color === 'transparent') {
       if (index !== -1) {
         stored.splice(index, 1)
@@ -92,6 +36,7 @@ export function useHighlight(data) {
       return
     }
 
+    // Actualizar highlight existente
     if (index !== -1) {
       stored[index].bgColor = color
       stored[index].textColor = highlightTextColors[color]
@@ -99,6 +44,7 @@ export function useHighlight(data) {
       return
     }
 
+    // Crear highlight nuevo
     const rangeText = verses.map(v => data.value.verses[v - 1]).join('')
 
     const newItem = {
@@ -116,28 +62,7 @@ export function useHighlight(data) {
     localStorage.setItem('highlights', JSON.stringify(stored))
   }
 
-  const colorSelect = (color) => {
-    let verses = []
-
-    // Desktop: selección de texto nativa
-    if (highlighterMenu.value.verses?.length) {
-      verses = highlighterMenu.value.verses
-    }
-
-    // Mobile: selección por versículo
-    else if (highlighterMenu.value.selectedVerses) {
-      const { start, end } = highlighterMenu.value.selectedVerses
-      verses = Array.from({ length: end - start + 1 }, (_, i) => start + i)
-    }
-
-    // Guardar highlight
-    saveHighlight(verses, color)
-
-    emitHighlight()
-    closeHighlighterMenu()
-  }
-
-
+  // Pintar versículo
   const verseHighlight = (numVers, text) => {
     const highlights = JSON.parse(localStorage.getItem('highlights') || '[]')
 
@@ -160,78 +85,32 @@ export function useHighlight(data) {
     ">${text}</mark>`
   }
 
-  const emitHighlight = () => {
-    window.dispatchEvent(new Event('updated-results'))
-  }
-
+  // Refrescar UI
   const refreshHighlight = () => {
     data.value = { ...data.value }
   }
 
-  const handleClickOutside = (event) => {
-    const menuEl = document.querySelector('.highlighter-menu')
-    if (menuEl && !menuEl.contains(event.target)) {
-      closeHighlighterMenu()
-    }
+  const applyHighlightHandler = (e) => { 
+    const { verses, color } = e.detail
+    saveHighlight(verses, color)
+    refreshHighlight()
   }
-
-
-
-
-  //mobile
-  const handleSelectionMobile = (e) => {
-    const selection = window.getSelection()
-    if (!selection || selection.isCollapsed) return
-    
-    const text = selection.toString().trim()
-    if (!text) return
-    
-    const verses = obtainSelectedVerses()
-    if (verses.length === 0) return
-    
-    const range = selection.getRangeAt(0)
-    const rect = range.getBoundingClientRect()
-
-    highlighterMenu.value = {
-      visible: true,
-      verses,
-      x: rect.left + window.scrollX,
-      y: rect.top + window.scrollY -50
-    }
-
-  }
-
-
-
 
   onMounted(() => {
-    document.addEventListener('mouseup', handleSelection)
-    document.addEventListener('touchend', handleSelectionMobile)
-
-
-    setTimeout(() => {
-      window.addEventListener('click', handleClickOutside)
-    }, 50)
-
+    window.addEventListener('apply-highlight', applyHighlightHandler)
     window.addEventListener('updated-results', refreshHighlight)
   })
 
   onUnmounted(() => {
-    document.removeEventListener('mouseup', handleSelection)
-    document.removeEventListener('touchend', handleSelectionMobile)
-
-    window.removeEventListener('click', handleClickOutside)
+    window.removeEventListener('apply-highlight', applyHighlightHandler)
     window.removeEventListener('updated-results', refreshHighlight)
   })
 
   return {
-    highlighterMenu,
     highlightColors,
-    handleSelection,
-    handleSelectionMobile,
-    handleClickOutside,
-    colorSelect,
+    saveHighlight,
     verseHighlight
   }
 }
+
 
