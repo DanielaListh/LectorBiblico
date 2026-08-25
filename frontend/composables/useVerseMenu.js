@@ -1,7 +1,9 @@
-import { ref } from "vue"
+import { ref, watch } from "vue"
+import { useRoute } from '#imports'
 import { booksMap } from "~/data/booksMap"
 
 export function useVerseMenu(selectedVerses, resetSelection) {
+  const route = useRoute()
 
   const menu = ref({
     visible: false,
@@ -11,19 +13,15 @@ export function useVerseMenu(selectedVerses, resetSelection) {
   })
 
   const openMenu = (event, verseNumber) => {
-    event.stopPropagation()
-
-    if (menu.value.visible) { 
-      menu.value.verses.push()
+    if (event?.stopPropagation) {
+      event.stopPropagation()
     }
-
-    const rect = event.target.getBoundingClientRect()
 
     menu.value = {
       visible: true,
-      x: event.clientX - 1,
-      y: event.clientY - 1,
-      verses: [verseNumber]
+      x: 0,
+      y: 0,
+      verses: verseNumber ? [verseNumber] : []
     }
   }
 
@@ -31,16 +29,37 @@ export function useVerseMenu(selectedVerses, resetSelection) {
     menu.value.visible = false
   }
 
-  const shareVerses = () => {
-    const book = selectedVerses.book
-    const chapter = selectedVerses.chapter
-    const verses = menu.value.verses
+  if (selectedVerses) {
+    watch(
+      () => selectedVerses.value?.length,
+      (length) => {
+        if (!length && menu.value.visible) {
+          closeMenu()
+        }
+      }
+    )
+  }
 
-    const text = `${booksMap[book]} ${chapter}:${verses.join(', ')}`
+  const getSelectedVerses = () => {
+    const list = selectedVerses?.value?.length
+      ? selectedVerses.value
+      : menu.value.verses
+    return [...list].sort((a, b) => a - b)
+  }
+
+  const shareVerses = () => {
+    const book = route.params.book
+    const chapter = route.params.chapter
+    const verses = getSelectedVerses()
+
+    if (!verses.length) return
+
+    const bookName = booksMap[book] || book
+    const text = `${bookName} ${chapter}:${verses.join(', ')}`
 
     if (navigator.share) {
       navigator.share({ text })
-    } else {
+    } else if (navigator.clipboard) {
       navigator.clipboard.writeText(text)
       alert("Copiado al portapapeles")
     }
@@ -50,9 +69,12 @@ export function useVerseMenu(selectedVerses, resetSelection) {
   }
 
   const applyHighlight = (color) => {
+    const verses = getSelectedVerses()
+    if (!verses.length) return
+
     window.dispatchEvent(new CustomEvent("apply-highlight", {
       detail: {
-        verses: menu.value.verses,
+        verses,
         color
       }
     }))
@@ -61,9 +83,12 @@ export function useVerseMenu(selectedVerses, resetSelection) {
   }
 
   const createNote = () => {
+    const verses = getSelectedVerses()
+    if (!verses.length) return
+
     window.dispatchEvent(new CustomEvent("create-note", {
       detail: {
-        verses: menu.value.verses
+        verses
       }
     }))
     closeMenu()
@@ -79,4 +104,3 @@ export function useVerseMenu(selectedVerses, resetSelection) {
     createNote
   }
 }
-

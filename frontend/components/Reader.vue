@@ -1,4 +1,5 @@
 <script setup>
+import { ref, computed, watch } from 'vue'
 import { useChapterNavigation } from '~/composables/useChapterNavigation'
 import { useReaderInteractions } from '~/composables/useReaderInteractions'
 import { useVerseMenu } from '~/composables/useVerseMenu'
@@ -7,7 +8,6 @@ import { useKeyboardNavigation } from '~/composables/useKeyboardNavigation'
 import { useSwipeNavigation } from '~/composables/useSwipeNavigation'
 import { useScroll } from '~/composables/useScroll'
 import { booksMap } from '~/data/booksMap'
-
 
 // Interacciones
 const { 
@@ -22,10 +22,9 @@ const {
   resetSelection
 } = useReaderInteractions()
 
-// Menú lateral
+// Menú inferior
 const {
   menu, 
-  isMenuOpen,
   openMenu,
   closeMenu,
   shareVerses,
@@ -60,16 +59,35 @@ const highlight = useHighlight(data)
 const verseHighlight = highlight.verseHighlight
 const highlightColors = highlight.highlightColors
 
-const showColorMenu = ref(false)
-
-
-// Highlight (solo pintar)
-// const { verseHighlight, highlightColors } = useHighlight(data)
-
 // Scroll
 const { scrollToVerse } = useScroll(data)
 
+// Reset selection on chapter change
+watch([book, chapter], () => {
+  closeMenu()
+  resetSelection()
+})
 
+const selectedVersesLabel = computed(() => {
+  const currentBookName = (book.value && booksMap[book.value]) || book.value || ''
+  const currentChapter = chapter.value || data.value?.chapter || ''
+  const verses = selectedVerses.value?.length
+    ? [...selectedVerses.value].sort((a, b) => a - b)
+    : menu.value.verses || []
+
+  if (!verses.length) return `${currentBookName} ${currentChapter}`
+
+  if (verses.length === 1) {
+    return `${currentBookName} ${currentChapter}:${verses[0]}`
+  }
+
+  const isConsecutive = verses.every((v, i) => i === 0 || v === verses[i - 1] + 1)
+  if (isConsecutive) {
+    return `${currentBookName} ${currentChapter}:${verses[0]}-${verses[verses.length - 1]}`
+  }
+
+  return `${currentBookName} ${currentChapter}:${verses.join(', ')}`
+})
 </script>
 
 
@@ -171,21 +189,23 @@ const { scrollToVerse } = useScroll(data)
       <div
         v-if="!loading"
         :key="`${book}-${chapter}`"
-        class="flex flex-col gap-2 leading-relaxed text-lg md:max-w-4xl md:px-10 md:pt-3 md:pb-12 px-5 pb-4"
+        class="flex flex-col gap-2 leading-relaxed text-lg md:max-w-4xl md:px-10 md:pt-3 md:pb-28 px-5 pb-28"
       >
         <div
           v-for="(vers, index) in data?.verses || []"
           :key="index"
           class="verse relative flex gap-3"
+          :class="{ 'cursor-pointer': isSelecting }"
           :data-vers="index + 1"
           @mouseenter="hoverVerse(index + 1)"
           @mouseleave="unhoverVerse"
+          @click="isSelecting && toggleVerseSelection(index + 1)"
         >
 
           <div
             v-if="isSelecting"
-            class="w-6 h-6 border border-bg4 rounded flex items-center justify-center"
-            @click="toggleVerseSelection(index + 1)"
+            class="w-6 h-6 border border-bg4 rounded flex items-center justify-center cursor-pointer shrink-0 mt-1"
+            @click.stop="toggleVerseSelection(index + 1)"
           >
             <svg
               class="w-5 h-5 text-text2"
@@ -198,8 +218,7 @@ const { scrollToVerse } = useScroll(data)
             </svg>
           </div>
 
-
-          <span class="font-bold font-lexendExa text-text2">
+          <span class="font-bold font-lexendExa text-text2 shrink-0">
             {{ index + 1 }}
           </span>
 
@@ -210,11 +229,12 @@ const { scrollToVerse } = useScroll(data)
 
           <button 
             v-if="hoveredVerse === index + 1 && !isSelecting"
-            @click="
+            @click.stop="
               activateSelectionMode(index + 1);
               openMenu($event, index + 1)
             "
             class="absolute right-0 top-0 p-1 opacity-80 hover:opacity-100 transition-opacity"
+            title="Seleccionar versículo"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -235,76 +255,109 @@ const { scrollToVerse } = useScroll(data)
 
         </div>
 
+      </div>
+    </Transition>
 
-        <div v-if="menu.visible" class="fixed inset-0 z-[49]" @click="closeMenu"></div>
-
-        <div
-          v-if="menu.visible"
-          class="fixed flex flex-col items-center justify-center gap-2 z-[50] bg-bg4 rounded-xl 
-          w-auto h-auto"
-          :style="{ top: menu.y + 'px', left: menu.x + 'px' }" 
-          @click.stop
-        >
-          <div>
+    <!-- Menú inferior en el contenedor del lector (no cubre el panel lateral) -->
+    <Transition name="slide-up">
+      <div
+        v-if="menu.visible"
+        class="fixed bottom-0 right-0 w-full md:w-[80%] z-50 bg-bg2 border-t md:border-l border-border1 shadow-2xl py-3 px-4 md:px-8"
+        @click.stop
+      >
+        <div class="max-w-4xl mx-auto flex items-center justify-between gap-3 md:gap-6">
+          
+          <!-- Botón cerrar y Versículos seleccionados -->
+          <div class="flex items-center gap-2 md:gap-3 shrink-0">
             <button
-              class="flex items-center p-1 mx-auto"
-              @click="shareVerses"
+              @click="closeMenu(); resetSelection()"
+              class="p-1.5 rounded-lg hover:bg-bg4 text-text2 transition duration-200 focus:outline-none"
+              title="Cerrar selección"
             >
-              <svg class="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path :style="{ fill: 'var(--icon-color)'}" d="M9 12C9 13.3807 7.88071 14.5 6.5 14.5C5.11929 14.5 4 13.3807 4 12C4 10.6193 5.11929 9.5 6.5 9.5C7.88071 9.5 9 10.6193 9 12Z" />
-                <path :style="{ stroke: 'var(--icon-color)'}" d="M14 6.5L9 10" />
-                <path :style="{ stroke: 'var(--icon-color)'}" d="M14 17.5L9 14" />
-                <path :style="{ fill: 'var(--icon-color)'}" d="M19 18.5C19 19.8807 17.8807 21 16.5 21C15.1193 21 14 19.8807 14 18.5C14 17.1193 15.1193 16 16.5 16C17.8807 16 19 17.1193 19 18.5Z" />
-                <path :style="{ fill: 'var(--icon-color)'}" d="M19 5.5C19 6.88071 17.8807 8 16.5 8C15.1193 8 14 6.88071 14 5.5C14 4.11929 15.1193 3 16.5 3C17.8807 3 19 4.11929 19 5.5Z" />
-              </svg>
-            </button>
-          </div> 
-          <!-- Cambiar color -->
-          <div>
-            <button
-              @click="showColorMenu = !showColorMenu"
-              class="p-1 mx-auto"
-            >
-              <svg class="w-6 h-6" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                <path 
-                  :style="{ fill: 'var(--icon-color)'}" 
-                  d="M8.25 0c-6.38 0-9.11 7.38-8.010 9.92 0.82 1.89 2.62 0.080 3.34 1 1.88 2.46-2.11 
-                  3.81 0.090 4.68 2.59 1.060 12.33 0.4 12.33-8.53 0-2.69-1.34-7.070-7.75-7.070zM4.47 
-                  9c-0.815-0.017-1.47-0.682-1.47-1.5 0-0.828 0.672-1.5 1.5-1.5s1.5 0.671 1.5 1.5c0 
-                  0 0 0 0 0 0 0.828-0.672 1.5-1.5 1.5-0.011 0-0.021-0-0.032-0zM6 3.5c0-0.828 
-                  0.672-1.5 1.5-1.5s1.5 0.672 1.5 1.5-0.672 1.5-1.5 1.5c-0.011 0-0.021-0-0.032-0-0.814-0.017-1.468-0.682-1.468-1.5 0-0 0-0 0-0zM8.47 
-                  14c-0.815-0.017-1.47-0.682-1.47-1.5 0-0.828 0.672-1.5 1.5-1.5s1.5 0.671 1.5 1.5c0 0 0 0 0 0 0 
-                  0.828-0.672 1.5-1.5 1.5-0.011 0-0.021-0-0.032-0zM12.47 11c-0.815-0.017-1.47-0.682-1.47-1.5 0-0.828 
-                  0.672-1.5 1.5-1.5s1.5 0.671 1.5 1.5c0 0 0 0 0 0 0 0.828-0.672 1.5-1.5 1.5-0.011 0-0.021-0-0.032-0zM12.47 
-                  6c-0.815-0.017-1.47-0.682-1.47-1.5 0-0.828 0.672-1.5 1.5-1.5s1.5 0.671 1.5 1.5c0 0 0 0 0 0 0 
-                  0.828-0.672 1.5-1.5 1.5-0.011 0-0.021-0-0.032-0z"
-                ></path>
-              </svg>
-            </button>
-
-            <Transition name="fade">
-              <div
-                v-if="showColorMenu"
-                class="absolute block gap-2 bg-bg4 rounded-full p-2"
-              >
-                <button
-                  v-for="color in highlightColors"
-                  :key="color"
-                  class="w-6 h-6 rounded-full"
-                  :style="{ background: color }"
-                  @click="applyHighlight(color)"
-                ></button>
-              </div>
-            </Transition>
-          </div>
-
-          <div>
-            <button @click="createNote" class="p-1 mx-auto">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="icon-line"
+                class="w-5 h-5"
                 viewBox="0 0 24 24"
-                stroke-width="1"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+            <span class="font-lexendExa font-semibold text-text1 text-sm md:text-base select-none">
+              {{ selectedVersesLabel }}
+            </span>
+          </div>
+
+          <!-- Colores para resaltar -->
+          <div class="flex items-center gap-1.5 md:gap-2.5 overflow-x-auto py-1 px-1">
+            <button
+              v-for="color in highlightColors"
+              :key="color"
+              class="w-7 h-7 md:w-8 md:h-8 rounded-full border-2 border-border1 transition-transform hover:scale-110 active:scale-95 flex items-center justify-center shrink-0 shadow-sm"
+              :style="{ background: color === 'transparent' ? 'transparent' : color }"
+              :title="color === 'transparent' ? 'Quitar resaltado' : 'Resaltar'"
+              @click="applyHighlight(color)"
+            >
+              <svg
+                v-if="color === 'transparent'"
+                class="w-4 h-4 text-text3"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <circle cx="12" cy="12" r="9" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Acciones: Compartir y Nota -->
+          <div class="flex items-center gap-2 shrink-0">
+            <!-- Compartir -->
+            <button
+              class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-bg4 hover:bg-hoverBg text-text2 font-lexendExa text-sm transition duration-200"
+              @click="shareVerses"
+              title="Compartir"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+              </svg>
+              <span class="hidden sm:inline">Compartir</span>
+            </button>
+
+            <!-- Nota -->
+            <button
+              class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-bg4 hover:bg-hoverBg text-text2 font-lexendExa text-sm transition duration-200"
+              @click="createNote"
+              title="Crear nota"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               >
@@ -313,9 +366,10 @@ const { scrollToVerse } = useScroll(data)
                 <path d="M9 11l6 0" />
                 <path d="M9 15l4 0" />
               </svg>
+              <span class="hidden sm:inline">Nota</span>
             </button>
           </div>
-          
+
         </div>
       </div>
     </Transition>
