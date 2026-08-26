@@ -1,5 +1,66 @@
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { useChapterNavigation } from '~/composables/useChapterNavigation'
+import { useReaderInteractions } from '~/composables/useReaderInteractions'
+import { useVerseMenu } from '~/composables/useVerseMenu'
+import { useHighlight } from '~/composables/useHighlight'
+import { useKeyboardNavigation } from '~/composables/useKeyboardNavigation'
+import { useSwipeNavigation } from '~/composables/useSwipeNavigation'
+import { useScroll } from '~/composables/useScroll'
+import { booksMap } from '~/data/booksMap'
+
+// Interacciones
+const { 
+  isSelecting,
+  hoveredVerse,
+  selectedVerses,
+  activeVerse,
+  hoverVerse,
+  unhoverVerse,
+  activateSelectionMode,
+  toggleVerseSelection,
+  resetSelection
+} = useReaderInteractions()
+
+// Menú inferior
+const {
+  menu, 
+  openMenu,
+  closeMenu,
+  shareVerses,
+  applyHighlight,
+  createNote
+} = useVerseMenu(selectedVerses, resetSelection)
+
+// Navegación capítulo
+const {
+  book,
+  chapter,
+  data,
+  loading,
+  direction,
+  previousChapter,
+  nextChapter,
+  goToChapter
+} = useChapterNavigation()
+
+// Swipe
+const { handleTouchStart, handleTouchEnd } = useSwipeNavigation(
+  nextChapter,
+  previousChapter,
+  goToChapter,
+  direction
+)
+
+// Keyboard
+useKeyboardNavigation(nextChapter, previousChapter, goToChapter, direction)
+
+const highlight = useHighlight(data)
+const verseHighlight = highlight.verseHighlight
+const highlightColors = highlight.highlightColors
+
+// Scroll
+const { scrollToVerse } = useScroll(data)
 
 let longPressTimer = null
 let touchStartCoords = { x: 0, y: 0 }
@@ -63,82 +124,30 @@ const handleToggleSelectionMode = () => {
   }
 }
 
-onMounted(() => {
-  window.addEventListener('toggle-selection-mode', handleToggleSelectionMode)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('toggle-selection-mode', handleToggleSelectionMode)
-  if (longPressTimer) {
-    clearTimeout(longPressTimer)
+const handleKeyDown = (e) => {
+  if (e.key === 'Escape' && (isSelecting.value || menu.value.visible)) {
+    closeMenu()
+    resetSelection()
   }
-})
-import { useChapterNavigation } from '~/composables/useChapterNavigation'
-import { useReaderInteractions } from '~/composables/useReaderInteractions'
-import { useVerseMenu } from '~/composables/useVerseMenu'
-import { useHighlight } from '~/composables/useHighlight'
-import { useKeyboardNavigation } from '~/composables/useKeyboardNavigation'
-import { useSwipeNavigation } from '~/composables/useSwipeNavigation'
-import { useScroll } from '~/composables/useScroll'
-import { booksMap } from '~/data/booksMap'
-
-// Interacciones
-const { 
-  isSelecting,
-  hoveredVerse,
-  selectedVerses,
-  activeVerse,
-  hoverVerse,
-  unhoverVerse,
-  activateSelectionMode,
-  toggleVerseSelection,
-  resetSelection
-} = useReaderInteractions()
-
-// Menú inferior
-const {
-  menu, 
-  openMenu,
-  closeMenu,
-  shareVerses,
-  applyHighlight,
-  createNote
-} = useVerseMenu(selectedVerses, resetSelection)
-
-// Navegación capítulo
-const {
-  book,
-  chapter,
-  data,
-  loading,
-  direction,
-  previousChapter,
-  nextChapter,
-  goToChapter
-} = useChapterNavigation()
-
-// Swipe
-const { handleTouchStart, handleTouchEnd } = useSwipeNavigation(
-  nextChapter,
-  previousChapter,
-  goToChapter,
-  direction
-)
-
-// Keyboard
-useKeyboardNavigation(nextChapter, previousChapter, goToChapter, direction)
-
-const highlight = useHighlight(data)
-const verseHighlight = highlight.verseHighlight
-const highlightColors = highlight.highlightColors
-
-// Scroll
-const { scrollToVerse } = useScroll(data)
+}
 
 // Reset selection on chapter change
 watch([book, chapter], () => {
   closeMenu()
   resetSelection()
+})
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyDown)
+  window.addEventListener('toggle-selection-mode', handleToggleSelectionMode)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeyDown)
+  window.removeEventListener('toggle-selection-mode', handleToggleSelectionMode)
+  if (longPressTimer) {
+    clearTimeout(longPressTimer)
+  }
 })
 
 const selectedVersesLabel = computed(() => {
@@ -172,7 +181,7 @@ const selectedVersesLabel = computed(() => {
     <!-- content of book name, chapter and buttons to navigate between chapters -->
     <div class="items-center px-5 py-5 md:h-[120px] md:w-[70%] md:fixed md:top-[82px] 
       flex md:justify-between bg-bg1 md:px-10 z-[30]">
-      <div v-if="book && booksMap[book]" class="pl-9">
+      <div v-if="book && booksMap[book]" :class="isSelecting ? 'pl-9' : 'pl-0 md:pl-9'">
         <h1
           class="font-cinzel text-4xl text-text2 md:text-5xl"
         >
@@ -236,10 +245,10 @@ const selectedVersesLabel = computed(() => {
     <div
       v-if="loading"
       class="-mt-[45px] px-5 md:px-10 animate-pulse">
-      <div class="pl-9 mb-12">
+      <div class="pl-0 md:pl-9 mb-12">
         <div class="h-8 w-1/4 bg-bg3 rounded"></div>
       </div>
-      <div class="pl-9 flex flex-col gap-4">
+      <div class="pl-0 md:pl-9 flex flex-col gap-4">
         <div class="h-6 w-4/6 bg-bg4 rounded"></div>
         <div class="h-6 w-3/6 bg-bg4 rounded"></div>
         <div class="h-6 w-5/6 bg-bg4 rounded"></div>
@@ -283,13 +292,15 @@ const selectedVersesLabel = computed(() => {
           @click="handleVerseClick(index + 1)"
         >
 
-          <!-- Checkbox visible en hover o en modo selección (instantáneo, sin animaciones) -->
+          <!-- Checkbox: oculto en mobile cuando no se selecciona, reservado en desktop para hover -->
           <div
-            class="w-6 h-6 border border-bg4 rounded flex items-center justify-center cursor-pointer shrink-0 mt-1"
+            class="h-6 border border-bg4 rounded items-center justify-center cursor-pointer shrink-0 mt-1"
             :class="[
               isSelecting
-                ? 'opacity-100 pointer-events-auto'
-                : (hoveredVerse === index + 1 ? 'opacity-100 pointer-events-auto hover:border-text2' : 'opacity-0 pointer-events-none')
+                ? 'flex w-6 opacity-100 pointer-events-auto'
+                : (hoveredVerse === index + 1
+                    ? 'hidden md:flex md:w-6 opacity-100 pointer-events-auto hover:border-text2'
+                    : 'hidden md:flex md:w-6 opacity-0 pointer-events-none')
             ]"
             @click.stop="
               if (!isSelecting) {
