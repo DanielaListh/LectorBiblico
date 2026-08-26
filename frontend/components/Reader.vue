@@ -1,5 +1,78 @@
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+
+let longPressTimer = null
+let touchStartCoords = { x: 0, y: 0 }
+let isLongPressActive = false
+
+const handleVerseTouchStart = (e, verseNumber) => {
+  if (isSelecting.value) return
+
+  const touch = e.touches[0]
+  touchStartCoords = { x: touch.clientX, y: touch.clientY }
+  isLongPressActive = false
+
+  longPressTimer = setTimeout(() => {
+    isLongPressActive = true
+    if (navigator.vibrate) {
+      try {
+        navigator.vibrate(40)
+      } catch (err) {}
+    }
+    activateSelectionMode(verseNumber)
+    openMenu(null, verseNumber)
+  }, 450)
+}
+
+const handleVerseTouchMove = (e) => {
+  if (!longPressTimer) return
+  const touch = e.touches[0]
+  const diffX = Math.abs(touch.clientX - touchStartCoords.x)
+  const diffY = Math.abs(touch.clientY - touchStartCoords.y)
+
+  if (diffX > 10 || diffY > 10) {
+    clearTimeout(longPressTimer)
+    longPressTimer = null
+  }
+}
+
+const handleVerseTouchEnd = () => {
+  if (longPressTimer) {
+    clearTimeout(longPressTimer)
+    longPressTimer = null
+  }
+}
+
+const handleVerseClick = (verseNumber) => {
+  if (isLongPressActive) {
+    isLongPressActive = false
+    return
+  }
+  if (isSelecting.value) {
+    toggleVerseSelection(verseNumber)
+  }
+}
+
+const handleToggleSelectionMode = () => {
+  if (!isSelecting.value) {
+    isSelecting.value = true
+    openMenu(null, null)
+  } else {
+    closeMenu()
+    resetSelection()
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('toggle-selection-mode', handleToggleSelectionMode)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('toggle-selection-mode', handleToggleSelectionMode)
+  if (longPressTimer) {
+    clearTimeout(longPressTimer)
+  }
+})
 import { useChapterNavigation } from '~/composables/useChapterNavigation'
 import { useReaderInteractions } from '~/composables/useReaderInteractions'
 import { useVerseMenu } from '~/composables/useVerseMenu'
@@ -198,12 +271,16 @@ const selectedVersesLabel = computed(() => {
         <div
           v-for="(vers, index) in data?.verses || []"
           :key="index"
-          class="verse group relative flex gap-3"
+          class="verse group relative flex gap-3 select-none md:select-auto"
           :class="{ 'cursor-pointer': isSelecting }"
           :data-vers="index + 1"
           @mouseenter="hoverVerse(index + 1)"
           @mouseleave="unhoverVerse"
-          @click="isSelecting && toggleVerseSelection(index + 1)"
+          @touchstart="handleVerseTouchStart($event, index + 1)"
+          @touchmove="handleVerseTouchMove"
+          @touchend="handleVerseTouchEnd"
+          @touchcancel="handleVerseTouchEnd"
+          @click="handleVerseClick(index + 1)"
         >
 
           <!-- Checkbox visible en hover o en modo selección (instantáneo, sin animaciones) -->
