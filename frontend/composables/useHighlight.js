@@ -17,49 +17,52 @@ export function useHighlight(data) {
   const saveHighlight = (verses, color) => {
     const actualBook = route.params.book
     const actualChapter = Number(route.params.chapter)
+    const selectedSet = new Set(verses)
 
     const stored = JSON.parse(localStorage.getItem('highlights') || '[]')
 
-    const index = stored.findIndex(
-      h =>
-        h.book === actualBook &&
-        h.chapter === actualChapter &&
-        JSON.stringify(h.verses) === JSON.stringify(verses)
-    )
-
-    // Eliminar highlight
-    if (color === 'transparent') {
-      if (index !== -1) {
-        stored.splice(index, 1)
-        localStorage.setItem('highlights', JSON.stringify(stored))
+    // 1. Limpiar versículos seleccionados de los resaltados existentes en este capítulo
+    const updated = []
+    for (const h of stored) {
+      if (h.book === actualBook && h.chapter === actualChapter) {
+        const remainingVerses = h.verses.filter(v => !selectedSet.has(v))
+        if (remainingVerses.length > 0) {
+          const remainingText = remainingVerses
+            .map(v => (data.value?.verses ? data.value.verses[v - 1] : ''))
+            .join(' ')
+          updated.push({
+            ...h,
+            verses: remainingVerses,
+            text: remainingText || h.text
+          })
+        }
+      } else {
+        updated.push(h)
       }
-      return
     }
 
-    // Actualizar highlight existente
-    if (index !== -1) {
-      stored[index].bgColor = color
-      stored[index].textColor = highlightTextColors[color]
-      localStorage.setItem('highlights', JSON.stringify(stored))
-      return
+    // 2. Si no es transparente, agregar el nuevo resaltado
+    if (color !== 'transparent') {
+      const sortedVerses = [...verses].sort((a, b) => a - b)
+      const rangeText = sortedVerses
+        .map(v => (data.value?.verses ? data.value.verses[v - 1] : ''))
+        .join(' ')
+
+      const newItem = {
+        id: crypto.randomUUID(),
+        book: actualBook,
+        chapter: actualChapter,
+        verses: sortedVerses,
+        bgColor: color,
+        textColor: highlightTextColors[color],
+        text: rangeText,
+        date: Date.now()
+      }
+
+      updated.push(newItem)
     }
 
-    // Crear highlight nuevo
-    const rangeText = verses.map(v => data.value.verses[v - 1]).join('')
-
-    const newItem = {
-      id: crypto.randomUUID(),
-      book: actualBook,
-      chapter: actualChapter,
-      verses,
-      bgColor: color,
-      textColor: highlightTextColors[color],
-      text: rangeText,
-      date: Date.now()
-    }
-
-    stored.push(newItem)
-    localStorage.setItem('highlights', JSON.stringify(stored))
+    localStorage.setItem('highlights', JSON.stringify(updated))
   }
 
   // Pintar versículo
