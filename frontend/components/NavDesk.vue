@@ -30,6 +30,7 @@ const filteredBooks = computed(() => {
 })
 
 const isReadRoute = computed(() => route.path === '/panel/libros')
+const isReaderRoute = computed(() => !!(route.params.book && route.params.chapter))
 
 const goToBook = (book) => {
   search.value = ''
@@ -89,6 +90,11 @@ const close = () => {
 
 const clickOutsideMenu = (e) => {
   if (!e.target.closest('.menu-opciones')) close()
+}
+
+const triggerSelectionMode = () => {
+  window.dispatchEvent(new CustomEvent('toggle-selection-mode'))
+  close()
 }
 
 onMounted(() => {
@@ -215,9 +221,16 @@ const { toggleTheme } = useTheme()
       <transition name="fade">
         <div
           v-show="open === 'opciones'" 
-          class="w-[150px] font-lexendExa absolute right-0 mt-2 bg-bg2 border border-border2 rounded-lg 
-          p-3 flex flex-col gap-2 z-[9999] transition-all duration-300"   
+          class="w-[170px] font-lexendExa absolute right-0 mt-2 bg-bg2 border border-border2 rounded-lg 
+          p-3 flex flex-col gap-2 z-[9999] transition-all duration-300 shadow-xl"   
         >
+          <button
+            v-if="isReaderRoute"
+            @click="triggerSelectionMode"
+            class="paragraph hover:text-hoverText1 text-left flex items-center gap-2 cursor-pointer focus:outline-none"
+          >
+            Seleccionar
+          </button>
           <a href="/panel/favorites" class="paragraph hover:text-hoverText1">Favoritos</a>
           <a href="/panel/notes" class="paragraph hover:text-hoverText1">Notas</a>
           <a href="/" class="paragraph hover:text-hoverText1">Página principal</a>
