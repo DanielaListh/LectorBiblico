@@ -97,9 +97,9 @@ const selectedVersesLabel = computed(() => {
   >
   
     <!-- content of book name, chapter and buttons to navigate between chapters -->
-    <div class="items-center p-5 md:h-[120px] md:w-[70%] md:fixed md:top-[82px] 
-      flex md:justify-between bg-bg1 md:px-0 md:pl-5 z-[30]">
-      <div v-if="book && booksMap[book]">
+    <div class="items-center px-5 py-5 md:h-[120px] md:w-[70%] md:fixed md:top-[82px] 
+      flex md:justify-between bg-bg1 md:px-10 z-[30]">
+      <div v-if="book && booksMap[book]" class="pl-9">
         <h1
           class="font-cinzel text-4xl text-text2 md:text-5xl"
         >
@@ -162,23 +162,27 @@ const selectedVersesLabel = computed(() => {
     <!-- loader -->
     <div
       v-if="loading"
-      class="-mt-[45px] px-5 animate-pulse">
-      <div class="h-8 w-1/4 bg-bg3 rounded mb-12"></div>
-      <div class="ml-[40px] h-6 w-4/6 bg-bg4 rounded mb-4"></div>
-      <div class="ml-[40px] h-6 w-3/6 bg-bg4 rounded mb-4"></div>
-      <div class="ml-[40px] h-6 w-5/6 bg-bg4 rounded mb-4"></div>
-      <div class="ml-[40px] h-6 w-3/6 bg-bg4 rounded mb-4"></div>
-      <div class="ml-[40px] h-6 w-4/6 bg-bg4 rounded mb-4"></div>
-      <div class="ml-[40px] h-6 w-3/6 bg-bg4 rounded mb-4"></div>
-      <div class="ml-[40px] h-6 w-5/6 bg-bg4 rounded mb-4"></div>
-      <div class="ml-[40px] h-6 w-3/6 bg-bg4 rounded mb-4"></div>
-      <div class="ml-[40px] h-6 w-3/6 bg-bg4 rounded mb-4"></div>
-      <div class="ml-[40px] h-6 w-4/6 bg-bg4 rounded mb-4"></div>
-      <div class="ml-[40px] h-6 w-3/6 bg-bg4 rounded mb-4"></div>
-      <div class="ml-[40px] h-6 w-5/6 bg-bg4 rounded mb-4"></div>
-      <div class="ml-[40px] h-6 w-3/6 bg-bg4 rounded mb-4"></div>
-      <div class="ml-[40px] h-6 w-5/6 bg-bg4 rounded mb-4"></div>
-      <div class="ml-[40px] h-6 w-3/6 bg-bg4 rounded mb-4"></div>
+      class="-mt-[45px] px-5 md:px-10 animate-pulse">
+      <div class="pl-9 mb-12">
+        <div class="h-8 w-1/4 bg-bg3 rounded"></div>
+      </div>
+      <div class="pl-9 flex flex-col gap-4">
+        <div class="h-6 w-4/6 bg-bg4 rounded"></div>
+        <div class="h-6 w-3/6 bg-bg4 rounded"></div>
+        <div class="h-6 w-5/6 bg-bg4 rounded"></div>
+        <div class="h-6 w-3/6 bg-bg4 rounded"></div>
+        <div class="h-6 w-4/6 bg-bg4 rounded"></div>
+        <div class="h-6 w-3/6 bg-bg4 rounded"></div>
+        <div class="h-6 w-5/6 bg-bg4 rounded"></div>
+        <div class="h-6 w-3/6 bg-bg4 rounded"></div>
+        <div class="h-6 w-3/6 bg-bg4 rounded"></div>
+        <div class="h-6 w-4/6 bg-bg4 rounded"></div>
+        <div class="h-6 w-3/6 bg-bg4 rounded"></div>
+        <div class="h-6 w-5/6 bg-bg4 rounded"></div>
+        <div class="h-6 w-3/6 bg-bg4 rounded"></div>
+        <div class="h-6 w-5/6 bg-bg4 rounded"></div>
+        <div class="h-6 w-3/6 bg-bg4 rounded"></div>
+      </div>
     </div>
         
     <!-- contenedor de versiculos -->
@@ -194,7 +198,7 @@ const selectedVersesLabel = computed(() => {
         <div
           v-for="(vers, index) in data?.verses || []"
           :key="index"
-          class="verse relative flex gap-3"
+          class="verse group relative flex gap-3"
           :class="{ 'cursor-pointer': isSelecting }"
           :data-vers="index + 1"
           @mouseenter="hoverVerse(index + 1)"
@@ -202,14 +206,26 @@ const selectedVersesLabel = computed(() => {
           @click="isSelecting && toggleVerseSelection(index + 1)"
         >
 
+          <!-- Checkbox visible en hover o en modo selección (instantáneo, sin animaciones) -->
           <div
-            v-if="isSelecting"
             class="w-6 h-6 border border-bg4 rounded flex items-center justify-center cursor-pointer shrink-0 mt-1"
-            @click.stop="toggleVerseSelection(index + 1)"
+            :class="[
+              isSelecting
+                ? 'opacity-100 pointer-events-auto'
+                : (hoveredVerse === index + 1 ? 'opacity-100 pointer-events-auto hover:border-text2' : 'opacity-0 pointer-events-none')
+            ]"
+            @click.stop="
+              if (!isSelecting) {
+                activateSelectionMode(index + 1);
+                openMenu($event, index + 1);
+              } else {
+                toggleVerseSelection(index + 1);
+              }
+            "
           >
             <svg
               class="w-5 h-5 text-text2"
-              :class="selectedVerses.includes(index + 1) ? 'opacity-100' : 'opacity-0'"
+              :class="isSelecting && selectedVerses.includes(index + 1) ? 'opacity-100' : 'opacity-0'"
               fill="var(--icon-color)"
               stroke-width="3"
               viewBox="0 0 24 24"
@@ -226,27 +242,6 @@ const selectedVersesLabel = computed(() => {
             class="text-text1 text-[18px] md:text-[20px] font-lexendExa leading-[1.7] max-w-[65ch]"
             v-html="verseHighlight(index + 1, vers)"
           ></p>
-
-          <button 
-            v-if="hoveredVerse === index + 1 && !isSelecting"
-            @click.stop="
-              activateSelectionMode(index + 1);
-              openMenu($event, index + 1)
-            "
-            class="absolute right-0 top-0 p-1 opacity-80 hover:opacity-100 transition-opacity"
-            title="Seleccionar versículo"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon-line"
-              viewBox="0 0 24 24"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M6 9l6 6l6 -6" />
-            </svg>
-          </button>
 
           <div 
             v-if="isSelecting && selectedVerses.includes(index + 1)"
