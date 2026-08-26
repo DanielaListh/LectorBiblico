@@ -30,6 +30,7 @@ const filteredBooks = computed(() => {
 })
 
 const isReadRoute = computed(() => route.path === '/panel/libros')
+const isReaderRoute = computed(() => !!(route.params.book && route.params.chapter))
 
 const goToBook = (book) => {
   search.value = ''
@@ -224,6 +225,7 @@ const { toggleTheme } = useTheme()
           p-3 flex flex-col gap-2 z-[9999] transition-all duration-300 shadow-xl"   
         >
           <button
+            v-if="isReaderRoute"
             @click="triggerSelectionMode"
             class="paragraph hover:text-hoverText1 text-left flex items-center gap-2 cursor-pointer focus:outline-none"
           >
