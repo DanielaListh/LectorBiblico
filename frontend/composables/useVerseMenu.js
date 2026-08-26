@@ -78,8 +78,6 @@ export function useVerseMenu(selectedVerses, resetSelection) {
         color
       }
     }))
-    closeMenu()
-    resetSelection()
   }
 
   const createNote = () => {
