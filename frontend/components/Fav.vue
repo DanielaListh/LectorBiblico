@@ -217,16 +217,19 @@ const goToFavorite = (item) => {
       v-if="!favorites.length"
       class="flex flex-col items-center justify-center text-center flex-1 my-auto py-8 px-4 select-none"
     >
-      <div class="p-6 rounded-3xl bg-bg2/40 border border-border1/40 mb-5 group transition-transform duration-300 hover:scale-105">
-        <MascotHeart class="w-32 h-32 md:w-40 md:h-40 text-text3 group-hover:text-hoverText1 transition-colors duration-300" />
-      </div>
-      <h3 class="text-xl md:text-2xl font-bold font-cinzel text-text1 mb-2">Aún no tienes favoritos</h3>
-      <p class="text-sm font-lexendExa text-text3 max-w-md opacity-80 leading-relaxed mb-6">
+      <MascotHeart class="w-36 h-36 md:w-44 md:h-44 text-text3 hover:text-hoverText1 transition-colors duration-300 mb-6" />
+      
+      <h3 class="text-2xl md:text-3xl font-cinzel text-text2 font-bold mb-3 tracking-wide">
+        Aún no tienes favoritos
+      </h3>
+      
+      <p class="text-sm md:text-base font-lexendExa text-text3 max-w-md opacity-85 leading-relaxed mb-8">
         Cuando encuentres versículos que toquen tu corazón mientras lees, resáltalos para tenerlos siempre a mano aquí.
       </p>
+      
       <NuxtLink
         to="/panel/libros"
-        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-bg3 text-text1 font-lexendExa font-medium text-sm hover:bg-bg4 border border-border1/50 transition-all duration-200 shadow-sm hover:shadow"
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-bg2 hover:bg-bg3 text-text1 font-lexendExa font-medium text-sm transition-all duration-200 shadow-sm hover:shadow active:scale-95"
       >
         <span>Comenzar a leer</span>
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
