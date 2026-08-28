@@ -3,6 +3,7 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useMenuFav } from '~/composables/useMenuFav'
 import { booksMap } from '~/data/booksMap'
 import { highlightColorsLight } from '~/data/highlightColors'
+import MascotHeart from '~/components/MascotHeart.vue'
 
 
 // Reactive array where saved favorites will be loaded
@@ -87,7 +88,7 @@ const goToFavorite = (item) => {
 
 
 <template> 
-  <section class="favorites-scroll p-4 flex flex-col h-auto md:h-[500px] overflow-y-auto">
+  <section class="favorites-scroll p-4 md:p-8 flex flex-col flex-1 h-full min-h-0 overflow-y-auto">
 
     <div
       v-if="menu.visible"
@@ -208,10 +209,32 @@ const goToFavorite = (item) => {
 
 
 
-    <!-- tittle -->
-
-    <h2 class="text-text1 font-lexendExa flex w-full text-4xl h-auto font-semibold my-2">Mis favoritos</h2>
+    <!-- tittle (solo cuando hay favoritos) -->
+    <h2 v-if="favorites.length" class="text-text1 font-lexendExa flex w-full text-4xl h-auto font-semibold my-2">Mis favoritos</h2>
     
+    <!-- Empty State -->
+    <div
+      v-if="!favorites.length"
+      class="flex flex-col items-center justify-center text-center flex-1 my-auto py-8 px-4 select-none"
+    >
+      <div class="p-6 rounded-3xl bg-bg2/40 border border-border1/40 mb-5 group transition-transform duration-300 hover:scale-105">
+        <MascotHeart class="w-32 h-32 md:w-40 md:h-40 text-text3 group-hover:text-hoverText1 transition-colors duration-300" />
+      </div>
+      <h3 class="text-xl md:text-2xl font-bold font-cinzel text-text1 mb-2">Aún no tienes favoritos</h3>
+      <p class="text-sm font-lexendExa text-text3 max-w-md opacity-80 leading-relaxed mb-6">
+        Cuando encuentres versículos que toquen tu corazón mientras lees, resáltalos para tenerlos siempre a mano aquí.
+      </p>
+      <NuxtLink
+        to="/panel/libros"
+        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-bg3 text-text1 font-lexendExa font-medium text-sm hover:bg-bg4 border border-border1/50 transition-all duration-200 shadow-sm hover:shadow"
+      >
+        <span>Comenzar a leer</span>
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </NuxtLink>
+    </div>
+
     <!-- fav pinned  -->
     <div v-if="pinnedFavorites.length" class="md:columns-3 gap-4 w-[400px] md:w-full mb-6 pl-3 pr-14 mx-auto">
 
@@ -276,7 +299,7 @@ const goToFavorite = (item) => {
     </div>
 
     <!-- Favoritos normales en masonry-->
-    <div class=" md:columns-3 gap-4 w-[400px] md:w-full mb-6 pl-3 pr-14  mx-auto">
+    <div v-if="normalFavorites.length" class=" md:columns-3 gap-4 w-[400px] md:w-full mb-6 pl-3 pr-14  mx-auto">
 
       <!-- cards -->
       <div

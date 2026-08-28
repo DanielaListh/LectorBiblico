@@ -109,7 +109,7 @@ const stopResize = () => {
     <div class="md:w-[3px] md:bg-bg2"></div>
 
     <!-- dynamic content -->
-    <main class="w-full md:w-[80%] md:flex md:flex-col">
+    <main class="w-full md:w-[80%] md:flex md:flex-col md:h-full md:overflow-hidden">
       <NavDesk 
         :showChapter="showChapter"
         @toggle-chapter="showChapter = !showChapter"
