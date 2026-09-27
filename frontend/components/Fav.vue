@@ -209,7 +209,6 @@ const goToFavorite = (item) => {
 
 
     <!-- tittle -->
-
     <h2 class="text-text1 font-lexendExa flex w-full text-4xl h-auto font-semibold my-2">Mis favoritos</h2>
     
     <!-- fav pinned  -->
@@ -275,7 +274,7 @@ const goToFavorite = (item) => {
       </div>
     </div>
 
-    <!-- Favoritos normales en masonry-->
+    <!-- Resaltados normales en masonry -->
     <div class=" md:columns-3 gap-4 w-[400px] md:w-full mb-6 pl-3 pr-14  mx-auto">
 
       <!-- cards -->
