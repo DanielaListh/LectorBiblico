@@ -41,9 +41,7 @@ export function useVerseMenu(selectedVerses, resetSelection) {
   }
 
   const getSelectedVerses = () => {
-    const list = selectedVerses?.value?.length
-      ? selectedVerses.value
-      : menu.value.verses
+    const list = selectedVerses?.value?.length ? selectedVerses.value : menu.value.verses
     return [...list].sort((a, b) => a - b)
   }
 
@@ -55,9 +53,10 @@ export function useVerseMenu(selectedVerses, resetSelection) {
     if (!verses.length) return
 
     const bookName = booksMap[book] || book
-    const text = `${bookName} ${chapter}:${verses.join(', ')}`
+    const text = `${bookName} \n ${chapter}: ${verses.join(', ')}`
 
     if (navigator.share) {
+      // web share API is supported
       navigator.share({ text })
     } else if (navigator.clipboard) {
       navigator.clipboard.writeText(text)

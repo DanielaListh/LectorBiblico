@@ -240,32 +240,6 @@ const selectedVersesLabel = computed(() => {
     </div>
     
     <div class="md:w-full md:h-[120px]"></div>
-
-    <!-- loader -->
-    <div
-      v-if="loading"
-      class="-mt-[45px] px-5 md:px-10 animate-pulse">
-      <div class="pl-0 md:pl-9 mb-12">
-        <div class="h-8 w-1/4 bg-bg3 rounded"></div>
-      </div>
-      <div class="pl-0 md:pl-9 flex flex-col gap-4">
-        <div class="h-6 w-4/6 bg-bg4 rounded"></div>
-        <div class="h-6 w-3/6 bg-bg4 rounded"></div>
-        <div class="h-6 w-5/6 bg-bg4 rounded"></div>
-        <div class="h-6 w-3/6 bg-bg4 rounded"></div>
-        <div class="h-6 w-4/6 bg-bg4 rounded"></div>
-        <div class="h-6 w-3/6 bg-bg4 rounded"></div>
-        <div class="h-6 w-5/6 bg-bg4 rounded"></div>
-        <div class="h-6 w-3/6 bg-bg4 rounded"></div>
-        <div class="h-6 w-3/6 bg-bg4 rounded"></div>
-        <div class="h-6 w-4/6 bg-bg4 rounded"></div>
-        <div class="h-6 w-3/6 bg-bg4 rounded"></div>
-        <div class="h-6 w-5/6 bg-bg4 rounded"></div>
-        <div class="h-6 w-3/6 bg-bg4 rounded"></div>
-        <div class="h-6 w-5/6 bg-bg4 rounded"></div>
-        <div class="h-6 w-3/6 bg-bg4 rounded"></div>
-      </div>
-    </div>
         
     <!-- contenedor de versiculos -->
     <Transition
@@ -273,7 +247,6 @@ const selectedVersesLabel = computed(() => {
       mode="out-in"
     >
       <div
-        v-if="!loading"
         :key="`${book}-${chapter}`"
         class="flex flex-col gap-2 leading-relaxed text-lg md:max-w-4xl md:px-10 md:pt-3 md:pb-28 px-5 pb-28"
       >
@@ -341,7 +314,7 @@ const selectedVersesLabel = computed(() => {
       </div>
     </Transition>
 
-    <!-- Menú inferior en el contenedor del lector (no cubre el panel lateral) -->
+    <!-- Menú inferior en el contenedor del lector -->
     <Transition name="slide-up">
       <div
         v-if="menu.visible"
@@ -370,9 +343,6 @@ const selectedVersesLabel = computed(() => {
                 <path d="M18 6L6 18M6 6l12 12" />
               </svg>
             </button>
-            <span class="font-lexendExa font-semibold text-text1 text-sm md:text-base select-none">
-              {{ selectedVersesLabel }}
-            </span>
           </div>
 
           <!-- Colores para resaltar -->
